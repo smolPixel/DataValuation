@@ -1,0 +1,35 @@
+"""Baseline with LOO experiments"""
+
+
+#Main file
+from data.DataProcessor import initialize_dataset
+from Classifier.classifier import classifier
+from AugmentStrat.Augmentator import augmentator
+from MetaStrategy.MetaStrat import meta_strat
+import argparse
+import random
+import numpy as np
+import torch
+import matplotlib.pyplot as plt
+import yaml
+import time
+from datetime import timedelta
+
+def set_seed(seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+def main():
+    set_seed()
+    train, dev, test=initialize_dataset()
+    print(f"Initialized SST-2 with length of {len(train)}")
+    fds
+    # classifier_algo=classifier(argdict, train)
+    # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
+
+#66.74
+
+if __name__ == '__main__':
+    main(argdict)
