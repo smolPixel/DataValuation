@@ -46,7 +46,8 @@ def main():
         _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
         results.append(dev_res-dev_baseline)
 
-    print(results)
+    sorted_results=np.argsort(results)
+    print(sorted_results)
 
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
 
