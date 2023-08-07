@@ -47,10 +47,10 @@ class RNN_Model(nn.Module):
         return output
 
 
-class RNN_Classifier(nn.Module):
+class RNN_Classifier():
 
     def __init__(self,train):
-        super(RNN_Classifier, self).__init__()
+        # super(RNN_Classifier, self).__init__()
         self.model=RNN_Model(train)
         self.model=self.model.cuda()
         self.loss_function = torch.nn.CrossEntropyLoss()
