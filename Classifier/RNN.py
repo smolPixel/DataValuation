@@ -75,7 +75,7 @@ class RNN_Classifier():
             for batch in train_loader:
                 output=self.model(batch['input'].cuda())
                 print(output.shape)
-                loss = self.loss_function(output, batch['label'])
+                loss = self.loss_function(output, batch['label'].cuda())
                 # print(loss)
                     # loss = outputs.loss
                 loss.backward()
