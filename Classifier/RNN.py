@@ -4,34 +4,30 @@ import torch
 import torch.nn as nn
 import os
 from sklearn.metrics import accuracy_score, recall_score, f1_score
-from data.DataProcessor import ds_DAControlled
 import itertools
-import pytorch_lightning as pl
-from pytorch_lightning.callbacks import Callback
-from pytorch_lightning.callbacks.early_stopping import EarlyStopping
+
 import numpy as np
 
-class RNN_Classifier(pl.LightningModule):
 
-    def __init__(self, argdict, train):
-        super().__init__()
+class RNN_Classifier(nn.Module):
+
+    def __init__(self,train):
+        super(RNN_Classifier, self).__init__()
         self.num_directions = 2
-        self.hidden_size = argdict['hidden_size_classifier']
-        self.input_size = argdict['input_size']
-        self.embedding = nn.Embedding(argdict['input_size'], argdict['embed_size_classifier'])
-        self.bridge = nn.Linear(argdict['embed_size_classifier'], argdict['hidden_size_classifier'])
+        self.hidden_size = 1024#argdict['hidden_size_classifier']
+        self.input_size = train.vocab_size #argdict['input_size']
+        self.embedding = nn.Embedding(self.input_size, 300)#argdict['embed_size_classifier'])
+        self.bridge = nn.Linear(300, 1024)#argdict['hidden_size_classifier'])
         # TODO: Test bidirectional
-        self.rnn = nn.LSTM(argdict['embed_size_classifier'], argdict['hidden_size_classifier'],
-                           argdict['num_layers_classifier'], batch_first=True, dropout=argdict['dropout_classifier'], bidirectional=True)
-        self.dropout = nn.Dropout(argdict['dropout_classifier'])
+        self.rnn = nn.LSTM(300, 1024, 2, batch_first=True, dropout=0.3, bidirectional=True)
+        self.dropout = nn.Dropout(0.3)
         # if len(argdict['categories']) == 2:
         #     self.out = nn.Linear(self.hidden_size * 2, 1)
         # else:
-        self.out = nn.Linear(self.hidden_size * 2, len(argdict['categories']))
+        self.out = nn.Linear(self.hidden_size * 2, 2)
 
-        self.n_layers = argdict['num_layers_classifier']
+        self.n_layers = 2
         self.loss_function = torch.nn.CrossEntropyLoss()
-        self.argdict=argdict
 
     def init_model(self):
         self.linear_layer=nn.Linear(self.argdict['input_size'], len(self.argdict['categories']))
@@ -39,6 +35,19 @@ class RNN_Classifier(pl.LightningModule):
         # for param in self.model.base_model.parameters():
         #     param.requires_grad = False
         # self.optimizer = AdamW(self.model.parameters(), lr=1e-5)
+
+    def train_test(self, train, dev, test):
+        for ep in range(10):
+            train_loader = DataLoader(
+                dataset=train,
+                batch_size=25,
+                shuffle=True,
+                # num_workers=cpu_count(),
+                pin_memory=torch.cuda.is_available()
+            )
+            for bs in train_loader:
+                print(bs)
+                fds
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
@@ -64,87 +73,6 @@ class RNN_Classifier(pl.LightningModule):
         loss=self.loss_function(output, batch['label'])
         return loss
 
-    def training_step(self, batch, batch_idx):
-        input=batch['input']
-        bs = input.shape[0]
-        output=self.forward(input)
-        best=torch.softmax(output, dim=-1)
-        pred=torch.argmax(best, dim=-1)
-        acc=accuracy_score(batch['label'].cpu(), pred.cpu())
-        loss=self.loss_function(output, batch['label'])
-        self.log("Loss", loss, on_epoch=True, on_step=True, prog_bar=True, logger=False,
-                 batch_size=bs)
-        self.log("Acc Train", acc, on_epoch=True, on_step=False, prog_bar=True, logger=False,
-                 batch_size=bs)
-        return loss
-
-
-    def validation_step(self, batch, batch_idx):
-        input=batch['input']
-        bs=input.shape[0]
-        output=self.forward(input)
-        best=torch.softmax(output, dim=-1)
-        pred=torch.argmax(best, dim=-1)
-        acc=accuracy_score(batch['label'].cpu(), pred.cpu())
-
-        loss=self.loss_function(output, batch['label'])
-        # self.log("Loss", loss, on_epoch=True, on_step=False, prog_bar=True, logger=False,
-        #          batch_size=bs)
-        self.log("Acc Dev", acc, on_epoch=True, on_step=False, prog_bar=True, logger=False,
-                 batch_size=bs)
-        return loss
-
-    def test_step(self, batch, batch_idx):
-        input=batch['input']
-        bs=input.shape[0]
-        output=self.forward(input)
-        best=torch.softmax(output, dim=-1)
-        pred=torch.argmax(best, dim=-1)
-        acc=accuracy_score(batch['label'].cpu(), pred.cpu())
-        self.acc_per_batch.append(acc)
-        loss=self.loss_function(output, batch['label'])
-        # self.log("Loss", loss, on_epoch=True, on_step=False, prog_bar=True, logger=False,
-        #          batch_size=bs)
-        self.log("Acc Dev", acc, on_epoch=True, on_step=False, prog_bar=True, logger=False,
-                 batch_size=bs)
-        return loss
-
-    def validation_epoch_end(self, outputs):
-        print("---\n")
-
-    def train_model(self, training_set, dev_set, test_set, generator, return_grad=False):
-        self.trainer = pl.Trainer(gpus=1, max_epochs=self.argdict['nb_epoch_classifier'], precision=16, enable_checkpointing=False)
-        # trainer=pl.Trainer(max_epochs=self.argdict['num_epochs'])
-        train_loader = DataLoader(
-            dataset=training_set,
-            batch_size=64,
-            shuffle=True,
-            # num_workers=cpu_count(),
-            pin_memory=torch.cuda.is_available()
-        )
-        dev_loader = DataLoader(
-            dataset=dev_set,
-            batch_size=64,
-            shuffle=False,
-            # num_workers=cpu_count(),
-            pin_memory=torch.cuda.is_available()
-        )
-        self.trainer.fit(self, train_loader, dev_loader)
-        for set in [training_set, dev_set, test_set]:
-            self.acc_per_batch=[]
-            train_loader = DataLoader(
-                dataset=set,
-                batch_size=1,
-                shuffle=True,
-                # num_workers=cpu_count(),
-                pin_memory=torch.cuda.is_available()
-            )
-            train_acc=self.trainer.test(self, train_loader)
-            acc=np.mean(self.acc_per_batch)
-            print(self.acc_per_batch)
-            print(acc)
-            print(train_acc)
-        fds
         # fds
 
 
