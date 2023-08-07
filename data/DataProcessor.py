@@ -26,10 +26,9 @@ class OrderedCounter(Counter, OrderedDict):
 
 	def __reduce__(self):
 		return self.__class__, (OrderedDict(self),)
-def sample_class(df, i, prop, argdict):
+def sample_class(df, i, prop, ds):
 	"""Sample the class i from the dataframe, with oversampling if needed. """
 	size_class=len(df[df['label'] == i])
-	ds=argdict['dataset_size'] if argdict['dataset_size']!=0 else len(df)
 	num_sample_tot=math.ceil(ds * prop)
 	#Sample a first time
 	num_sample = min(num_sample_tot, size_class)
@@ -53,34 +52,22 @@ def get_dataFrame(task, dataset_size):
 	dfTrain=pd.read_csv(f'data/{task}/train.tsv', sep='\t').dropna(axis=1)
 
 	num_labels=len(set(dfTrain['label']))
-	print(num_labels)
-	fds
 
-	# pd.set_option('display.max_rows', None)
-	# pd.set_option('display.max_columns', None)
-	# pd.set_option('display.width', None)
-	# pd.set_option('display.max_colwidth', -1)
 	#Sampling balanced data
 	#We always oversample data to eliminate the unbalance factor from the DA algos, as the assumption is that DA is going to be more efficient if the data is unbalanced
 	if dataset_size==0:
 		max_size = dfTrain['label'].value_counts().max()
 		prop=max_size/len(dfTrain)
 	else:
-		prop=1/len(argdict['categories'])
-	NewdfTrain=sample_class(dfTrain, 0, prop, argdict)
-	for i in range(1, len(argdict['categories'])):
+		prop=1/num_labels
+	NewdfTrain=sample_class(dfTrain, 0, prop)
+	for i in range(1, num_labels):
 		prop = len(dfTrain[dfTrain['label'] == i]) / len(dfTrain)
 		# TODO HERE
-		prop = 1 / len(argdict['categories'])
-		NewdfTrain=pd.concat([NewdfTrain ,sample_class(dfTrain, i, prop, argdict)])
+		prop = 1 / num_labels
+		NewdfTrain=pd.concat([NewdfTrain ,sample_class(dfTrain, i, prop, dataset_size)])
 	dfTrain=NewdfTrain
-	# Path(pathTrain).mkdir(parents=True, exist_ok=True)
-	# dfTrain.to_csv(f"{pathTrain}/train.tsv", sep='\t')
-	# fdasklj
 	print(f"Length of the dataframe {len(dfTrain)}")
-	if argdict['fix_dataset']:
-		dfTrain.to_csv(f'Selecteddata/{task}/{argdict["dataset_size"]}/train.tsv', sep='\t')
-
 	return dfTrain, dfVal, dfTest
 
 
@@ -107,7 +94,7 @@ def initialize_dataset():
 	train=SST2_dataset(train, tokenizer, vocab)
 	dev=SST2_dataset(dev, tokenizer, vocab)
 	test=SST2_dataset(test, tokenizer, vocab)
-	self.input_size=train.vocab_size
+	# self.input_size=train.vocab_size
 
 	return train, dev, test
 
