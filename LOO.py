@@ -50,7 +50,7 @@ def main():
     # print(sorted_results)
     # print(sorted_results[::-1])
     print("Evaluation of LOO, removing worst data by bs of 10")
-    for i in range(0, 50, 10):
+    for i in range(0, 50, 5):
         train_eval=copy.deepcopy(train)
         eliminated=0
         for ss in sorted_results:
@@ -64,7 +64,7 @@ def main():
         _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
         print(f"Results of {dev_res}")
     print("Evaluation of LOO, removing best data by bs of 10")
-    for i in range(0, 50, 10):
+    for i in range(0, 50, 5):
         train_eval = copy.deepcopy(train)
         eliminated = 0
         for ss in sorted_results[::-1]:
