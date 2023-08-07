@@ -35,6 +35,7 @@ class SST2_dataset(Dataset):
 		# mask=len(argdict['categories'])
 		for i, row in data.iterrows():
 			input = tokenizer.tokenize("<bos> " + row['sentence'].lower() + " <eos>")
+			print(input)
 			if len(input)>self.max_len:
 				self.max_len=len(input)
 			self.data[index] = {'sentence':row['sentence'].lower(), 'input': input, 'label':row['label']}
