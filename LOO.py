@@ -43,7 +43,6 @@ def main():
         Classifier = LogReg_Classifier(train_loo)
         _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
         print(dev_res, dev_baseline)
-        fds
 
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
 
