@@ -81,7 +81,7 @@ class RNN_Classifier():
                 loss.backward()
                 self.optimizer.step()
 
-                preds=torch.argmax(output, dim=2)
+                preds=torch.argmax(output, dim=1)
                 print(preds.shape)
                 print(loss)
 
