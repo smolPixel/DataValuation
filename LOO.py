@@ -25,6 +25,7 @@ def main():
     print(f"Initialized SST-2 with length of {len(train)}")
     from Classifier.LogReg import LogReg_Classifier
     Classifier = LogReg_Classifier(train)
+
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
 
 #66.74

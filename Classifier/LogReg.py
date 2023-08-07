@@ -10,7 +10,7 @@ class LogReg_Classifier():
         self.init_model()
 
     def init_model(self):
-        print(self.train)
+        print(self.train.return_pandas())
         fds
 
     def configure_optimizers(self):
