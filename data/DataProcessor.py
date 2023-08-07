@@ -112,9 +112,9 @@ def initialize_dataset(argdict):
 	train, dev, test=get_dataFrame(argdict)
 	vocab = build_vocab_from_iterator((iter([tokenizer.tokenize(sentence.lower()) for sentence in list(train['sentence'])])),specials=["<unk>", "<pad>", "<bos>", "<eos>"])
 	vocab.set_default_index(vocab["<unk>"])
-	train=SST2_dataset(train, tokenizer, vocab, argdict)
-	dev=SST2_dataset(dev, tokenizer, vocab, argdict)
-	test=SST2_dataset(test, tokenizer, vocab, argdict)
+	train=SST2_dataset(train, tokenizer, vocab)
+	dev=SST2_dataset(dev, tokenizer, vocab)
+	test=SST2_dataset(test, tokenizer, vocab)
 	argdict['input_size']=train.vocab_size
 
 	return train, dev, test
