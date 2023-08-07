@@ -29,18 +29,20 @@ def main():
     print("Running LOO with LogReg classifier")
 
     from Classifier.LogReg import LogReg_Classifier
+    set_seed()
     Classifier = LogReg_Classifier(train)
     results=Classifier.train_test(train, dev, test)
+    dev_baseline=results[1]
 
     print(f"Results with all data is {results}")
 
     for i in range(DATASET_SIZE):
-        print(i)
         train_loo=copy.deepcopy(train)
-        print(len(train_loo))
         train_loo.data.pop(i)
-        print(len(train_loo))
-        print(train.data[i])
+        set_seed()
+        Classifier = LogReg_Classifier(train_loo)
+        _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
+        print(dev_res, dev_baseline)
         fds
 
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
