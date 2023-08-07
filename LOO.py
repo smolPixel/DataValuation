@@ -35,7 +35,7 @@ def main():
 
     for i in range(DATASET_SIZE):
         print(i)
-        print(train.data)
+        print(train.data[i])
         fds
 
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
