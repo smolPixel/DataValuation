@@ -23,7 +23,7 @@ def set_seed(seed=42):
 
 def main():
     set_seed()
-    DATASET_SIZE=500
+    DATASET_SIZE=100
     train, dev, test=initialize_dataset(DATASET_SIZE)
     print(f"Initialized SST-2 with length of {len(train)}")
 
@@ -48,6 +48,7 @@ def main():
 
     sorted_results=np.argsort(results)
     print(sorted_results)
+    print(sorted_results[::-1])
     print("Evaluation of LOO, removing worst data by bs of 10")
     for i in range(0, 50, 10):
         train_eval=copy.deepcopy(train)
