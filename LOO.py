@@ -23,8 +23,14 @@ def main():
     set_seed()
     train, dev, test=initialize_dataset()
     print(f"Initialized SST-2 with length of {len(train)}")
+
+    print("Running LOO with LogReg classifier")
+
     from Classifier.LogReg import LogReg_Classifier
     Classifier = LogReg_Classifier(train)
+    results=Classifier.train_test(train, dev, test)
+
+    print(f"Results with all data is {results}")
 
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
 
