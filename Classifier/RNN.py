@@ -82,7 +82,8 @@ class RNN_Classifier():
                 self.optimizer.step()
 
                 preds=torch.argmax(output, dim=1)
-                print(preds.shape)
+                print(preds)
+                print(preds.tolist())
                 print(loss)
 
     def configure_optimizers(self):
