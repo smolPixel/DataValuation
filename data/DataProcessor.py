@@ -60,7 +60,7 @@ def get_dataFrame(task, dataset_size):
 		prop=max_size/len(dfTrain)
 	else:
 		prop=1/num_labels
-	NewdfTrain=sample_class(dfTrain, 0, prop)
+	NewdfTrain=sample_class(dfTrain, 0, prop, dataset_size)
 	for i in range(1, num_labels):
 		prop = len(dfTrain[dfTrain['label'] == i]) / len(dfTrain)
 		# TODO HERE
