@@ -72,8 +72,8 @@ class RNN_Classifier():
                 pin_memory=torch.cuda.is_available()
             )
             for batch in train_loader:
-                self.model(batch['input'].cuda())
-                fds
+                output=self.model(batch['input'].cuda())
+                print(output.shape)
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
