@@ -13,6 +13,7 @@ import yaml
 import time
 from datetime import timedelta
 import copy
+import numpy as np
 
 def set_seed(seed=42):
     random.seed(seed)
@@ -36,13 +37,16 @@ def main():
 
     print(f"Results with all data is {results}")
 
+    results=[]
     for i in range(DATASET_SIZE):
         train_loo=copy.deepcopy(train)
         train_loo.data.pop(i)
         set_seed()
         Classifier = LogReg_Classifier(train_loo)
         _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
-        print(dev_res, dev_baseline)
+        results.append(dev_res-dev_baseline)
+
+    print(results)
 
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
 
