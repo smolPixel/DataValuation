@@ -44,24 +44,17 @@ def sample_class(df, i, prop, argdict):
 
 
 
-def get_dataFrame(argdict):
+def get_dataFrame(task, dataset_size):
 	"""Get the dataframe for the particular split. If it does not exist: create it"""
-	task=argdict['dataset']
 	create_train=False
 
-	#IF we fix the training set, we always want the same
-	if argdict['fix_dataset'] and os.path.isfile(f'Selecteddata/{task}/{argdict["dataset_size"]}/train.tsv'):
-		# pathTrain = f"SelectedData/{argdict['dataset']}/{argdict['dataset_size']}"
-		dfVal = pd.read_csv(f'data/{task}/dev.tsv', sep='\t')
-		dfTest=pd.read_csv(f'data/{task}/test.tsv', sep='\t')
-		dfTrain=pd.read_csv(f'Selecteddata/{task}/{argdict["dataset_size"]}/train.tsv', sep='\t').dropna(axis=1)
-		# print(dfTrain)
-		return dfTrain, dfVal, dfTest
-	else:
-		# pathTrain = f"SelectedData/{argdict['dataset']}/{argdict['dataset_size']}"
-		dfVal = pd.read_csv(f'data/{task}/dev.tsv', sep='\t')
-		dfTest=pd.read_csv(f'data/{task}/test.tsv', sep='\t')
-		dfTrain=pd.read_csv(f'data/{task}/train.tsv', sep='\t').dropna(axis=1)
+	dfVal = pd.read_csv(f'data/{task}/dev.tsv', sep='\t')
+	dfTest=pd.read_csv(f'data/{task}/test.tsv', sep='\t')
+	dfTrain=pd.read_csv(f'data/{task}/train.tsv', sep='\t').dropna(axis=1)
+
+	num_labels=len(set(dfTrain['label']))
+	print(num_labels)
+	fds
 
 	# pd.set_option('display.max_rows', None)
 	# pd.set_option('display.max_columns', None)
@@ -69,8 +62,7 @@ def get_dataFrame(argdict):
 	# pd.set_option('display.max_colwidth', -1)
 	#Sampling balanced data
 	#We always oversample data to eliminate the unbalance factor from the DA algos, as the assumption is that DA is going to be more efficient if the data is unbalanced
-	print(list(dfTrain))
-	if argdict['dataset_size']==0:
+	if dataset_size==0:
 		max_size = dfTrain['label'].value_counts().max()
 		prop=max_size/len(dfTrain)
 	else:
@@ -93,29 +85,29 @@ def get_dataFrame(argdict):
 
 
 
-def initialize_dataset(argdict):
-	if argdict['tokenizer'] == "tweetTokenizer":
-		tokenizer = TweetTokenizer()
-	elif argdict['tokenizer']=="PtweetTokenizer":
-		tokenizer= TweetTokenizer()
-	elif argdict['tokenizer'] == "mwordPiece":
-		tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-uncased')
-		num_token_add = tokenizer.add_tokens(['<bos>', '<eos>', '<unk>', '<pad>'], special_tokens=True)  ##This line is updated
-	else:
-		raise ValueError("Incorrect tokenizer")
+def initialize_dataset():
+	# if argdict['tokenizer'] == "tweetTokenizer":
+	# 	tokenizer = TweetTokenizer()
+	# elif argdict['tokenizer']=="PtweetTokenizer":
+	# 	tokenizer= TweetTokenizer()
+	# elif argdict['tokenizer'] == "mwordPiece":
+	# 	tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-uncased')
+	# 	num_token_add = tokenizer.add_tokens(['<bos>', '<eos>', '<unk>', '<pad>'], special_tokens=True)  ##This line is updated
+	# else:
+	# 	raise ValueError("Incorrect tokenizer")
 
-
+	tokenizer = TweetTokenizer()
 	from data.SST2.SST2Dataset import SST2_dataset
 	#Textual dataset
 
 
-	train, dev, test=get_dataFrame(argdict)
+	train, dev, test=get_dataFrame()
 	vocab = build_vocab_from_iterator((iter([tokenizer.tokenize(sentence.lower()) for sentence in list(train['sentence'])])),specials=["<unk>", "<pad>", "<bos>", "<eos>"])
 	vocab.set_default_index(vocab["<unk>"])
 	train=SST2_dataset(train, tokenizer, vocab)
 	dev=SST2_dataset(dev, tokenizer, vocab)
 	test=SST2_dataset(test, tokenizer, vocab)
-	argdict['input_size']=train.vocab_size
+	self.input_size=train.vocab_size
 
 	return train, dev, test
 
