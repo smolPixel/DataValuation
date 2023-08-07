@@ -9,8 +9,7 @@ import itertools
 import numpy as np
 
 
-class RNN_Classifier(nn.Module):
-
+class RNN_Model(nn.Module):
     def __init__(self,train):
         super(RNN_Classifier, self).__init__()
         self.num_directions = 2
@@ -27,14 +26,41 @@ class RNN_Classifier(nn.Module):
         self.out = nn.Linear(self.hidden_size * 2, 2)
 
         self.n_layers = 2
-        self.loss_function = torch.nn.CrossEntropyLoss()
 
-    def init_model(self):
-        self.linear_layer=nn.Linear(self.argdict['input_size'], len(self.argdict['categories']))
-        # self.optimizer = torch.optim.Adam(self.model.parameters(), lr=0.001)
-        # for param in self.model.base_model.parameters():
-        #     param.requires_grad = False
-        # self.optimizer = AdamW(self.model.parameters(), lr=1e-5)
+    def forward(self, input):
+        input=input
+        bs=input.shape[0]
+        input=input.cuda()
+        input = self.embedding(input)
+        input = self.dropout(input)
+        # input = nn.utils.rnn.pack_padded_sequence(input, lengths, batch_first=True, enforce_sorted=False)
+        input, (hidden, cell_state) = self.rnn(input)
+        #Keep only last state
+        # input, _= nn.utils.rnn.pad_packed_sequence(input, batch_first=True)
+        # seq_len=input.shape[1]
+        # input=input.contiguous().view(seq_len, bs, self.num_directions*self.hidden_size)
+        # input=input[-1]
+        hidden=hidden.view(self.n_layers, self.num_directions, -1, self.hidden_size)
+        hidden=torch.cat([hidden[-1, -1], hidden[-1, -2]], dim=1)
+        # Getting the output over vocabulary
+        output = self.out(hidden)
+        return output
+
+
+class RNN_Classifier(nn.Module):
+
+    def __init__(self,train):
+        super(RNN_Classifier, self).__init__()
+        self.model=RNN_Model(train)
+        self.model=self.model.cuda()
+        self.loss_function = torch.nn.CrossEntropyLoss()
+    #
+    # def init_model(self):
+    #     self.linear_layer=nn.Linear(self.argdict['input_size'], len(self.argdict['categories']))
+    #     # self.optimizer = torch.optim.Adam(self.model.parameters(), lr=0.001)
+    #     # for param in self.model.base_model.parameters():
+    #     #     param.requires_grad = False
+    #     # self.optimizer = AdamW(self.model.parameters(), lr=1e-5)
 
     def train_test(self, train, dev, test):
         for ep in range(10):
@@ -46,7 +72,7 @@ class RNN_Classifier(nn.Module):
                 pin_memory=torch.cuda.is_available()
             )
             for batch in train_loader:
-                self.forward(batch['input'].cuda())
+                self.model(batch['input'].cuda())
                 fds
 
     def configure_optimizers(self):
@@ -76,22 +102,5 @@ class RNN_Classifier(nn.Module):
         # fds
 
 
-    def forward(self, input):
-        input=input
-        bs=input.shape[0]
-        input=input.cuda()
-        input = self.embedding(input)
-        input = self.dropout(input)
-        # input = nn.utils.rnn.pack_padded_sequence(input, lengths, batch_first=True, enforce_sorted=False)
-        input, (hidden, cell_state) = self.rnn(input)
-        #Keep only last state
-        # input, _= nn.utils.rnn.pad_packed_sequence(input, batch_first=True)
-        # seq_len=input.shape[1]
-        # input=input.contiguous().view(seq_len, bs, self.num_directions*self.hidden_size)
-        # input=input[-1]
-        hidden=hidden.view(self.n_layers, self.num_directions, -1, self.hidden_size)
-        hidden=torch.cat([hidden[-1, -1], hidden[-1, -2]], dim=1)
-        # Getting the output over vocabulary
-        output = self.out(hidden)
-        return output
+
 
