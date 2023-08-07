@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import yaml
 import time
 from datetime import timedelta
+import copy
 
 def set_seed(seed=42):
     random.seed(seed)
@@ -35,6 +36,10 @@ def main():
 
     for i in range(DATASET_SIZE):
         print(i)
+        train_loo=copy.deepcopy(train)
+        print(len(train_loo))
+        train_loo.data.pop(i)
+        print(len(train_loo))
         print(train.data[i])
         fds
 
