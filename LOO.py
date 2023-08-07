@@ -30,4 +30,4 @@ def main():
 #66.74
 
 if __name__ == '__main__':
-    main(argdict)
+    main()
