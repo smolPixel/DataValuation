@@ -73,13 +73,16 @@ class RNN_Classifier():
                 pin_memory=torch.cuda.is_available()
             )
             for batch in train_loader:
+                self.optimizer.zero_grad()
                 output=self.model(batch['input'].cuda())
-                print(output.shape)
                 loss = self.loss_function(output, batch['label'].cuda())
                 # print(loss)
                     # loss = outputs.loss
                 loss.backward()
                 self.optimizer.step()
+
+                preds=torch.argmax(output, dim=2)
+                print(preds.shape)
                 print(loss)
 
     def configure_optimizers(self):
