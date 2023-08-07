@@ -27,8 +27,6 @@ class SST2_dataset(Dataset):
 		self.bos_idx = self.vocab_object['<bos>']
 		self.eos_idx = self.vocab_object['<eos>']
 		self.unk_idx = self.vocab_object['<unk>']
-		print(self.unk_idx, self.pad_idx, self.bos_idx, self.eos_idx)
-		fds
 		# argdict['pad_idx']=self.pad_idx
 		# argdict['bos_idx']=self.bos_idx
 		# argdict['unk_idx']=self.unk_idx
@@ -37,7 +35,6 @@ class SST2_dataset(Dataset):
 		# mask=len(argdict['categories'])
 		for i, row in data.iterrows():
 			input = tokenizer.tokenize("<bos> " + row['sentence'].lower() + " <eos>")
-			print(input)
 			input=self.vocab_object(input)
 			if len(input)>self.max_len:
 				self.max_len=len(input)
