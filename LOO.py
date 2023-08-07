@@ -44,12 +44,13 @@ def main():
         set_seed()
         Classifier = LogReg_Classifier(train_loo)
         _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
+        #If the perfo augments when removing (if diff is positive), then this was a bad data
         results.append(dev_res-dev_baseline)
 
     sorted_results=np.argsort(results)
     # print(sorted_results)
     # print(sorted_results[::-1])
-    print("Evaluation of LOO, removing worst data by bs of 10")
+    print("Evaluation of LOO, removing best data by bs of 10")
     for i in range(0, 50, 5):
         train_eval=copy.deepcopy(train)
         eliminated=0
@@ -63,7 +64,7 @@ def main():
         Classifier = LogReg_Classifier(train_eval)
         _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
         print(f"Results of {dev_res}")
-    print("Evaluation of LOO, removing best data by bs of 10")
+    print("Evaluation of LOO, removing worst data by bs of 10")
     for i in range(0, 50, 5):
         train_eval = copy.deepcopy(train)
         eliminated = 0
