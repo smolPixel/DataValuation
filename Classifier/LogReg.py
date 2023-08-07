@@ -1,5 +1,6 @@
 import os
 from sklearn.metrics import accuracy_score, recall_score, f1_score
+from sklearn.feature_extraction.text import TfidfVectorizer
 import itertools
 
 class LogReg_Classifier():
@@ -10,12 +11,9 @@ class LogReg_Classifier():
         self.init_model()
 
     def init_model(self):
-        print(self.train.return_pandas())
+        sents=list(self.train.return_pandas()['sentence'])
+        print(sents)
         fds
-
-    def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
-        return optimizer
 
     def get_logits(self, batch):
         input = batch['input']
