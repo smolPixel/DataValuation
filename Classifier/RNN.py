@@ -5,6 +5,7 @@ import torch.nn as nn
 import os
 from sklearn.metrics import accuracy_score, recall_score, f1_score
 import itertools
+from transformers import AdamW
 
 import numpy as np
 
@@ -60,7 +61,7 @@ class RNN_Classifier():
     #     # self.optimizer = torch.optim.Adam(self.model.parameters(), lr=0.001)
     #     # for param in self.model.base_model.parameters():
     #     #     param.requires_grad = False
-    #     # self.optimizer = AdamW(self.model.parameters(), lr=1e-5)
+        self.optimizer = AdamW(self.model.parameters(), lr=1e-5)
 
     def train_test(self, train, dev, test):
         for ep in range(10):
@@ -74,6 +75,12 @@ class RNN_Classifier():
             for batch in train_loader:
                 output=self.model(batch['input'].cuda())
                 print(output.shape)
+                loss = self.loss_function(output, batch['label'])
+                # print(loss)
+                    # loss = outputs.loss
+                loss.backward()
+                self.optimizer.step()
+                print(loss)
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
