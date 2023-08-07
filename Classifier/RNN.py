@@ -72,8 +72,11 @@ class RNN_Classifier():
                 # num_workers=cpu_count(),
                 pin_memory=torch.cuda.is_available()
             )
+            preds_train=[]
+            target_train=[]
             for batch in train_loader:
                 self.optimizer.zero_grad()
+                target_train.extend(batch['label'])
                 output=self.model(batch['input'].cuda())
                 loss = self.loss_function(output, batch['label'].cuda())
                 # print(loss)
@@ -82,9 +85,10 @@ class RNN_Classifier():
                 self.optimizer.step()
 
                 preds=torch.argmax(output, dim=1)
-                print(preds)
-                print(preds.tolist())
-                print(loss)
+                # print(preds)
+                preds_train.extend(preds.tolist())
+                # print(loss)
+            print(accuracy_score(target_train, preds_train))
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
