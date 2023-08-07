@@ -11,7 +11,7 @@ import numpy as np
 
 class RNN_Model(nn.Module):
     def __init__(self,train):
-        super(RNN_Classifier, self).__init__()
+        super(RNN_Model, self).__init__()
         self.num_directions = 2
         self.hidden_size = 1024#argdict['hidden_size_classifier']
         self.input_size = train.vocab_size #argdict['input_size']
