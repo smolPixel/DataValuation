@@ -36,6 +36,7 @@ class SST2_dataset(Dataset):
 		for i, row in data.iterrows():
 			input = tokenizer.tokenize("<bos> " + row['sentence'].lower() + " <eos>")
 			print(input)
+			print(self.vocab_object(input))
 			if len(input)>self.max_len:
 				self.max_len=len(input)
 			self.data[index] = {'sentence':row['sentence'].lower(), 'input': input, 'label':row['label']}
