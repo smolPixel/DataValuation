@@ -101,7 +101,7 @@ def initialize_dataset():
 	#Textual dataset
 
 
-	train, dev, test=get_dataFrame()
+	train, dev, test=get_dataFrame('SST2', 500)
 	vocab = build_vocab_from_iterator((iter([tokenizer.tokenize(sentence.lower()) for sentence in list(train['sentence'])])),specials=["<unk>", "<pad>", "<bos>", "<eos>"])
 	vocab.set_default_index(vocab["<unk>"])
 	train=SST2_dataset(train, tokenizer, vocab)
