@@ -33,6 +33,11 @@ def main():
 
     print(f"Results with all data is {results}")
 
+    for i in range(DATASET_SIZE):
+        print(i)
+        print(train.data)
+        fds
+
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
 
 #66.74
