@@ -45,8 +45,8 @@ class RNN_Classifier(nn.Module):
                 # num_workers=cpu_count(),
                 pin_memory=torch.cuda.is_available()
             )
-            for bs in train_loader:
-                print(bs)
+            for batch in train_loader:
+                self.forward(batch['input'])
                 fds
 
     def configure_optimizers(self):

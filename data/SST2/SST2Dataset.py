@@ -92,13 +92,11 @@ class SST2_dataset(Dataset):
 		length= len(input)
 		label = self.data[item]['label']
 		input.extend([self.pad_idx] * (self.max_len - len(input)))
-		target=input[1:]
-		input=input[:-1]
+		input=input[:]
 		return {
 			'sentence': self.data[item]['sentence'],
 			'length': length,
 			'input': np.asarray(input, dtype=int),
-			'target': np.asarray(target, dtype=int),
 			'label': label,
 		}
 
