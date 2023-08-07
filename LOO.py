@@ -48,6 +48,20 @@ def main():
 
     sorted_results=np.argsort(results)
     print(sorted_results)
+    print("Evaluation of LOO, removing worst data by bs of 10")
+    for i in range(0, 50, 10):
+        train_eval=copy.deepcopy(train)
+        eliminated=0
+        for ss in sorted_results:
+            if eliminated == i:
+                print(f"Testing with dataset of size of {len(train_eval)}")
+                break
+            train_eval.data.pop(ss)
+            eliminated+=1
+        set_seed()
+        Classifier = LogReg_Classifier(train_eval)
+        _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
+        print(f"Results of {dev_res}")
 
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
 
