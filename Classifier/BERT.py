@@ -5,41 +5,22 @@ from torch.utils.data import Dataset
 import torch
 import os
 from sklearn.metrics import accuracy_score, recall_score, f1_score
-from data.DataProcessor import ds_DAControlled
 import itertools
 
 class Bert_Classifier():
 
-    def __init__(self, argdict):
-        self.argdict=argdict
+    def __init__(self, ):
         self.init_model()
 
         # print(self.model)
 
 
     def init_model(self):
-        try:
-            self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', cache_dir='/tmp/piedboef',
-                                                           local_files_only=True)
-        except:
-            self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', cache_dir='/tmp/piedboef')
-        try:
-            self.argdict['output_hidden_state']
-            self.model = BertForSequenceClassification.from_pretrained('bert-base-uncased',
-                                                                       num_labels=len(self.argdict['categories']),
-                                                                       output_hidden_states=True,
-                                                                       cache_dir='/Tmp',
-                                                                       local_files_only=True).cuda()
-        except:
-            try:
-                self.model = BertForSequenceClassification.from_pretrained('bert-base-uncased',
-                                                                           num_labels=len(self.argdict['categories']),
-                                                                           cache_dir='/tmp/piedboef',
-                                                                           local_files_only=True).cuda()
-            except:
-                self.model = BertForSequenceClassification.from_pretrained('bert-base-uncased',
-                                                                           num_labels=len(self.argdict['categories']),
-                                                                           cache_dir='/tmp/piedboef').cuda()
+
+        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', cache_dir='/tmp/piedboef')
+        self.model = BertForSequenceClassification.from_pretrained('bert-base-uncased',
+                                                                   num_labels=len(self.argdict['categories']),
+                                                                   cache_dir='/tmp/piedboef').cuda()
 
         # for param in self.model.base_model.parameters():
         #     param.requires_grad = False
