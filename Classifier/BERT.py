@@ -68,23 +68,6 @@ class Bert_Classifier():
             # print(loss)
             # print(outputs)
             loss.backward()
-
-            if return_grad:
-                total_norm=0
-                for p in self.model.parameters():
-                    param_norm = p.grad.detach().data.norm(2)
-                    total_norm += param_norm.item() ** 2
-                total_norm = total_norm ** 0.5
-                if batch['augmented']:
-                    grad_aug.append(total_norm)
-                    acc_aug.append(int(batch['label'].item()==results.item()))
-                else:
-                    grad_og.append(total_norm)
-                    acc_og.append(int(batch['label'].item() == results.item()))
-
-
-
-
             self.optimizer.step()
 
             pred_train[start:start + bs] = results
