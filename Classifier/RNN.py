@@ -64,7 +64,7 @@ class RNN_Classifier():
         self.optimizer = AdamW(self.model.parameters(), lr=1e-5)
 
     def train_test(self, train, dev, test):
-        for ep in range(20):
+        for ep in range(50):
             train_loader = DataLoader(
                 dataset=train,
                 batch_size=25,
