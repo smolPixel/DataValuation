@@ -166,7 +166,7 @@ class Bert_Classifier():
         grad_aug_prog=[]
         accuracies_base_prog=[]
         accuracies_aug_prog=[]
-        for j in range(self.argdict['nb_epoch_classifier']):
+        for j in range(10):
             acc_train, acc_dev, acc_test=self.run_epoch(train, dev, test)
             # grad_base_prog.append(grad_base)
             # grad_aug_prog.append(grad_aug)
