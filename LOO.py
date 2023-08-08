@@ -86,9 +86,9 @@ def main():
     set_seed()
     Classifier = RNN_Classifier(train)
     results = Classifier.train_test(train, dev, test)
+    print(f"Results with all data is {results}")
     dev_baseline = results[1]
     results = []
-    print(f"Results with all data is {results}")
     for i in tqdm(range(DATASET_SIZE)):
         train_loo=copy.deepcopy(train)
         train_loo.data.pop(i)
