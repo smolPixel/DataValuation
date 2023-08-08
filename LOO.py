@@ -14,6 +14,7 @@ import time
 from datetime import timedelta
 import copy
 import numpy as np
+from tqdm import tqdm
 
 def set_seed(seed=42):
     random.seed(seed)
@@ -88,9 +89,10 @@ def main():
     dev_baseline = results[1]
 
     print(f"Results with all data is {results}")
-    for i in range(DATASET_SIZE):
+    for i in tqdm(range(DATASET_SIZE)):
         train_loo=copy.deepcopy(train)
         train_loo.data.pop(i)
+        train_loo.reset_index()
         set_seed()
         Classifier = RNN_Classifier(train_loo)
         _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
