@@ -12,6 +12,7 @@ class Bert_Classifier():
     def __init__(self, train):
         self.init_model()
         self.train=train
+        self.num_cat=2
 
         # print(self.model)
 
@@ -134,7 +135,7 @@ class Bert_Classifier():
         #     return accuracy_score(Y_train, pred_train), accuracy_score(Y_dev, pred_dev),accuracy_score(Y_test, pred_test), sum(grad_og)/len(grad_og), sum(grad_aug)/len(grad_og), \
         #            sum(acc_og)*100/len(acc_og), sum(acc_aug)*100/len(acc_aug)
         # else:
-        if len(self.argdict['categories'])>2:
+        if self.num_cat>2:
             ff=f1_score(Y_train, pred_train, average='macro'), f1_score(Y_dev, pred_dev, average='macro'),f1_score(Y_test, pred_test, average='macro')
         else:
             ff=accuracy_score(Y_train, pred_train), accuracy_score(Y_dev, pred_dev),accuracy_score(Y_test, pred_test)
