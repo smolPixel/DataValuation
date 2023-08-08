@@ -9,8 +9,9 @@ import itertools
 
 class Bert_Classifier():
 
-    def __init__(self, ):
+    def __init__(self, train):
         self.init_model()
+        self.train=train
 
         # print(self.model)
 
@@ -19,17 +20,17 @@ class Bert_Classifier():
 
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', cache_dir='/tmp/piedboef')
         self.model = BertForSequenceClassification.from_pretrained('bert-base-uncased',
-                                                                   num_labels=len(self.argdict['categories']),
+                                                                   num_labels=2,
                                                                    cache_dir='/tmp/piedboef').cuda()
 
         # for param in self.model.base_model.parameters():
         #     param.requires_grad = False
         self.optimizer = AdamW(self.model.parameters(), lr=1e-5)
-    def run_epoch(self, train, dev, test, return_grad=False):
+    def run_epoch(self, train, dev, test):
         """Return grad returns the average grad for augmented and non augmented examples. """
         # train.return_pandas().to_csv("test.csv")
         self.model.train()
-        bs=self.argdict['batch_size_classifier'] if not return_grad else 1
+        bs=25
         data_loader = DataLoader(
             dataset=train,
             batch_size=bs,
