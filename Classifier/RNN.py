@@ -44,6 +44,7 @@ class RNN_Model(nn.Module):
         hidden=hidden.view(self.n_layers, self.num_directions, -1, self.hidden_size)
         print(hidden.shape)
         hidden=torch.cat([hidden[-1, -1], hidden[-1, -2]], dim=1)
+        print(hidden.shape)
         # Getting the output over vocabulary
         output = self.out(hidden)
         return output
