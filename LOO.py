@@ -127,7 +127,7 @@ def main():
             train_eval.data.pop(ss)
             eliminated += 1
         set_seed()
-        Classifier = LogReg_Classifier(train_eval)
+        Classifier = RNN_Classifier(train_eval)
         _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
         print(f"Results of {dev_res}")
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)

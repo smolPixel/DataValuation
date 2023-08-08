@@ -61,7 +61,7 @@ class RNN_Classifier():
     #     # self.optimizer = torch.optim.Adam(self.model.parameters(), lr=0.001)
     #     # for param in self.model.base_model.parameters():
     #     #     param.requires_grad = False
-        self.optimizer = AdamW(self.model.parameters(), lr=1e-5)
+        self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=1e-5)
 
     def train_test(self, train, dev, test):
         for ep in range(50):
