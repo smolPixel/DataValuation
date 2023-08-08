@@ -159,18 +159,15 @@ class Bert_Classifier():
 
 
 
-    def train_model(self, train, dev, test, type='dataLoader', generator=None, return_grad=False):
+    def train_test(self, train, dev, test,):
 
-        if type=="pandas":
-            train=Transformerdataset(train, split='train', labelled_only=True)
-            dev=Transformerdataset(dev, split='dev', labelled_only=True)
         accuracies=[]
         grad_base_prog=[]
         grad_aug_prog=[]
         accuracies_base_prog=[]
         accuracies_aug_prog=[]
         for j in range(self.argdict['nb_epoch_classifier']):
-            acc_train, acc_dev, acc_test=self.run_epoch(train, dev, test, return_grad=return_grad)
+            acc_train, acc_dev, acc_test=self.run_epoch(train, dev, test)
             # grad_base_prog.append(grad_base)
             # grad_aug_prog.append(grad_aug)
             # accuracies_base_prog.append(acc_base)
@@ -182,10 +179,7 @@ class Bert_Classifier():
             # print(accuracies_aug_prog)
             # print(accuracies_base_prog)
 
-        if return_grad:
-            return accuracies, grad_base_prog, grad_aug_prog, accuracies_base_prog, accuracies_aug_prog
-        else:
-            return accuracies[-1]
+        return accuracies[-1]
 
 
     def train_batches(self, train, dev):
