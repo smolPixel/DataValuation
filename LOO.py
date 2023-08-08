@@ -114,6 +114,7 @@ def main():
             eliminated+=1
         set_seed()
         Classifier = RNN_Classifier(train_eval)
+        train_eval.reset_index()
         _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
         print(f"Results of {dev_res}")
     print("Evaluation of LOO, removing worst data by bs of 10")
@@ -128,6 +129,7 @@ def main():
             eliminated += 1
         set_seed()
         Classifier = RNN_Classifier(train_eval)
+        train_eval.reset_index()
         _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
         print(f"Results of {dev_res}")
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
