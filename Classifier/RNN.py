@@ -101,7 +101,7 @@ class RNN_Classifier():
                 with torch.no_grad():
                     target_dev.extend(batch['label'])
                     output = self.model(batch['input'].cuda())
-                    loss = self.loss_function(output, batch['label'].cuda())
+                    # loss = self.loss_function(output, batch['label'].cuda())
                     # print(loss)
                     # loss = outputs.loss
 
@@ -122,7 +122,7 @@ class RNN_Classifier():
                 with torch.no_grad():
                     target_test.extend(batch['label'])
                     output = self.model(batch['input'].cuda())
-                    loss = self.loss_function(output, batch['label'].cuda())
+                    # loss = self.loss_function(output, batch['label'].cuda())
                     # print(loss)
                     # loss = outputs.loss
 
