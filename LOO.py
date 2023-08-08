@@ -87,7 +87,7 @@ def main():
     Classifier = RNN_Classifier(train)
     results = Classifier.train_test(train, dev, test)
     dev_baseline = results[1]
-
+    results = []
     print(f"Results with all data is {results}")
     for i in tqdm(range(DATASET_SIZE)):
         train_loo=copy.deepcopy(train)
@@ -97,7 +97,6 @@ def main():
         Classifier = RNN_Classifier(train_loo)
         _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
         #If the perfo augments when removing (if diff is positive), then this was a bad data
-        print(dev_res)
         results.append(dev_res-dev_baseline)
 
     sorted_results=np.argsort(results)
