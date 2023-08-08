@@ -1,5 +1,4 @@
 from transformers import BertTokenizer, BertForSequenceClassification
-from transformers import AdamW
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 import torch
@@ -26,7 +25,7 @@ class Bert_Classifier():
 
         # for param in self.model.base_model.parameters():
         #     param.requires_grad = False
-        self.optimizer = AdamW(self.model.parameters(), lr=1e-5)
+        self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=1e-5)
     def run_epoch(self, train, dev, test):
         """Return grad returns the average grad for augmented and non augmented examples. """
         # train.return_pandas().to_csv("test.csv")
@@ -156,7 +155,7 @@ class Bert_Classifier():
             # grad_aug_prog.append(grad_aug)
             # accuracies_base_prog.append(acc_base)
             # accuracies_aug_prog.append(acc_aug)
-            print(f"Epoch {j}, accuracy on dev {(acc_train, acc_dev)} ")
+            # print(f"Epoch {j}, accuracy on dev {(acc_train, acc_dev)} ")
                   # f"grad base {grad_base} grad aug {grad_aug}"
                   # f"Acc base {acc_base} Acc aug {acc_aug}")
             accuracies.append((acc_train, acc_dev, acc_test))
