@@ -201,11 +201,11 @@ class Bert_Classifier():
         for i, batch in enumerate(data_loader):
             self.init_model()
             self.model.train()
-            for j in range(self.argdict['nb_epoch_classifier']):
+            for j in range(10):
                 self.optimizer.zero_grad()
 
                 text_batch = batch['sentence']
-                encoding = self.tokenizer(text_batch, max_length=self.argdict['max_seq_length'], return_tensors='pt', padding=True, truncation=True)
+                encoding = self.tokenizer(text_batch, max_length=64, return_tensors='pt', padding=True, truncation=True)
                 input_ids = encoding['input_ids'].cuda()
                 attention_mask = encoding['attention_mask'].cuda()
                 # print(encoding)
