@@ -97,6 +97,7 @@ def main():
         Classifier = RNN_Classifier(train_loo)
         _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
         #If the perfo augments when removing (if diff is positive), then this was a bad data
+        print(dev_res)
         results.append(dev_res-dev_baseline)
 
     sorted_results=np.argsort(results)
