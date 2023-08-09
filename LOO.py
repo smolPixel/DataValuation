@@ -71,6 +71,7 @@ def main():
                 train_eval.data.pop(ss)
                 eliminated+=1
             set_seed()
+            train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
             _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
             results_remove_best.append(dev_res)
@@ -86,6 +87,7 @@ def main():
                 train_eval.data.pop(ss)
                 eliminated += 1
             set_seed()
+            train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
             _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
             results_remove_worst.append(dev_res)
