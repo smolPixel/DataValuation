@@ -56,7 +56,7 @@ def main():
     results_remove_best=[dev_baseline]
     results_remove_worst=[dev_baseline]
     print("Evaluation of LOO, removing best data by bs of 10")
-    for i in range(0, 50, 5):
+    for i in range(5, 50, 5):
         train_eval=copy.deepcopy(train)
         eliminated=0
         for ss in sorted_results:
@@ -71,7 +71,7 @@ def main():
         results_remove_best.append(dev_res)
         print(f"Results of {dev_res}")
     print("Evaluation of LOO, removing worst data by bs of 10")
-    for i in range(0, 50, 5):
+    for i in range(5, 50, 5):
         train_eval = copy.deepcopy(train)
         eliminated = 0
         for ss in sorted_results[::-1]:
