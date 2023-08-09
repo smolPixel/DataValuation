@@ -91,8 +91,7 @@ def main():
 
     X=[i for i in range(0,50,5)]
     data_plot=pd.DataFrame({'Number of data points removed': X, 'remove bad': results_remove_worst, 'remove good': results_remove_best})
-    sns.lineplot(x='Number of data points removed', y='remove bad', data=data_plot)
-    sns.lineplot(x='Number of data points removed', y='remove good', data=data_plot)
+    sns.lineplot(data=data_plot)
     plt.savefig('test.png')
 
     fds
