@@ -30,22 +30,91 @@ def main():
     train, dev, test=initialize_dataset(DATASET_SIZE)
     print(f"Initialized SST-2 with length of {len(train)}")
 
-    print("Running LOO with LogReg classifier")
+    # print("Running LOO with LogReg classifier")
+    #
+    # from Classifier.LogReg import LogReg_Classifier
+    # set_seed()
+    # Classifier = LogReg_Classifier(train)
+    # results=Classifier.train_test(train, dev, test)
+    # dev_baseline=results[1]
+    #
+    # print(f"Results with all data is {results}")
+    #
+    # results=[]
+    # for i in range(DATASET_SIZE):
+    #     train_loo=copy.deepcopy(train)
+    #     train_loo.data.pop(i)
+    #     set_seed()
+    #     Classifier = LogReg_Classifier(train_loo)
+    #     _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
+    #     #If the perfo augments when removing (if diff is positive), then this was a bad data
+    #     results.append(dev_res-dev_baseline)
+    #
+    # sorted_results=np.argsort(results)
+    # # print(sorted_results)
+    # # print(sorted_results[::-1])
+    # results_remove_best=[dev_baseline]
+    # results_remove_worst=[dev_baseline]
+    # print("Evaluation of LOO, removing best data by bs of 10")
+    # for i in range(5, 55, 5):
+    #     train_eval=copy.deepcopy(train)
+    #     eliminated=0
+    #     for ss in sorted_results:
+    #         if eliminated == i:
+    #             print(f"Testing with dataset of size of {len(train_eval)}")
+    #             break
+    #         train_eval.data.pop(ss)
+    #         eliminated+=1
+    #     set_seed()
+    #     Classifier = LogReg_Classifier(train_eval)
+    #     _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
+    #     results_remove_best.append(dev_res)
+    #     print(f"Results of {dev_res}")
+    # print("Evaluation of LOO, removing worst data by bs of 10")
+    # for i in range(5, 55, 5):
+    #     train_eval = copy.deepcopy(train)
+    #     eliminated = 0
+    #     for ss in sorted_results[::-1]:
+    #         if eliminated == i:
+    #             print(f"Testing with dataset of size of {len(train_eval)}")
+    #             break
+    #         train_eval.data.pop(ss)
+    #         eliminated += 1
+    #     set_seed()
+    #     Classifier = LogReg_Classifier(train_eval)
+    #     _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
+    #     results_remove_worst.append(dev_res)
+    #     print(f"Results of {dev_res}")
+    #
+    #
+    # X=[i for i in range(0,55,5)]
+    # X.extend([i for i in range(0,55,5)])
+    # strats=['remove bad' for i in range(0,55,5)]
+    # strats.extend(['remove good' for i in range(0,55,5)])
+    # Y=results_remove_worst
+    # Y.extend(results_remove_best)
+    # data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
+    # sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
+    # plt.title('LogReg-LOO')
+    # plt.savefig('LogRegLOO.png')
 
-    from Classifier.LogReg import LogReg_Classifier
+    print("Running LOO with RNN classifier")
+
+    from Classifier.RNN import RNN_Classifier
     set_seed()
-    Classifier = LogReg_Classifier(train)
-    results=Classifier.train_test(train, dev, test)
-    dev_baseline=results[1]
-
+    Classifier = RNN_Classifier(train)
+    results = Classifier.train_test(train, dev, test)
     print(f"Results with all data is {results}")
-
-    results=[]
-    for i in range(DATASET_SIZE):
+    dev_baseline = results[1]
+    results = []
+    results_remove_best=[dev_baseline]
+    results_remove_worst=[dev_baseline]
+    for i in tqdm(range(DATASET_SIZE)):
         train_loo=copy.deepcopy(train)
         train_loo.data.pop(i)
+        train_loo.reset_index()
         set_seed()
-        Classifier = LogReg_Classifier(train_loo)
+        Classifier = RNN_Classifier(train_loo)
         _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
         #If the perfo augments when removing (if diff is positive), then this was a bad data
         results.append(dev_res-dev_baseline)
@@ -53,10 +122,8 @@ def main():
     sorted_results=np.argsort(results)
     # print(sorted_results)
     # print(sorted_results[::-1])
-    results_remove_best=[dev_baseline]
-    results_remove_worst=[dev_baseline]
     print("Evaluation of LOO, removing best data by bs of 10")
-    for i in range(5, 55, 5):
+    for i in range(0, 55, 5):
         train_eval=copy.deepcopy(train)
         eliminated=0
         for ss in sorted_results:
@@ -66,12 +133,13 @@ def main():
             train_eval.data.pop(ss)
             eliminated+=1
         set_seed()
-        Classifier = LogReg_Classifier(train_eval)
+        Classifier = RNN_Classifier(train_eval)
+        train_eval.reset_index()
         _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
-        results_remove_best.append(dev_res)
         print(f"Results of {dev_res}")
+        results_remove_best.append(dev_res)
     print("Evaluation of LOO, removing worst data by bs of 10")
-    for i in range(5, 55, 5):
+    for i in range(0, 55, 5):
         train_eval = copy.deepcopy(train)
         eliminated = 0
         for ss in sorted_results[::-1]:
@@ -81,13 +149,11 @@ def main():
             train_eval.data.pop(ss)
             eliminated += 1
         set_seed()
-        Classifier = LogReg_Classifier(train_eval)
+        Classifier = RNN_Classifier(train_eval)
+        train_eval.reset_index()
         _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
-        results_remove_worst.append(dev_res)
         print(f"Results of {dev_res}")
-
-    print(results_remove_best)
-    print(results_remove_worst)
+        results_remove_worst.append(dev_res)
 
     X=[i for i in range(0,55,5)]
     X.extend([i for i in range(0,55,5)])
@@ -95,123 +161,79 @@ def main():
     strats.extend(['remove good' for i in range(0,55,5)])
     Y=results_remove_worst
     Y.extend(results_remove_best)
-    print(X, Y, strats)
     data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
-    print(data_plot)
     sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
-    plt.title('LogReg-LOO')
-    plt.savefig('LogRegLOO.png')
+    plt.title('RNN-LOO')
+    plt.savefig('RNNLOO.png')
 
-    fds
+    print("Running LOO with BERT")
 
-    # print("Running LOO with RNN classifier")
-    #
-    # from Classifier.RNN import RNN_Classifier
-    # set_seed()
-    # Classifier = RNN_Classifier(train)
-    # results = Classifier.train_test(train, dev, test)
-    # print(f"Results with all data is {results}")
-    # dev_baseline = results[1]
-    # results = []
-    # for i in tqdm(range(DATASET_SIZE)):
-    #     train_loo=copy.deepcopy(train)
-    #     train_loo.data.pop(i)
-    #     train_loo.reset_index()
-    #     set_seed()
-    #     Classifier = RNN_Classifier(train_loo)
-    #     _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
-    #     #If the perfo augments when removing (if diff is positive), then this was a bad data
-    #     results.append(dev_res-dev_baseline)
-    #
-    # sorted_results=np.argsort(results)
-    # # print(sorted_results)
-    # # print(sorted_results[::-1])
-    # print("Evaluation of LOO, removing best data by bs of 10")
-    # for i in range(0, 55, 5):
-    #     train_eval=copy.deepcopy(train)
-    #     eliminated=0
-    #     for ss in sorted_results:
-    #         if eliminated == i:
-    #             print(f"Testing with dataset of size of {len(train_eval)}")
-    #             break
-    #         train_eval.data.pop(ss)
-    #         eliminated+=1
-    #     set_seed()
-    #     Classifier = RNN_Classifier(train_eval)
-    #     train_eval.reset_index()
-    #     _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
-    #     print(f"Results of {dev_res}")
-    # print("Evaluation of LOO, removing worst data by bs of 10")
-    # for i in range(0, 55, 5):
-    #     train_eval = copy.deepcopy(train)
-    #     eliminated = 0
-    #     for ss in sorted_results[::-1]:
-    #         if eliminated == i:
-    #             print(f"Testing with dataset of size of {len(train_eval)}")
-    #             break
-    #         train_eval.data.pop(ss)
-    #         eliminated += 1
-    #     set_seed()
-    #     Classifier = RNN_Classifier(train_eval)
-    #     train_eval.reset_index()
-    #     _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
-    #     print(f"Results of {dev_res}")
+    from Classifier.BERT import Bert_Classifier
+    set_seed()
+    Classifier = Bert_Classifier(train)
+    results = Classifier.train_test(train, dev, test)
+    print(f"Results with all data is {results}")
+    dev_baseline = results[1]
+    results = []
+    results_remove_best=[dev_baseline]
+    results_remove_worst=[dev_baseline]
+    for i in tqdm(range(DATASET_SIZE)):
+        train_loo=copy.deepcopy(train)
+        train_loo.data.pop(i)
+        train_loo.reset_index()
+        set_seed()
+        Classifier = Bert_Classifier(train_loo)
+        _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
+        #If the perfo augments when removing (if diff is positive), then this was a bad data
+        results.append(dev_res-dev_baseline)
 
-
-
-    # print("Running LOO with BERT")
-    #
-    # from Classifier.BERT import Bert_Classifier
-    # set_seed()
-    # Classifier = Bert_Classifier(train)
-    # results = Classifier.train_test(train, dev, test)
-    # print(f"Results with all data is {results}")
-    # dev_baseline = results[1]
-    # results = []
-    # for i in tqdm(range(DATASET_SIZE)):
-    #     train_loo=copy.deepcopy(train)
-    #     train_loo.data.pop(i)
-    #     train_loo.reset_index()
-    #     set_seed()
-    #     Classifier = Bert_Classifier(train_loo)
-    #     _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
-    #     #If the perfo augments when removing (if diff is positive), then this was a bad data
-    #     results.append(dev_res-dev_baseline)
-    #
-    # sorted_results=np.argsort(results)
-    # # print(sorted_results)
-    # # print(sorted_results[::-1])
-    # print("Evaluation of LOO, removing best data by bs of 10")
-    # for i in range(0, 55, 5):
-    #     train_eval=copy.deepcopy(train)
-    #     eliminated=0
-    #     for ss in sorted_results:
-    #         if eliminated == i:
-    #             print(f"Testing with dataset of size of {len(train_eval)}")
-    #             break
-    #         train_eval.data.pop(ss)
-    #         eliminated+=1
-    #     set_seed()
-    #     Classifier = Bert_Classifier(train_eval)
-    #     train_eval.reset_index()
-    #     _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
-    #     print(f"Results of {dev_res}")
-    # print("Evaluation of LOO, removing worst data by bs of 10")
-    # for i in range(0, 55, 5):
-    #     train_eval = copy.deepcopy(train)
-    #     eliminated = 0
-    #     for ss in sorted_results[::-1]:
-    #         if eliminated == i:
-    #             print(f"Testing with dataset of size of {len(train_eval)}")
-    #             break
-    #         train_eval.data.pop(ss)
-    #         eliminated += 1
-    #     set_seed()
-    #     Classifier = Bert_Classifier(train_eval)
-    #     train_eval.reset_index()
-    #     _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
-    #     print(f"Results of {dev_res}")
+    sorted_results=np.argsort(results)
+    # print(sorted_results)
+    # print(sorted_results[::-1])
+    print("Evaluation of LOO, removing best data by bs of 10")
+    for i in range(0, 55, 5):
+        train_eval=copy.deepcopy(train)
+        eliminated=0
+        for ss in sorted_results:
+            if eliminated == i:
+                print(f"Testing with dataset of size of {len(train_eval)}")
+                break
+            train_eval.data.pop(ss)
+            eliminated+=1
+        set_seed()
+        Classifier = Bert_Classifier(train_eval)
+        train_eval.reset_index()
+        _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
+        print(f"Results of {dev_res}")
+        results_remove_best.append(dev_res)
+    print("Evaluation of LOO, removing worst data by bs of 10")
+    for i in range(0, 55, 5):
+        train_eval = copy.deepcopy(train)
+        eliminated = 0
+        for ss in sorted_results[::-1]:
+            if eliminated == i:
+                print(f"Testing with dataset of size of {len(train_eval)}")
+                break
+            train_eval.data.pop(ss)
+            eliminated += 1
+        set_seed()
+        Classifier = Bert_Classifier(train_eval)
+        train_eval.reset_index()
+        _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
+        print(f"Results of {dev_res}")
+        results_remove_worst.append(dev_res)
     # results_train_iter, results_dev_iter, results_test_iter =classifier_algo.train_test(train, dev, test)
+
+    X=[i for i in range(0,55,5)]
+    X.extend([i for i in range(0,55,5)])
+    strats=['remove bad' for i in range(0,55,5)]
+    strats.extend(['remove good' for i in range(0,55,5)])
+    Y=results_remove_worst
+    Y.extend(results_remove_best)
+    data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
+    sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
+    plt.title('BERT-LOO')
+    plt.savefig('BERTLOO.png')
 
 #66.74
 
