@@ -32,12 +32,14 @@ def main():
     set_seed()
     DATASET_SIZE=100
     train, dev, test=initialize_dataset(DATASET_SIZE)
+
     print(f"Initialized SST-2 with length of {len(train)}")
     # classifiers=[Bert_Classifier]
     classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
     # names=['BERT']
     names=['LogReg', 'RNN', 'BERT']
     for name, classifier_algo in zip(names, classifiers):
+        plt.figure()
         print(f"Running LOO with {name} classifier")
 
         set_seed()
