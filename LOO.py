@@ -50,6 +50,7 @@ def main():
             train_loo=copy.deepcopy(train)
             train_loo.data.pop(i)
             set_seed()
+            train_loo.reset_index()
             Classifier = classifier_algo(train_loo)
             _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
             #If the perfo augments when removing (if diff is positive), then this was a bad data
