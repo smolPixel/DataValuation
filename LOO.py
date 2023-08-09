@@ -33,8 +33,10 @@ def main():
     DATASET_SIZE=10
     train, dev, test=initialize_dataset(DATASET_SIZE)
     print(f"Initialized SST-2 with length of {len(train)}")
-    classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
-    names=['LogReg', 'RNN', 'BERT']
+    classifiers=[Bert_Classifier]
+    # classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
+    names=['BERT']
+    # names=['LogReg', 'RNN', 'BERT']
     for name, classifier_algo in zip(names, classifiers):
         print(f"Running LOO with {name} classifier")
 
@@ -101,6 +103,8 @@ def main():
         strats.extend(['remove good' for i in range(0,5,1)])
         Y=results_remove_worst
         Y.extend(results_remove_best)
+        print(X)
+        print(Y)
         data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
         plt.title(f'{name}-LOO')
