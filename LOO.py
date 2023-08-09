@@ -56,7 +56,7 @@ def main():
     results_remove_best=[dev_baseline]
     results_remove_worst=[dev_baseline]
     print("Evaluation of LOO, removing best data by bs of 10")
-    for i in range(5, 50, 5):
+    for i in range(5, 55, 5):
         train_eval=copy.deepcopy(train)
         eliminated=0
         for ss in sorted_results:
@@ -71,7 +71,7 @@ def main():
         results_remove_best.append(dev_res)
         print(f"Results of {dev_res}")
     print("Evaluation of LOO, removing worst data by bs of 10")
-    for i in range(5, 50, 5):
+    for i in range(5, 55, 5):
         train_eval = copy.deepcopy(train)
         eliminated = 0
         for ss in sorted_results[::-1]:
@@ -89,9 +89,16 @@ def main():
     print(results_remove_best)
     print(results_remove_worst)
 
-    X=[i for i in range(0,50,5)]
-    data_plot=pd.DataFrame({'Number of data points removed': X, 'remove bad': results_remove_worst, 'remove good': results_remove_best})
-    sns.lineplot(x='Number of data points removed', data=data_plot)
+    X=[i for i in range(0,55,5)]
+    X.extend([i for i in range(0,55,5)])
+    strats=['remove bad' for i in range(0,55,5)]
+    strats.extend(['remove good' for i in range(0,55,5)])
+    Y=results_remove_worst
+    Y.extend(results_remove_best)
+    print(X, Y, strats)
+    data_plot=pd.DataFrame({'Number of data points removed': X, 'accuracy': Y, 'strategy':strats})
+    print(data_plot)
+    sns.lineplot(x='Number of data points removed', y='accuracy', hue='strategy', data=data_plot)
     plt.savefig('test.png')
 
     fds
@@ -119,7 +126,7 @@ def main():
     # # print(sorted_results)
     # # print(sorted_results[::-1])
     # print("Evaluation of LOO, removing best data by bs of 10")
-    # for i in range(0, 50, 5):
+    # for i in range(0, 55, 5):
     #     train_eval=copy.deepcopy(train)
     #     eliminated=0
     #     for ss in sorted_results:
@@ -134,7 +141,7 @@ def main():
     #     _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
     #     print(f"Results of {dev_res}")
     # print("Evaluation of LOO, removing worst data by bs of 10")
-    # for i in range(0, 50, 5):
+    # for i in range(0, 55, 5):
     #     train_eval = copy.deepcopy(train)
     #     eliminated = 0
     #     for ss in sorted_results[::-1]:
@@ -174,7 +181,7 @@ def main():
     # # print(sorted_results)
     # # print(sorted_results[::-1])
     # print("Evaluation of LOO, removing best data by bs of 10")
-    # for i in range(0, 50, 5):
+    # for i in range(0, 55, 5):
     #     train_eval=copy.deepcopy(train)
     #     eliminated=0
     #     for ss in sorted_results:
@@ -189,7 +196,7 @@ def main():
     #     _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
     #     print(f"Results of {dev_res}")
     # print("Evaluation of LOO, removing worst data by bs of 10")
-    # for i in range(0, 50, 5):
+    # for i in range(0, 55, 5):
     #     train_eval = copy.deepcopy(train)
     #     eliminated = 0
     #     for ss in sorted_results[::-1]:
