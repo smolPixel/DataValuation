@@ -30,13 +30,13 @@ def set_seed(seed=42):
 
 def main():
     set_seed()
-    DATASET_SIZE=10
+    DATASET_SIZE=100
     train, dev, test=initialize_dataset(DATASET_SIZE)
     print(f"Initialized SST-2 with length of {len(train)}")
-    classifiers=[Bert_Classifier]
-    # classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
-    names=['BERT']
-    # names=['LogReg', 'RNN', 'BERT']
+    # classifiers=[Bert_Classifier]
+    classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
+    # names=['BERT']
+    names=['LogReg', 'RNN', 'BERT']
     for name, classifier_algo in zip(names, classifiers):
         print(f"Running LOO with {name} classifier")
 
@@ -64,7 +64,7 @@ def main():
         results_remove_best=[dev_baseline]
         results_remove_worst=[dev_baseline]
         print("Evaluation of LOO, removing best data by bs of 10")
-        for i in range(1, 5, 1):
+        for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
             eliminated=0
             for ss in sorted_results:
@@ -80,7 +80,7 @@ def main():
             results_remove_best.append(dev_res)
             print(f"Results of {dev_res}")
         print("Evaluation of LOO, removing worst data by bs of 10")
-        for i in range(1, 5, 1):
+        for i in range(5, 55, 5):
             train_eval = copy.deepcopy(train)
             eliminated = 0
             for ss in sorted_results[::-1]:
@@ -97,10 +97,10 @@ def main():
             print(f"Results of {dev_res}")
 
 
-        X=[i for i in range(0,5,1)]
-        X.extend([i for i in range(0,5,1)])
-        strats=['remove bad' for i in range(0,5,1)]
-        strats.extend(['remove good' for i in range(0,5,1)])
+        X=[i for i in range(0,55,5)]
+        X.extend([i for i in range(0,55,5)])
+        strats=['remove bad' for i in range(0,55,5)]
+        strats.extend(['remove good' for i in range(0,55,5)])
         Y=results_remove_worst
         Y.extend(results_remove_best)
         print(X)
