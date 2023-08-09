@@ -26,7 +26,7 @@ def set_seed(seed=42):
 
 def main():
     set_seed()
-    DATASET_SIZE=100
+    DATASET_SIZE=10
     train, dev, test=initialize_dataset(DATASET_SIZE)
     print(f"Initialized SST-2 with length of {len(train)}")
 
@@ -123,7 +123,8 @@ def main():
     # print(sorted_results)
     # print(sorted_results[::-1])
     print("Evaluation of LOO, removing best data by bs of 10")
-    for i in range(0, 55, 5):
+    # for i in range(0, 55, 5):
+    for i in range(0, 5, 1):
         train_eval=copy.deepcopy(train)
         eliminated=0
         for ss in sorted_results:
@@ -139,7 +140,8 @@ def main():
         print(f"Results of {dev_res}")
         results_remove_best.append(dev_res)
     print("Evaluation of LOO, removing worst data by bs of 10")
-    for i in range(0, 55, 5):
+    # for i in range(0, 55, 5):
+    for i in range(0, 5, 1):
         train_eval = copy.deepcopy(train)
         eliminated = 0
         for ss in sorted_results[::-1]:
@@ -155,10 +157,14 @@ def main():
         print(f"Results of {dev_res}")
         results_remove_worst.append(dev_res)
 
-    X=[i for i in range(0,55,5)]
-    X.extend([i for i in range(0,55,5)])
-    strats=['remove bad' for i in range(0,55,5)]
-    strats.extend(['remove good' for i in range(0,55,5)])
+    X=[i for i in range(0,5,1)]
+    # X=[i for i in range(0,55,5)]
+    # X.extend([i for i in range(0,55,5)])
+    X.extend([i for i in range(0,5, 1)])
+    strats=['remove bad' for i in range(0,5,1)]
+    # strats=['remove bad' for i in range(0,55,5)]
+    strats.extend(['remove good' for i in range(0,5,1)])
+    # strats.extend(['remove good' for i in range(0,55,5)])
     Y=results_remove_worst
     Y.extend(results_remove_best)
     data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
@@ -166,6 +172,7 @@ def main():
     plt.title('RNN-LOO')
     plt.savefig('RNNLOO.png')
 
+    fds
     print("Running LOO with BERT")
 
     from Classifier.BERT import Bert_Classifier
