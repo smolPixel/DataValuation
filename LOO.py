@@ -96,10 +96,11 @@ def main():
     Y=results_remove_worst
     Y.extend(results_remove_best)
     print(X, Y, strats)
-    data_plot=pd.DataFrame({'Number of data points removed': X, 'accuracy': Y, 'strategy':strats})
+    data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
     print(data_plot)
-    sns.lineplot(x='Number of data points removed', y='accuracy', hue='strategy', data=data_plot)
-    plt.savefig('test.png')
+    sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
+    plt.title('LogReg-LOO')
+    plt.savefig('LogRegLOO.png')
 
     fds
 
