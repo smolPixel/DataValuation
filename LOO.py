@@ -105,7 +105,6 @@ def main():
     fds
     print("Running LOO with RNN classifier")
 
-    from Classifier.RNN import RNN_Classifier
     set_seed()
     Classifier = RNN_Classifier(train)
     results = Classifier.train_test(train, dev, test)
@@ -180,7 +179,6 @@ def main():
     fds
     print("Running LOO with BERT")
 
-    from Classifier.BERT import Bert_Classifier
     set_seed()
     Classifier = Bert_Classifier(train)
     results = Classifier.train_test(train, dev, test)
