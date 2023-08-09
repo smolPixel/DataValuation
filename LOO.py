@@ -15,7 +15,9 @@ from datetime import timedelta
 import copy
 import numpy as np
 from tqdm import tqdm
-
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
 def set_seed(seed=42):
     random.seed(seed)
     np.random.seed(seed)
@@ -51,8 +53,8 @@ def main():
     sorted_results=np.argsort(results)
     # print(sorted_results)
     # print(sorted_results[::-1])
-    results_remove_best=[]
-    results_remove_worst=[]
+    results_remove_best=[dev_baseline]
+    results_remove_worst=[dev_baseline]
     print("Evaluation of LOO, removing best data by bs of 10")
     for i in range(0, 50, 5):
         train_eval=copy.deepcopy(train)
@@ -86,6 +88,12 @@ def main():
 
     print(results_remove_best)
     print(results_remove_worst)
+
+    X=[i for i in range(0,50,5)]
+    data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': results_remove_worst})
+    sns.lineplot(x='Number of data points removed', y='Accuracy', data=data_plot)
+    plt.savefig('test.png')
+
     fds
 
     # print("Running LOO with RNN classifier")
