@@ -35,7 +35,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     #dev_baseline= V(D) in paper
 
     #For now let's put PT at 2%, aka, when we get at 2% of the value of dev_baseline we are satisfied
-    PT=2
+    PT=0.02
 
     train_iter=copy.deepcopy(train)
     permuatation=train_iter.permute_data()
