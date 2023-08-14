@@ -69,6 +69,7 @@ class SST2_dataset(Dataset):
 		for i, (j, dat) in enumerate(self.data.items()):
 			new_dat[perm[i]]=dat
 		self.data=new_dat
+		return perm
 	@property
 	def vocab_size(self):
 		return len(self.vocab_object)

@@ -8,6 +8,7 @@ import argparse
 import random
 import numpy as np
 import torch
+import math
 import matplotlib.pyplot as plt
 import yaml
 import time
@@ -29,13 +30,25 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 
-def TMC_Shapley(train, dev, test, classifier_algo):
+def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     #Let's program one iteration. First we need to randomly permute data point
+    #dev_baseline= V(D) in paper
+
+    #For now let's put PT at 2%, aka, when we get at 2% of the value of dev_baseline we are satisfied
+    PT=2
+
     train_iter=copy.deepcopy(train)
-    train_iter.permute_data()
+    permuatation=train_iter.permute_data()
     #baseline is 0.5 for binary dataset
     vals=[0.5 for i in range(len(train_iter))]
     print(vals)
+    phis=[0 for i in range(len(train_iter))]
+    for j in range(len(train_iter)):
+        if j>0 and math.abs(dev_baseline-vals[j-1])<PT:
+            vals[j]=vals[j-1]
+        else:
+            print(train_iter.data)
+            print(permuatation)
     fds
 
 def main():
@@ -61,7 +74,7 @@ def main():
 
         results=[]
 
-        shapleys=TMC_Shapley(train, dev, test, classifier_algo)
+        shapleys=TMC_Shapley(train, dev, test, classifier_algo, dev_baseline)
 
         for i in range(DATASET_SIZE):
             train_loo=copy.deepcopy(train)
