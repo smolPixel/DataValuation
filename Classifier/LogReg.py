@@ -11,9 +11,7 @@ class LogReg_Classifier():
         self.train=train
         self.init_model()
         num_classes=len(set(list(train.return_pandas()['label'])))
-        print(num_classes)
         self.num_classes=num_classes
-        fds
 
     def init_model(self):
         sents=list(self.train.return_pandas()['sentence'])
@@ -31,8 +29,8 @@ class LogReg_Classifier():
 
     def train_test(self, train, dev, test):
         train=train.return_pandas()
-        print(train)
-        fds
+        if len(set(list(train.return_pandas()['label'])))<2:
+            return 1/self.num_classes, 1/self.num_classes, 1/self.num_classes
         X=self.vectorizer.transform(list(train['sentence']))
         Y=list(train['label'])
         self.clf.fit(X, Y)
