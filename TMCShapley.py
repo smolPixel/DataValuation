@@ -41,13 +41,9 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     permuatation=train_iter.permute_data()
     #baseline is 0.5 for binary dataset
     vals=[0.5 for i in range(len(train_iter))]
-    print(vals)
     phis=[0 for i in range(len(train_iter))]
     for j in range(1, len(train_iter)):
         if j>0 and abs(dev_baseline-vals[j-1])<PT:
-            print(PT)
-            print(dev_baseline)
-            print(vals[j-1])
             vals[j]=vals[j-1]
         else:
             print('hellp')
@@ -55,6 +51,10 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
             train_trunc=copy.deepcopy(train_iter)
             train_trunc.truncate(permuatation[:j])
             print(len(train_trunc))
+            set_seed()
+            Classifier = classifier_algo(train)
+            vjt = Classifier.train_test(train_trunc, dev, test)
+            print(vjt)
             fdds
     fds
 
