@@ -11,6 +11,9 @@ class LogReg_Classifier():
         self.train=train
         self.init_model()
         num_classes=len(set(list(train.return_pandas()['label'])))
+        print(num_classes)
+        self.num_classes=num_classes
+        fds
 
     def init_model(self):
         sents=list(self.train.return_pandas()['sentence'])
