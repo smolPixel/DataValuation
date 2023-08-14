@@ -65,11 +65,10 @@ class SST2_dataset(Dataset):
 		#Randomly permute dataset. Useful for Shapley permutation
 		new_dat={}
 		perm=[i for i in range(len(self.data))]
-		print(perm)
 		random.shuffle(perm)
-		print(perm)
 		for i, (j, dat) in enumerate(self.data.items()):
-			fds
+			new_dat[perm[i]]=dat
+		self.data=new_dat
 	@property
 	def vocab_size(self):
 		return len(self.vocab_object)

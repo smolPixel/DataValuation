@@ -32,7 +32,9 @@ def set_seed(seed=42):
 def TMC_Shapley(train, dev, test, algo):
     #Let's program one iteration. First we need to randomly permute data point
     train_iter=copy.deepcopy(train)
+    print(train_iter.data)
     train_iter.permute_data()
+    print(train_iter.data)
     fds
 
 def main():
