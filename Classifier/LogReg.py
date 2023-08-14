@@ -24,8 +24,11 @@ class LogReg_Classifier():
         preds = self.clf.predict(X)
         acc_dataset = accuracy_score(Y, preds)
         return acc_dataset
+
     def train_test(self, train, dev, test):
         train=train.return_pandas()
+        print(train)
+        fds
         X=self.vectorizer.transform(list(train['sentence']))
         Y=list(train['label'])
         self.clf.fit(X, Y)
