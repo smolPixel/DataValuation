@@ -53,7 +53,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
             set_seed()
             Classifier = classifier_algo(train)
             _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
-            phis[new_point]=((t-1)/t)*phis[new_point]+(vjt-dev_baseline)/t
+            phis[new_point]=((t-1)/t)*phis[new_point]+(vjt-vals[j-1])/t
     print(phis)
     fds
 
