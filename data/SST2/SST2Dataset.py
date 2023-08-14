@@ -1,6 +1,8 @@
 import os
 import io
 import json
+import random
+
 import torch
 import numpy as np
 from collections import defaultdict
@@ -59,6 +61,13 @@ class SST2_dataset(Dataset):
 			new_dat[i] = dat
 		self.data = new_dat
 
+	def permute_data(self):
+		#Randomly permute dataset. Useful for Shapley permutation
+		new_dat={}
+		perm=random.shuffle([i for i in range(len(self.data))])
+		print(perm)
+		for i, (j, dat) in enumerate(self.data.items()):
+			fds
 	@property
 	def vocab_size(self):
 		return len(self.vocab_object)
