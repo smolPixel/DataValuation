@@ -29,7 +29,7 @@ class LogReg_Classifier():
 
     def train_test(self, train, dev, test):
         train=train.return_pandas()
-        if len(set(list(train.return_pandas()['label'])))<2:
+        if len(set(list(train['label'])))<2:
             return 1/self.num_classes, 1/self.num_classes, 1/self.num_classes
         X=self.vectorizer.transform(list(train['sentence']))
         Y=list(train['label'])
