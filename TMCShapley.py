@@ -47,6 +47,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
         if j>0 and abs(dev_baseline-vals[j-1])<PT:
             vals[j]=vals[j-1]
         else:
+            print('hellp')
             print(train_iter.data)
             train_trunc=copy.deepcopy(train_iter)
             train_trunc.truncat(permuatation[:j])
