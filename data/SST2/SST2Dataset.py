@@ -61,6 +61,12 @@ class SST2_dataset(Dataset):
 			new_dat[i] = dat
 		self.data = new_dat
 
+	def truncate(self, indexes):
+		#truncate the dataset by only keeping the data with indexes given
+		new_dat = {}
+		for ind in indexes:
+			new_dat[len(new_dat)] = self.data[ind]
+		self.data = new_dat
 	def permute_data(self):
 		#Randomly permute dataset. Useful for Shapley permutation
 		new_dat={}
