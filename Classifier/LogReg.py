@@ -10,6 +10,7 @@ class LogReg_Classifier():
     def __init__(self, train):
         self.train=train
         self.init_model()
+        num_classes=len(set(list(train.return_pandas()['label'])))
 
     def init_model(self):
         sents=list(self.train.return_pandas()['sentence'])
