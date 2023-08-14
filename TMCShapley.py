@@ -33,7 +33,7 @@ def TMC_Shapley(train, dev, test, algo):
     #Let's program one iteration. First we need to randomly permute data point
     train_iter=copy.deepcopy(train)
     train_iter.permute_data()
-    baseline=algo.test(test)
+    baseline=algo.evaluate(dev)
     print(baseline)
     fds
 

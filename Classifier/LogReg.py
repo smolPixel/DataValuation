@@ -17,6 +17,13 @@ class LogReg_Classifier():
         self.vectorizer.fit(sents)
         self.clf=LogisticRegression()
 
+    def evaluate(self, dataset):
+        dataset = dataset.return_pandas()
+        X = self.vectorizer.transform(list(dataset['sentence']))
+        Y = list(dataset['label'])
+        preds = self.clf.predict(X)
+        acc_dataset = accuracy_score(Y, preds)
+        return acc_dataset
     def train_test(self, train, dev, test):
         train=train.return_pandas()
         X=self.vectorizer.transform(list(train['sentence']))
@@ -25,15 +32,7 @@ class LogReg_Classifier():
         preds=self.clf.predict(X)
         acc_train=accuracy_score(Y, preds)
         """dev"""
-        dev=dev.return_pandas()
-        X = self.vectorizer.transform(list(dev['sentence']))
-        Y=list(dev['label'])
-        preds = self.clf.predict(X)
-        acc_dev = accuracy_score(Y, preds)
+        acc_dev=self.evaluate(dev)
         """test"""
-        test=test.return_pandas()
-        X = self.vectorizer.transform(list(test['sentence']))
-        Y=list(test['label'])
-        preds = self.clf.predict(X)
-        acc_test = accuracy_score(Y, preds)
+        acc_test=self.evaluate(test)
         return acc_train, acc_dev, acc_test
