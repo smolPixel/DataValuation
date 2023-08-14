@@ -33,10 +33,9 @@ def TMC_Shapley(train, dev, test, classifier_algo):
     #Let's program one iteration. First we need to randomly permute data point
     train_iter=copy.deepcopy(train)
     train_iter.permute_data()
-    set_seed()
-    Classifier = classifier_algo(train)
-    baseline=Classifier.evaluate(dev)
-    print(baseline)
+    #baseline is 0.5 for binary dataset
+    vals=[0.5 for i in range(len(train_iter))]
+    print(vals)
     fds
 
 def main():
