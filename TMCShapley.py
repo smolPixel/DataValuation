@@ -44,7 +44,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     print(vals)
     phis=[0 for i in range(len(train_iter))]
     for j in range(1, len(train_iter)):
-        if j>0 and math.abs(dev_baseline-vals[j-1])<PT:
+        if j>0 and abs(dev_baseline-vals[j-1])<PT:
             vals[j]=vals[j-1]
         else:
             print(train_iter.data)
