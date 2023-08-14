@@ -46,16 +46,16 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
         if j>0 and abs(dev_baseline-vals[j-1])<PT:
             vals[j]=vals[j-1]
         else:
-            print('hellp')
-            print(train_iter.data)
             train_trunc=copy.deepcopy(train_iter)
             train_trunc.truncate(permuatation[:j])
-            print(len(train_trunc))
+            new_point=permuatation[j]
+            print(permuatation[:j])
+            print(permuatation[j])
+            fds
             set_seed()
             Classifier = classifier_algo(train)
-            vjt = Classifier.train_test(train_trunc, dev, test)
-            print(vjt)
-            fdds
+            _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
+            phis[j]
     fds
 
 def main():
