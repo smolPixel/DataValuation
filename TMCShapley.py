@@ -53,7 +53,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
             print('hellp')
             print(train_iter.data)
             train_trunc=copy.deepcopy(train_iter)
-            train_trunc.truncat(permuatation[:j])
+            train_trunc.truncate(permuatation[:j])
             print(len(train_trunc))
     fds
 
