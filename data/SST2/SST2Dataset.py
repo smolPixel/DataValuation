@@ -64,7 +64,9 @@ class SST2_dataset(Dataset):
 	def permute_data(self):
 		#Randomly permute dataset. Useful for Shapley permutation
 		new_dat={}
-		perm=random.shuffle([i for i in range(len(self.data))])
+		perm=[i for i in range(len(self.data))]
+		print(perm)
+		random.shuffle(perm)
 		print(perm)
 		for i, (j, dat) in enumerate(self.data.items()):
 			fds
