@@ -50,7 +50,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
             train_trunc.truncate(permuatation[:j])
             new_point=permuatation[j]
             print(permuatation[:j])
-            print(permuatation[j])
+            print(permuatation[j-1])
             fds
             set_seed()
             Classifier = classifier_algo(train)
