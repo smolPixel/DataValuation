@@ -43,17 +43,18 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     vals=[0.5 for i in range(len(train_iter))]
     phis=[0 for i in range(len(train_iter))]
     t=1
-    for j in range(1, len(train_iter)):
-        if j>0 and abs(dev_baseline-vals[j-1])<PT:
-            vals[j]=vals[j-1]
-        else:
-            train_trunc=copy.deepcopy(train_iter)
-            train_trunc.truncate(permuatation[:j])
-            new_point=permuatation[j-1]
-            set_seed()
-            Classifier = classifier_algo(train)
-            _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
-            phis[new_point]=((t-1)/t)*phis[new_point]+(vjt-vals[j-1])/t
+    for t in range(1, 10, 1):
+        for j in range(1, len(train_iter)):
+            if j>0 and abs(dev_baseline-vals[j-1])<PT:
+                vals[j]=vals[j-1]
+            else:
+                train_trunc=copy.deepcopy(train_iter)
+                train_trunc.truncate(permuatation[:j])
+                new_point=permuatation[j-1]
+                set_seed()
+                Classifier = classifier_algo(train)
+                _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
+                phis[new_point]=((t-1)/t)*phis[new_point]+(vjt-vals[j-1])/t
     print(phis)
     fds
 
