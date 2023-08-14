@@ -29,11 +29,13 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 
-def TMC_Shapley(train, dev, test, algo):
+def TMC_Shapley(train, dev, test, classifier_algo):
     #Let's program one iteration. First we need to randomly permute data point
     train_iter=copy.deepcopy(train)
     train_iter.permute_data()
-    baseline=algo.evaluate(dev)
+    set_seed()
+    Classifier = classifier_algo(train)
+    baseline=Classifier.evaluate(dev)
     print(baseline)
     fds
 
