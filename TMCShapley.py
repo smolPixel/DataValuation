@@ -43,7 +43,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     vals=[0.5 for i in range(len(train_iter))]
     phis=[0 for i in range(len(train_iter))]
     t=1
-    for t in range(1, 100, 1):
+    for t in range(1, 10, 1):
         for j in range(1, len(train_iter)):
             if j>0 and abs(dev_baseline-vals[j-1])<PT:
                 vals[j]=vals[j-1]
@@ -55,8 +55,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
                 Classifier = classifier_algo(train)
                 _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
                 phis[new_point]=((t-1)/t)*phis[new_point]+(vjt-vals[j-1])/t
-    print(phis)
-    fds
+    return phis
 
 def main():
     set_seed()
@@ -83,17 +82,7 @@ def main():
 
         shapleys=TMC_Shapley(train, dev, test, classifier_algo, dev_baseline)
 
-        for i in range(DATASET_SIZE):
-            train_loo=copy.deepcopy(train)
-            train_loo.data.pop(i)
-            set_seed()
-            train_loo.reset_index()
-            Classifier = classifier_algo(train_loo)
-            _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
-            #If the perfo augments when removing (if diff is positive), then this was a bad data
-            results.append(dev_res-dev_baseline)
-
-        sorted_results=np.argsort(results)
+        sorted_results=np.argsort(shapleys)
         # print(sorted_results)
         # print(sorted_results[::-1])
         results_remove_best=[dev_baseline]
