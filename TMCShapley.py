@@ -53,7 +53,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
                 train_trunc.truncate(permuatation[:j])
                 new_point=permuatation[j-1]
                 set_seed()
-                Classifier = classifier_algo(train)
+                Classifier = classifier_algo(train_trunc)
                 _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
                 #Inverse to the paper, to keep in track with loo: baseline is with the point included
                 phis[new_point]=((t-1)/t)*phis[new_point]+(vals[j-1]-vjt)/t
