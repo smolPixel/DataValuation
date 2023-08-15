@@ -48,6 +48,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
         for j in tqdm(range(1, len(train_iter))):
             if j>0 and abs(dev_baseline-vals[j-1])<PT:
                 vals[j]=vals[j-1]
+                vjt=vals[j]
             else:
                 train_trunc=copy.deepcopy(train_iter)
                 train_trunc.truncate(permuatation[:j])
@@ -55,8 +56,9 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
                 set_seed()
                 Classifier = classifier_algo(train_trunc)
                 _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
+                vals[j]=vjt
                 #Inverse to the paper, to keep in track with loo: baseline is with the point included
-                phis[new_point]=((t-1)/t)*phis[new_point]+(vals[j-1]-vjt)/t
+            phis[new_point]=((t-1)/t)*phis[new_point]+(vals[j-1]-vjt)/t
         phis_prec=phis
 
     return phis
