@@ -42,6 +42,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     #baseline is 0.5 for binary dataset
     vals=[0.5 for i in range(len(train_iter))]
     phis=[0 for i in range(len(train_iter))]
+    phis_prec=phis
     t=1
     for t in range(1, 10, 1):
         for j in range(1, len(train_iter)):
@@ -56,6 +57,8 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
                 _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
                 #Inverse to the paper, to keep in track with loo: baseline is with the point included
                 phis[new_point]=((t-1)/t)*phis[new_point]+(vals[j-1]-vjt)/t
+        phis_prec=phis
+
     return phis
 
 def main():

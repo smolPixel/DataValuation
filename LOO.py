@@ -46,6 +46,7 @@ def main():
         Classifier = classifier_algo(train)
         results=Classifier.train_test(train, dev, test)
         dev_baseline=results[1]
+        test_baseline=results[2]
 
         print(f"Results with all data is {results}")
 
@@ -63,8 +64,8 @@ def main():
         sorted_results=np.argsort(results)
         # print(sorted_results)
         # print(sorted_results[::-1])
-        results_remove_best=[dev_baseline]
-        results_remove_worst=[dev_baseline]
+        results_remove_best=[test_baseline]
+        results_remove_worst=[test_baseline]
         print("Evaluation of LOO, removing best data by bs of 10")
         for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
@@ -78,9 +79,9 @@ def main():
             set_seed()
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
-            _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
-            results_remove_best.append(dev_res)
-            print(f"Results of {dev_res}")
+            _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
+            results_remove_best.append(test_res)
+            print(f"Results of {test_res}")
         print("Evaluation of LOO, removing worst data by bs of 10")
         for i in range(5, 55, 5):
             train_eval = copy.deepcopy(train)
@@ -95,8 +96,8 @@ def main():
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
             _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
-            results_remove_worst.append(dev_res)
-            print(f"Results of {dev_res}")
+            results_remove_worst.append(test_res)
+            print(f"Results of {test_res}")
 
 
         X=[i for i in range(0,55,5)]
