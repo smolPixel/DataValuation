@@ -1,4 +1,4 @@
-"""Calculating values with TMC Shapley, from https://arxiv.org/pdf/1904.02868.pdf"""
+"""Calculating values with Gradient Shapley, from https://arxiv.org/pdf/1904.02868.pdf"""
 
 
 #Main file
@@ -23,6 +23,7 @@ import pandas as pd
 from Classifier.LogReg import LogReg_Classifier
 from Classifier.RNN import RNN_Classifier
 from Classifier.BERT import Bert_Classifier
+
 def set_seed(seed=42):
     random.seed(seed)
     np.random.seed(seed)
@@ -30,12 +31,13 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 
-def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
+def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
     #Let's program one iteration. First we need to randomly permute data point
     #dev_baseline= V(D) in paper
 
     #For now let's put PT at 2%, aka, when we get at 2% of the value of dev_baseline we are satisfied
     PT=0.02
+    #TODO FINE TUNING WITH ONE EPOCH
 
     train_iter=copy.deepcopy(train)
     permuatation=train_iter.permute_data()
@@ -71,9 +73,9 @@ def main():
 
     print(f"Initialized SST-2 with length of {len(train)}")
     # classifiers=[Bert_Classifier]
-    classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
+    classifiers=[RNN_Classifier, Bert_Classifier]
     # names=['BERT']
-    names=['LogReg', 'RNN', 'BERT']
+    names=['RNN', 'BERT']
     for name, classifier_algo in zip(names, classifiers):
         plt.figure()
         print(f"Running LOO with {name} classifier")
@@ -88,8 +90,8 @@ def main():
 
         results=[]
 
-        shapleys=TMC_Shapley(train, dev, test, classifier_algo, dev_baseline)
-
+        shapleys=Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline)
+        fds
         sorted_results=np.argsort(shapleys)
         # print(sorted_results)
         # print(sorted_results[::-1])
@@ -145,94 +147,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-# Original code for reference:
-
-    # def _tmc_shap(self, iterations, tolerance=None, sources=None):
-    #     """Runs TMC-Shapley algorithm.
-    #
-    #     Args:
-    #         iterations: Number of iterations to run.
-    #         tolerance: Truncation tolerance ratio.
-    #         sources: If values are for sources of data points rather than
-    #                individual points. In the format of an assignment array
-    #                or dict.
-    #     """
-    #     if sources is None:
-    #         sources = {i: np.array([i]) for i in range(len(self.X))}
-    #     elif not isinstance(sources, dict):
-    #         sources = {i: np.where(sources == i)[0] for i in set(sources)}
-    #     model = self.model
-    #     try:
-    #         self.mean_score
-    #     except:
-    #         self._tol_mean_score()
-    #     if tolerance is None:
-    #         tolerance = self.tolerance
-    #     marginals, idxs = [], []
-    #     for iteration in range(iterations):
-    #         if 10 * (iteration + 1) / iterations % 1 == 0:
-    #             print('{} out of {} TMC_Shapley iterations.'.format(
-    #                 iteration + 1, iterations))
-    #         marginals, idxs = self.one_iteration(
-    #             tolerance=tolerance,
-    #             sources=sources
-    #         )
-    #         self.mem_tmc = np.concatenate([
-    #             self.mem_tmc,
-    #             np.reshape(marginals, (1, -1))
-    #         ])
-    #         self.idxs_tmc = np.concatenate([
-    #             self.idxs_tmc,
-    #             np.reshape(idxs, (1, -1))
-    #         ])
-
-    # def one_iteration(self, tolerance, sources=None):
-    #     """Runs one iteration of TMC-Shapley algorithm."""
-    #     if sources is None:
-    #         sources = {i: np.array([i]) for i in range(len(self.X))}
-    #     elif not isinstance(sources, dict):
-    #         sources = {i: np.where(sources == i)[0] for i in set(sources)}
-    #     idxs = np.random.permutation(len(sources))
-    #     marginal_contribs = np.zeros(len(self.X))
-    #     X_batch = np.zeros((0,) + tuple(self.X.shape[1:]))
-    #     y_batch = np.zeros(0, int)
-    #     sample_weight_batch = np.zeros(0)
-    #     truncation_counter = 0
-    #     new_score = self.random_score
-    #     for n, idx in enumerate(idxs):
-    #         old_score = new_score
-    #         X_batch = np.concatenate([X_batch, self.X[sources[idx]]])
-    #         y_batch = np.concatenate([y_batch, self.y[sources[idx]]])
-    #         if self.sample_weight is None:
-    #             sample_weight_batch = None
-    #         else:
-    #             sample_weight_batch = np.concatenate([
-    #                 sample_weight_batch,
-    #                 self.sample_weight[sources[idx]]
-    #             ])
-    #         with warnings.catch_warnings():
-    #             warnings.simplefilter("ignore")
-    #             if (self.is_regression
-    #                 or len(set(y_batch)) == len(set(self.y_test))): ##FIXIT
-    #                 self.restart_model()
-    #                 if sample_weight_batch is None:
-    #                     self.model.fit(X_batch, y_batch)
-    #                 else:
-    #                     self.model.fit(
-    #                         X_batch,
-    #                         y_batch,
-    #                         sample_weight = sample_weight_batch
-    #                     )
-    #                 new_score = self.value(self.model, metric=self.metric)
-    #         marginal_contribs[sources[idx]] = (new_score - old_score)
-    #         marginal_contribs[sources[idx]] /= len(sources[idx])
-    #         distance_to_full_score = np.abs(new_score - self.mean_score)
-    #         if distance_to_full_score <= tolerance * self.mean_score:
-    #             truncation_counter += 1
-    #             if truncation_counter > 5:
-    #                 break
-    #         else:
-    #             truncation_counter = 0
-    #     return marginal_contribs, idxs
