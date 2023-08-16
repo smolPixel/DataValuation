@@ -37,14 +37,16 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     #For now let's put PT at 2%, aka, when we get at 2% of the value of dev_baseline we are satisfied
     PT=0.02
 
-    train_iter=copy.deepcopy(train)
-    permuatation=train_iter.permute_data()
+    # train_iter=copy.deepcopy(train)
+    # permuatation=train_iter.permute_data()
     #baseline is 0.5 for binary dataset
-    vals=[0.5 for i in range(len(train_iter))]
-    phis=[0 for i in range(len(train_iter))]
+    vals=[0.5 for i in range(len(train))]
+    phis=[0 for i in range(len(train))]
     phis_prec=phis
     t=1
     for t in range(1, 10, 1):
+        train_iter = copy.deepcopy(train)
+        permuatation = train_iter.permute_data()
         for j in tqdm(range(1, len(train_iter))):
             if j>0 and abs(dev_baseline-vals[j-1])<PT:
                 vals[j]=vals[j-1]
@@ -171,6 +173,7 @@ if __name__ == '__main__':
     #     if tolerance is None:
     #         tolerance = self.tolerance
     #     marginals, idxs = [], []
+    """Main loop of iterations"""
     #     for iteration in range(iterations):
     #         if 10 * (iteration + 1) / iterations % 1 == 0:
     #             print('{} out of {} TMC_Shapley iterations.'.format(
@@ -179,6 +182,7 @@ if __name__ == '__main__':
     #             tolerance=tolerance,
     #             sources=sources
     #         )
+    """It seems like instead of doing a running average here he keeps all iters and do the average at the end"""
     #         self.mem_tmc = np.concatenate([
     #             self.mem_tmc,
     #             np.reshape(marginals, (1, -1))
