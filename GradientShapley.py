@@ -39,23 +39,24 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
     PT=0.02
     #TODO FINE TUNING WITH ONE EPOCH
 
-    train_iter=copy.deepcopy(train)
-    permuatation=train_iter.permute_data()
     #baseline is 0.5 for binary dataset
-    vals=[0.5 for i in range(len(train_iter))]
-    phis=[0 for i in range(len(train_iter))]
+    vals=[0.5 for i in range(len(train))]
+    phis=[0 for i in range(len(train))]
     phis_prec=phis
     t=1
     for t in range(1, 10, 1):
+        train_iter = copy.deepcopy(train)
+        permuatation = train_iter.permute_data()
+        set_seed()
+        # print(len(train_trunc))
+        Classifier = classifier_algo(train_trunc)
         for j in tqdm(range(1, len(train_iter))):
             train_trunc=copy.deepcopy(train_iter)
             train_trunc.truncate(permuatation[:j])
             new_point=permuatation[j-1]
-            print(new_point)
-            fds
-            set_seed()
-            # print(len(train_trunc))
-            Classifier = classifier_algo(train_trunc)
+
+
+
             _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
             vals[j]=vjt
                 #Inverse to the paper, to keep in track with loo: baseline is with the point included

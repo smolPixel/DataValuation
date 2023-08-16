@@ -44,14 +44,19 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     phis=[0 for i in range(len(train))]
     phis_prec=phis
     t=1
+    truncation_counter=0
     for t in range(1, 10, 1):
         train_iter = copy.deepcopy(train)
         permuatation = train_iter.permute_data()
         for j in tqdm(range(1, len(train_iter))):
-            if j>0 and abs(dev_baseline-vals[j-1])<PT:
+            if truncation_counter>5 and abs(dev_baseline-vals[j-1])<PT:
                 vals[j]=vals[j-1]
                 vjt=vals[j]
             else:
+                if abs(dev_baseline-vals[j-1])<PT:
+                    truncation_counter+=1
+                else:
+                    truncation_counter=0
                 train_trunc=copy.deepcopy(train_iter)
                 train_trunc.truncate(permuatation[:j])
                 new_point=permuatation[j-1]
@@ -198,15 +203,20 @@ if __name__ == '__main__':
     #         sources = {i: np.array([i]) for i in range(len(self.X))}
     #     elif not isinstance(sources, dict):
     #         sources = {i: np.where(sources == i)[0] for i in set(sources)}
+    """Permutation step"""
     #     idxs = np.random.permutation(len(sources))
+    """Initializing shapley values at 0"""
     #     marginal_contribs = np.zeros(len(self.X))
     #     X_batch = np.zeros((0,) + tuple(self.X.shape[1:]))
     #     y_batch = np.zeros(0, int)
+    """Not sure what sample_weight_batch is, not mentionned in paper"""
     #     sample_weight_batch = np.zeros(0)
     #     truncation_counter = 0
     #     new_score = self.random_score
     #     for n, idx in enumerate(idxs):
+    """TODO UNDERSTAND WHERE HE DOES RUNNING AVERAGE"""
     #         old_score = new_score
+    """Add X Y to the batch"""
     #         X_batch = np.concatenate([X_batch, self.X[sources[idx]]])
     #         y_batch = np.concatenate([y_batch, self.y[sources[idx]]])
     #         if self.sample_weight is None:
@@ -229,10 +239,13 @@ if __name__ == '__main__':
     #                         y_batch,
     #                         sample_weight = sample_weight_batch
     #                     )
+    """Calculate new score"""
     #                 new_score = self.value(self.model, metric=self.metric)
+    """This is the second part of running average """
     #         marginal_contribs[sources[idx]] = (new_score - old_score)
     #         marginal_contribs[sources[idx]] /= len(sources[idx])
     #         distance_to_full_score = np.abs(new_score - self.mean_score)
+    """Truncate if fulfill truncation condition 5 times in a row TODO"""
     #         if distance_to_full_score <= tolerance * self.mean_score:
     #             truncation_counter += 1
     #             if truncation_counter > 5:
