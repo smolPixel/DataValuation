@@ -55,7 +55,9 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
             train_trunc.truncate(permuatation[:j])
             new_point=permuatation[j-1]
 
-
+            dat=train_trunc.data[new_point]
+            print(dat)
+            fds
 
             _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
             vals[j]=vjt
