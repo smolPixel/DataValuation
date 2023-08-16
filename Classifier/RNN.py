@@ -65,6 +65,7 @@ class RNN_Classifier():
 
     def train_test(self, train, dev, test):
         for ep in range(50):
+            print(ep)
             train_loader = DataLoader(
                 dataset=train,
                 batch_size=25,
@@ -75,6 +76,7 @@ class RNN_Classifier():
             preds_train=[]
             target_train=[]
             for batch in train_loader:
+                print(batch)
                 self.optimizer.zero_grad()
                 target_train.extend(batch['label'])
                 output=self.model(batch['input'].cuda())
