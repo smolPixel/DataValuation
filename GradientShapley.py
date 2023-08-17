@@ -51,11 +51,8 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
         # print(len(train_trunc))
         Classifier = classifier_algo(train_iter)
         for j in tqdm(range(1, len(train_iter))):
-            train_trunc=copy.deepcopy(train_iter)
-            train_trunc.truncate(permuatation[:j])
-            new_point=permuatation[j-1]
-            print(train_trunc.data.keys())
-            dat=train_trunc.data[new_point]
+            new_point=train_iter.data[j]
+            print(new_point)
             print(dat)
             fds
 
