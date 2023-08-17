@@ -49,7 +49,7 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
         permuatation = train_iter.permute_data()
         set_seed()
         # print(len(train_trunc))
-        Classifier = classifier_algo(train_trunc)
+        Classifier = classifier_algo(train_iter)
         for j in tqdm(range(1, len(train_iter))):
             train_trunc=copy.deepcopy(train_iter)
             train_trunc.truncate(permuatation[:j])
