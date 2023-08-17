@@ -23,7 +23,7 @@ import pandas as pd
 from Classifier.LogReg import LogReg_Classifier
 from Classifier.RNN import RNN_Classifier
 from Classifier.BERT import Bert_Classifier
-
+from torch.utils.data import DataLoader
 def set_seed(seed=42):
     random.seed(seed)
     np.random.seed(seed)
@@ -50,7 +50,16 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
         set_seed()
         # print(len(train_trunc))
         Classifier = classifier_algo(train_iter)
-        for j in tqdm(range(1, len(train_iter))):
+        train_loader = DataLoader(
+            dataset=train_iter,
+            batch_size=1,
+            shuffle=False,
+            # num_workers=cpu_count(),
+            pin_memory=torch.cuda.is_available()
+        )
+        for j, batch in enumerate(train_loader):
+            print(batch)
+            fds
             new_point=train_iter.data[j]
             print(new_point)
             print(dat)
