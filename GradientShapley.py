@@ -51,9 +51,9 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
         # print(len(train_trunc))
         # 1e-6:
         # 1e-5:
-        # 1e-4: 
-        # 1e-3
-        Classifier = classifier_algo(train_iter, lr=1e-3)
+        # 1e-4:
+        # 1e-3 : 51.0
+        Classifier = classifier_algo(train_iter, lr=1e-4)
         train_loader = DataLoader(
             dataset=train_iter,
             batch_size=1,
