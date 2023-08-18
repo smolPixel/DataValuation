@@ -63,6 +63,12 @@ class RNN_Classifier():
     #     #     param.requires_grad = False
         self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=1e-5)
 
+    def forward(self, batch):
+        output = self.model(batch['input'].cuda())
+        loss = self.loss_function(output, batch['label'].cuda())
+        return loss
+
+
     def train_test(self, train, dev, test):
         for ep in range(50):
             train_loader = DataLoader(
@@ -132,9 +138,9 @@ class RNN_Classifier():
                 # print(loss)
             # print(f"Epoch {ep} train/dev/test accuracy {accuracy_score(target_train, preds_train)}, {accuracy_score(target_dev, preds_dev)}, {accuracy_score(target_test, preds_test)}")
         return accuracy_score(target_train, preds_train), accuracy_score(target_dev, preds_dev), accuracy_score(target_test, preds_test)
-    def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
-        return optimizer
+    # def configure_optimizers(self):
+    #     optimizer = torch.optim.Adam(self.parameters(), lr=0.001)
+    #     return optimizer
 
     def get_logits(self, batch):
         input = batch['input']

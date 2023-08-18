@@ -59,6 +59,10 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
         )
         for j, batch in enumerate(train_loader):
             print(batch)
+            Classifier.optimizer.zero_grad()
+            loss=Classifier.forward(batch)
+            loss.backward()
+            Classifier.optimizer.step()
             fds
             new_point=train_iter.data[j]
             print(new_point)
