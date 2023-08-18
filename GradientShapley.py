@@ -159,8 +159,8 @@ def main():
         print(Y)
         data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
-        plt.title(f'{name}-TMC')
-        plt.savefig(f'{name}TMC.png')
+        plt.title(f'{name}-Gradient')
+        plt.savefig(f'{name}Gradient.png')
         print("before continuing, you need finetuning bert")
         fds
 
