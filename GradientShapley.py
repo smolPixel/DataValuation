@@ -44,7 +44,7 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
     phis=[0 for i in range(len(train))]
     phis_prec=phis
     t=1
-    for t in range(1, 10, 1):
+    for t in tqdm(range(1, 10, 1)):
         train_iter = copy.deepcopy(train)
         permuatation = train_iter.permute_data()
         set_seed()
