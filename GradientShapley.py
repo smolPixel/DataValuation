@@ -49,11 +49,12 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
         permuatation = train_iter.permute_data()
         set_seed()
         # print(len(train_trunc))
-        # 1e-6:
+        # 1e-6: 50.9 dont learn
         # 1e-5:49.1
         # 1e-4: 51.1
         # 1e-3 : 51.0
-        Classifier = classifier_algo(train_iter, lr=1e-6)
+        # 1e-2:
+        Classifier = classifier_algo(train_iter, lr=1e-2)
         train_loader = DataLoader(
             dataset=train_iter,
             batch_size=1,
