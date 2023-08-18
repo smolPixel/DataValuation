@@ -47,14 +47,16 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
     for t in range(1, 10, 1):
         train_iter = copy.deepcopy(train)
         permuatation = train_iter.permute_data()
+        print(permuatation)
+        fd
         set_seed()
         # print(len(train_trunc))
         # 1e-6: 50.9 dont learn
         # 1e-5:49.1
         # 1e-4: 51.1
         # 1e-3 : 51.0
-        # 1e-2:
-        Classifier = classifier_algo(train_iter, lr=1e-2)
+        # 1e-2:50.9
+        Classifier = classifier_algo(train_iter, lr=1e-3)
         train_loader = DataLoader(
             dataset=train_iter,
             batch_size=1,
@@ -161,6 +163,8 @@ def main():
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
         plt.title(f'{name}-TMC')
         plt.savefig(f'{name}TMC.png')
+        print("before continuing, you need finetuning bert")
+        fds
 
 
 if __name__ == '__main__':
