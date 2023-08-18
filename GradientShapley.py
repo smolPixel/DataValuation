@@ -63,17 +63,20 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
             loss=Classifier.forward(batch)
             loss.backward()
             Classifier.optimizer.step()
-            fds
-            new_point=train_iter.data[j]
-            print(new_point)
-            print(dat)
-            fds
-
-            _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
-            vals[j]=vjt
-                #Inverse to the paper, to keep in track with loo: baseline is with the point included
-            phis[new_point]=((t-1)/t)*phis[new_point]+(vals[j-1]-vjt)/t
-        phis_prec=phis
+            dev_result=Classifier.evaluate(dev)
+            print(dev_result)
+        fds
+        #     fds
+        #     new_point=train_iter.data[j]
+        #     print(new_point)
+        #     print(dat)
+        #     fds
+        #
+        #     _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
+        #     vals[j]=vjt
+        #         #Inverse to the paper, to keep in track with loo: baseline is with the point included
+        #     phis[new_point]=((t-1)/t)*phis[new_point]+(vals[j-1]-vjt)/t
+        # phis_prec=phis
 
     return phis
 

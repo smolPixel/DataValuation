@@ -69,6 +69,28 @@ class RNN_Classifier():
         return loss
 
 
+    def evaluate(self, dataset):
+        data_loader = DataLoader(
+            dataset=dataset,
+            batch_size=25,
+            shuffle=False,
+            # num_workers=cpu_count(),
+            pin_memory=torch.cuda.is_available()
+        )
+        preds_dev = []
+        target_dev = []
+        for batch in data_loader:
+            with torch.no_grad():
+                target_dev.extend(batch['label'])
+                output = self.model(batch['input'].cuda())
+                # loss = self.loss_function(output, batch['label'].cuda())
+                # print(loss)
+                # loss = outputs.loss
+
+                preds = torch.argmax(output, dim=1)
+                # print(preds)
+                preds_dev.extend(preds.tolist())
+            return accuracy_score(target_dev, preds_dev)
     def train_test(self, train, dev, test):
         for ep in range(50):
             train_loader = DataLoader(
