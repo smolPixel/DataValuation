@@ -90,7 +90,7 @@ class RNN_Classifier():
                 preds = torch.argmax(output, dim=1)
                 # print(preds)
                 preds_dev.extend(preds.tolist())
-            return accuracy_score(target_dev, preds_dev)
+        return accuracy_score(target_dev, preds_dev)
     def train_test(self, train, dev, test):
         for ep in range(50):
             train_loader = DataLoader(
