@@ -50,7 +50,7 @@ class RNN_Model(nn.Module):
 
 class RNN_Classifier():
 
-    def __init__(self,train):
+    def __init__(self,train, lr=1e-5):
         # super(RNN_Classifier, self).__init__()
         self.model=RNN_Model(train)
         self.model=self.model.cuda()
@@ -61,7 +61,7 @@ class RNN_Classifier():
     #     # self.optimizer = torch.optim.Adam(self.model.parameters(), lr=0.001)
     #     # for param in self.model.base_model.parameters():
     #     #     param.requires_grad = False
-        self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=1e-5)
+        self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=lr)
 
     def forward(self, batch):
         output = self.model(batch['input'].cuda())
