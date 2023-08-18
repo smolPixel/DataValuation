@@ -58,7 +58,6 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
             pin_memory=torch.cuda.is_available()
         )
         for j, batch in enumerate(train_loader):
-            print(batch)
             Classifier.optimizer.zero_grad()
             loss=Classifier.forward(batch)
             loss.backward()
