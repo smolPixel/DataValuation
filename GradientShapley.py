@@ -109,7 +109,6 @@ def main():
         results=[]
 
         shapleys=Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline)
-        fds
         sorted_results=np.argsort(shapleys)
         # print(sorted_results)
         # print(sorted_results[::-1])
