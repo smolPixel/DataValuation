@@ -47,8 +47,6 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
     for t in range(1, 10, 1):
         train_iter = copy.deepcopy(train)
         permuatation = train_iter.permute_data()
-        print(permuatation)
-        fd
         set_seed()
         # print(len(train_trunc))
         # 1e-6: 50.9 dont learn
@@ -69,9 +67,9 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
             loss=Classifier.forward(batch)
             loss.backward()
             Classifier.optimizer.step()
-            dev_result=Classifier.evaluate(dev)
-            print(dev_result)
-        fds
+            vjt=Classifier.evaluate(dev)
+            new_point=permuatation[j]
+            phis[new_point] = ((t - 1) / t) * phis[new_point] + (vals[j - 1] - vjt) / t
         #     fds
         #     new_point=train_iter.data[j]
         #     print(new_point)
