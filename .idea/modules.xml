@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../DAControlled/.idea/DAControlled.iml" filepath="$PROJECT_DIR$/../DAControlled/.idea/DAControlled.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../DAIro/.idea/DAIro.iml" filepath="$PROJECT_DIR$/../DAIro/.idea/DAIro.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/DataValuation.iml" filepath="$PROJECT_DIR$/.idea/DataValuation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../MQ/.idea/Doctorate.iml" filepath="$PROJECT_DIR$/../MQ/.idea/Doctorate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../KPGDataset/.idea/KPGDataset.iml" filepath="$PROJECT_DIR$/../KPGDataset/.idea/KPGDataset.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../europa/.idea/europa.iml" filepath="$PROJECT_DIR$/../europa/.idea/europa.iml" />
     </modules>
   </component>
 </project>

@@ -31,7 +31,7 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 
-def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
+def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr):
     #Let's program one iteration. First we need to randomly permute data point
     #dev_baseline= V(D) in paper
 
@@ -54,7 +54,7 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
         # 1e-4: 51.1
         # 1e-3 : 51.0
         # 1e-2:50.9
-        Classifier = classifier_algo(train_iter, lr=1e-3)
+        Classifier = classifier_algo(train_iter, lr=lr)
         train_loader = DataLoader(
             dataset=train_iter,
             batch_size=1,
@@ -68,8 +68,10 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline):
             loss.backward()
             Classifier.optimizer.step()
             vjt=Classifier.evaluate(dev)
+            print(vjt)
             new_point=permuatation[j]
             phis[new_point] = ((t - 1) / t) * phis[new_point] + (vals[j - 1] - vjt) / t
+        fds
         #     fds
         #     new_point=train_iter.data[j]
         #     print(new_point)
@@ -92,9 +94,12 @@ def main():
     print(f"Initialized SST-2 with length of {len(train)}")
     # classifiers=[Bert_Classifier]
     classifiers=[RNN_Classifier, Bert_Classifier]
+    lrs=[1e-3, 1e-5]
     # names=['BERT']
     names=['RNN', 'BERT']
-    for name, classifier_algo in zip(names, classifiers):
+    for name, classifier_algo, lr in zip(names, classifiers, lrs):
+        if name=="RNN":
+            continue
         plt.figure()
         print(f"Running LOO with {name} classifier")
 
@@ -108,7 +113,7 @@ def main():
 
         results=[]
 
-        shapleys=Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline)
+        shapleys=Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr)
         sorted_results=np.argsort(shapleys)
         # print(sorted_results)
         # print(sorted_results[::-1])
@@ -160,8 +165,6 @@ def main():
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
         plt.title(f'{name}-Gradient')
         plt.savefig(f'{name}Gradient.png')
-        print("before continuing, you need finetuning bert")
-        fds
 
 
 if __name__ == '__main__':
