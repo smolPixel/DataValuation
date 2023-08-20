@@ -29,7 +29,7 @@ class Bert_Classifier():
         self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=self.learning_rate)
 
     def forward(self, input):
-        text_batch = batch['sentence']
+        text_batch = input['sentence']
         encoding = self.tokenizer(text_batch, return_tensors='pt', padding=True, truncation=True)
         input_ids = encoding['input_ids'].cuda()
         attention_mask = encoding['attention_mask'].cuda()
