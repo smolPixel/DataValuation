@@ -39,27 +39,30 @@ def main():
     # names=['BERT']
     names=['LogReg', 'RNN', 'BERT']
     for name, classifier_algo in zip(names, classifiers):
+        values=[0 for i in range(DATASET_SIZE)]
         plt.figure()
         print(f"Running LOO with {name} classifier")
 
-        set_seed()
-        Classifier = classifier_algo(train)
-        results=Classifier.train_test(train, dev, test)
-        dev_baseline=results[1]
-        test_baseline=results[2]
-
-        print(f"Results with all data is {results}")
-
-        results=[]
-        for i in range(DATASET_SIZE):
-            train_loo=copy.deepcopy(train)
-            train_loo.data.pop(i)
+        for t in range(1, 6, 1):
             set_seed()
-            train_loo.reset_index()
-            Classifier = classifier_algo(train_loo)
-            _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
-            #If the perfo augments when removing (if diff is positive), then this was a bad data
-            results.append(dev_res-dev_baseline)
+            Classifier = classifier_algo(train)
+            results=Classifier.train_test(train, dev, test)
+            dev_baseline=results[1]
+            test_baseline=results[2]
+
+            print(f"Results with all data is {results}")
+
+            results=[]
+            for i in range(DATASET_SIZE):
+                train_loo=copy.deepcopy(train)
+                train_loo.data.pop(i)
+                set_seed()
+                train_loo.reset_index()
+                Classifier = classifier_algo(train_loo)
+                _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
+                #If the perfo augments when removing (if diff is positive), then this was a bad data
+                values[i] = ((t - 1) / t) * values[i] + (dev_res-dev_baseline) / t
+                # values[i]=(dev_res-dev_baseline)
 
         sorted_results=np.argsort(results)
         # print(sorted_results)
