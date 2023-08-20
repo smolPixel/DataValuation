@@ -94,7 +94,13 @@ def main():
     print(f"Initialized SST-2 with length of {len(train)}")
     # classifiers=[Bert_Classifier]
     classifiers=[RNN_Classifier, Bert_Classifier]
-    lrs=[1e-3, 1e-5]
+    lrs=[1e-3, 1e-6]
+    # Bert 1e-5 : 61.3 but overfits
+    # 1e-6:
+    # 1e-4
+    # 1e-3
+    # 1e-2
+
     # names=['BERT']
     names=['RNN', 'BERT']
     for name, classifier_algo, lr in zip(names, classifiers, lrs):
