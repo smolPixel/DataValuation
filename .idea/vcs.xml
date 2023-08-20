@@ -6,6 +6,5 @@
     <mapping directory="$PROJECT_DIR$/../DAIro" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../KPGDataset" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../MQ" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../europa" vcs="Git" />
   </component>
 </project>

@@ -8,10 +8,11 @@ import itertools
 
 class Bert_Classifier():
 
-    def __init__(self, train):
+    def __init__(self, train, lr=1e-5):
         self.init_model()
         self.train=train
         self.num_cat=2
+        self.lr=lr
 
         # print(self.model)
 
@@ -25,7 +26,7 @@ class Bert_Classifier():
 
         # for param in self.model.base_model.parameters():
         #     param.requires_grad = False
-        self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=1e-5)
+        self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=self.lr)
     def run_epoch(self, train, dev, test):
         """Return grad returns the average grad for augmented and non augmented examples. """
         # train.return_pandas().to_csv("test.csv")
