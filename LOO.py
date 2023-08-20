@@ -63,7 +63,8 @@ def main():
                 #If the perfo augments when removing (if diff is positive), then this was a bad data
                 values[i] = ((t - 1) / t) * values[i] + (dev_res-dev_baseline) / t
                 # values[i]=(dev_res-dev_baseline)
-
+        print(values)
+        fd
         sorted_results=np.argsort(results)
         # print(sorted_results)
         # print(sorted_results[::-1])
