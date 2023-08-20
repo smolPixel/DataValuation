@@ -31,6 +31,7 @@ def set_seed(seed=42):
 def main():
     set_seed()
     DATASET_SIZE=100
+    NUM_ITER=5
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
@@ -43,7 +44,7 @@ def main():
         plt.figure()
         print(f"Running LOO with {name} classifier")
 
-        for t in range(1, 6, 1):
+        for t in range(1, NUM_ITER+1, 1):
             set_seed()
             Classifier = classifier_algo(train)
             results=Classifier.train_test(train, dev, test)
@@ -115,8 +116,8 @@ def main():
         print(Y)
         data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
-        plt.title(f'{name}-LOO')
-        plt.savefig(f'{name}LOO.png')
+        plt.title(f'{name}-LOO-{NUM_ITER}-iters')
+        plt.savefig(f'{name}LOO{NUM_ITER}iter.png')
     fds
     # print("Running LOO with RNN classifier")
     #
