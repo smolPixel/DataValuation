@@ -40,6 +40,33 @@ class Bert_Classifier():
         loss = outputs[0]
         return loss
 
+    def evaluate(self, dataset):
+        data_loader = DataLoader(
+            dataset=dataset,
+            batch_size=25,
+            shuffle=False,
+            # num_workers=cpu_count(),
+            pin_memory=torch.cuda.is_available()
+        )
+        preds_dev = []
+        target_dev = []
+        for batch in data_loader:
+            with torch.no_grad():
+                text_batch = batch['sentence']
+                encoding = self.tokenizer(text_batch, return_tensors='pt', padding=True, truncation=True)
+                input_ids = encoding['input_ids'].cuda()
+                attention_mask = encoding['attention_mask'].cuda()
+                # print(encoding)
+                labels = batch['label'].cuda()
+                outputs = self.model(input_ids, attention_mask=attention_mask, labels=labels)
+                results = torch.argmax(torch.log_softmax(outputs[1], dim=1), dim=1)
+                # print(preds)
+                print(results)
+                fds
+                preds_dev.extend(results.tolist())
+                target_dev.extend(batch['label'])
+        return accuracy_score(target_dev, preds_dev)
+
     def run_epoch(self, train, dev, test):
         """Return grad returns the average grad for augmented and non augmented examples. """
         # train.return_pandas().to_csv("test.csv")
