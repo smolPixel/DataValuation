@@ -12,7 +12,7 @@ class Bert_Classifier():
         self.init_model()
         self.train=train
         self.num_cat=2
-        self.lr=lr
+        self.learning_rate=lr
 
         # print(self.model)
 
@@ -26,7 +26,7 @@ class Bert_Classifier():
 
         # for param in self.model.base_model.parameters():
         #     param.requires_grad = False
-        self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=self.lr)
+        self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=self.learning_rate)
     def run_epoch(self, train, dev, test):
         """Return grad returns the average grad for augmented and non augmented examples. """
         # train.return_pandas().to_csv("test.csv")
@@ -251,117 +251,7 @@ class Bert_Classifier():
             print(f"Batch {i}, train acc: {acc_train}, dev acc: {acc_dev}")
 
         return acc_train, accs_dev
-    #
-    # def separate_good_bad(self, train, dev):
-    #     self.model.train()
-    #     bs = 8
-    #     data_loader = DataLoader(
-    #         dataset=train,
-    #         batch_size=bs,
-    #         shuffle=True,
-    #         # num_workers=cpu_count(),
-    #         pin_memory=torch.cuda.is_available()
-    #     )
-    #
-    #     accs_dev = []
-    #
-    #     pred_train = torch.zeros(len(train))
-    #     Y_train = torch.zeros(len(train))
-    #     start = 0
-    #     good_batches={}
-    #     bad_batches={}
-    #     for i, train_batch in enumerate(data_loader):
-    #         self.init_model()
-    #         self.model.train()
-    #         for j in range(self.argdict['nb_epoch_classifier']):
-    #             self.optimizer.zero_grad()
-    #
-    #             text_batch = train_batch['sentence']
-    #             encoding = self.tokenizer(text_batch, max_length=self.argdict['max_seq_length'], return_tensors='pt', padding=True, truncation=True)
-    #             input_ids = encoding['input_ids'].cuda()
-    #             attention_mask = encoding['attention_mask'].cuda()
-    #             # print(encoding)
-    #             labels = train_batch['label'].cuda()
-    #             outputs = self.model(input_ids, attention_mask=attention_mask, labels=labels)
-    #             results = torch.argmax(torch.log_softmax(outputs[1], dim=1), dim=1)
-    #             # print(outputs)
-    #             # print(outputs)
-    #             try:
-    #                 loss = outputs[0]
-    #             except:
-    #                 loss = outputs.loss
-    #             # print(loss)
-    #             # print(outputs)
-    #             loss.backward()
-    #
-    #             self.optimizer.step()
-    #             acc_train = accuracy_score(train_batch['label'].cpu(), results.cpu())
-    #
-    #         self.model.eval()
-    #         # Test
-    #         data_loader_dev = DataLoader(
-    #             dataset=dev,
-    #             batch_size=bs,
-    #             shuffle=True,
-    #             # num_workers=cpu_count(),
-    #             pin_memory=torch.cuda.is_available()
-    #         )
-    #         pred_dev = torch.zeros(len(dev))
-    #         Y_dev = torch.zeros(len(dev))
-    #         start = 0
-    #         for j, batch in enumerate(data_loader_dev):
-    #             with torch.no_grad():
-    #                 text_batch = batch['sentence']
-    #                 encoding = self.tokenizer(text_batch, max_length=self.argdict['max_seq_length'], return_tensors='pt', padding=True, truncation=True)
-    #                 input_ids = encoding['input_ids'].cuda()
-    #                 attention_mask = encoding['attention_mask'].cuda()
-    #                 # print(encoding)
-    #                 labels = batch['label'].cuda()
-    #                 outputs = self.model(input_ids, attention_mask=attention_mask)
-    #                 # print(outputs)
-    #                 results = torch.argmax(torch.log_softmax(outputs[0], dim=1), dim=1)
-    #                 pred_dev[start:start + bs] = results
-    #                 Y_dev[start:start + bs] = batch['label']
-    #                 start = start + bs
-    #         # if i==10:
-    #         #     break
-    #         acc_dev = accuracy_score(Y_dev, pred_dev)
-    #         if acc_dev>self.argdict['cutoff']:
-    #             for ind in train_batch['index']:
-    #                 good_batches[len(good_batches)]=train.data[ind.item()]
-    #         else:
-    #             for ind in train_batch['index']:
-    #                 bad_batches[len(bad_batches)] = train.data[ind.item()]
-    #
-    #         accs_dev.append(acc_dev)
-    #         print(f"Batch {i}, train acc: {acc_train}, dev acc: {acc_dev}")
-    #
-    #
-    #     # print(len(good_batches))
-    #     # print(len(bad_batches))
-    #     min_len=min(len(good_batches), len(bad_batches))
-    #     # print(min_len)
-    #     good_batches=dict(itertools.islice(good_batches.items(), min_len))
-    #     bad_batches=dict(itertools.islice(bad_batches.items(), min_len))
-    #     # bad_batches=bad_batches[:min_len]
-    #     # print(len(good_batches))
-    #     # print(len(bad_batches))
-    #     # fds
-    #
-    #     good_ds=ds_DAControlled(data=good_batches, dataset_parent=train, from_dict=True)
-    #     bad_ds=ds_DAControlled(data=bad_batches, dataset_parent=train, from_dict=True)
-    #
-    #     return good_ds, bad_ds
-    #     # print(Y)
-    #     # print(pred)
-    #     # print(accuracy_score(Y, pred))
-    #
-    #     # if return_grad:
-    #     #     return accuracy_score(Y_train, pred_train), accuracy_score(Y_dev, pred_dev), sum(grad_og) / len(
-    #     #         grad_og), sum(grad_aug) / len(grad_og), \
-    #     #            sum(acc_og) * 100 / len(acc_og), sum(acc_aug) * 100 / len(acc_aug)
-    #     # else:
-    #     #     return accuracy_score(Y_train, pred_train), accuracy_score(Y_dev, pred_dev), 0, 0, 0, 0
+
 
     def predict(self, dataset):
         ds = Transformerdataset(dataset, split='train', labelled_only=False)
