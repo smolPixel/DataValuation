@@ -9,10 +9,10 @@ import itertools
 class Bert_Classifier():
 
     def __init__(self, train, lr=1e-5):
+        self.train = train
+        self.num_cat = 2
+        self.learning_rate = lr
         self.init_model()
-        self.train=train
-        self.num_cat=2
-        self.learning_rate=lr
 
         # print(self.model)
 
