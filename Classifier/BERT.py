@@ -61,8 +61,6 @@ class Bert_Classifier():
                 outputs = self.model(input_ids, attention_mask=attention_mask, labels=labels)
                 results = torch.argmax(torch.log_softmax(outputs[1], dim=1), dim=1)
                 # print(preds)
-                print(results)
-                fds
                 preds_dev.extend(results.tolist())
                 target_dev.extend(batch['label'])
         return accuracy_score(target_dev, preds_dev)
