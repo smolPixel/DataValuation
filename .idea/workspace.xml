@@ -90,15 +90,15 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/media/frederic/Alternia/europa"
+    "last_opened_file_path": "/media/frederic/Alternia/DAIro/borderify"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../DAIro/borderify" />
       <recent name="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData" />
       <recent name="$PROJECT_DIR$/../DAIro/borderify/Safeguard" />
       <recent name="$PROJECT_DIR$/../europa" />
-      <recent name="$PROJECT_DIR$/../DAIro/borderify" />
       <recent name="$PROJECT_DIR$/../europa/Model" />
     </key>
   </component>
