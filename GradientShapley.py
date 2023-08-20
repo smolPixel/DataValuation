@@ -68,10 +68,9 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr):
             loss.backward()
             Classifier.optimizer.step()
             vjt=Classifier.evaluate(dev)
-            print(vjt)
             new_point=permuatation[j]
             phis[new_point] = ((t - 1) / t) * phis[new_point] + (vals[j - 1] - vjt) / t
-        fds
+        # fds
         #     fds
         #     new_point=train_iter.data[j]
         #     print(new_point)
@@ -94,7 +93,7 @@ def main():
     print(f"Initialized SST-2 with length of {len(train)}")
     # classifiers=[Bert_Classifier]
     classifiers=[RNN_Classifier, Bert_Classifier]
-    lrs=[1e-3, 1e-2]
+    lrs=[1e-3, 1e-5]
     # Bert 1e-5 : 61.3 but overfits
     # 1e-6: 50.9
     # 1e-4: 50.9
