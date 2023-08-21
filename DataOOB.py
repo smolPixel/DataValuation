@@ -44,6 +44,11 @@ def main():
         values=[[] for i in range(DATASET_SIZE)]
         plt.figure()
         print(f"Running LOO with {name} classifier")
+        set_seed()
+        Classifier = classifier_algo(train)
+        results = Classifier.train_test(train, dev, test)
+        dev_baseline = results[1]
+        test_baseline = results[2]
 
         for t in range(1, NUM_BOOTSTRAP+1, 1):
             train_iter = copy.deepcopy(train)
@@ -52,7 +57,6 @@ def main():
             Classifier = classifier_algo(train_iter)
             results=Classifier.train_test(train_iter, dev, test)
             dev_results=results[1]
-            # test_ba=results[2]
 
 
             for i in range(DATASET_SIZE):
