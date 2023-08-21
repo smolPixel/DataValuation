@@ -116,7 +116,6 @@ def main():
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
         plt.title(f'{name}-DataOOB')
         plt.savefig(f'{name}DataOOB.png')
-        fds
 
 
 if __name__ == '__main__':
