@@ -83,10 +83,8 @@ class SST2_dataset(Dataset):
 		new_dat={}
 		perm=[i for i in range(len(self.data))]
 		perm=np.random.choice(perm, size=size, replace=True)
-		print(perm)
-		fds
-		for i, (j, dat) in enumerate(self.data.items()):
-			new_dat[perm[i]]=dat
+		for i in perm:
+			new_dat[len(new_dat)]=self.data[i]
 		self.data=new_dat
 		return perm
 
