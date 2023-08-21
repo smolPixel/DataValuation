@@ -67,6 +67,7 @@ class SST2_dataset(Dataset):
 		for ind in indexes:
 			new_dat[len(new_dat)] = self.data[ind]
 		self.data = new_dat
+
 	def permute_data(self):
 		#Randomly permute dataset. Useful for Shapley permutation
 		new_dat={}
@@ -76,6 +77,19 @@ class SST2_dataset(Dataset):
 			new_dat[perm[i]]=dat
 		self.data=new_dat
 		return perm
+
+	def bootstrap_data(self, size):
+		#Randomly permute dataset. Useful for Shapley permutation
+		new_dat={}
+		perm=[i for i in range(len(self.data))]
+		perm=np.random.choice(perm, size=size, replace=True)
+		print(perm)
+		fds
+		for i, (j, dat) in enumerate(self.data.items()):
+			new_dat[perm[i]]=dat
+		self.data=new_dat
+		return perm
+
 	@property
 	def vocab_size(self):
 		return len(self.vocab_object)

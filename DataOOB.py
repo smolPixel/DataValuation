@@ -31,7 +31,8 @@ def set_seed(seed=42):
 def main():
     set_seed()
     DATASET_SIZE=100
-    NUM_ITER=5
+    NUM_BOOTSTRAP=50
+    NUM_DATA_IN_BOOTSTRAP=50
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
@@ -44,7 +45,12 @@ def main():
         plt.figure()
         print(f"Running LOO with {name} classifier")
 
-        for t in range(1, NUM_ITER+1, 1):
+        for t in range(1, NUM_BOOTSTRAP+1, 1):
+            train_iter = copy.deepcopy(train)
+            boostrap = train_iter.bootstrap_data(NUM_DATA_IN_BOOTSTRAP)
+            print(len(train_iter))
+            print(boostrap)
+            fds
             set_seed()
             Classifier = classifier_algo(train)
             results=Classifier.train_test(train, dev, test)
