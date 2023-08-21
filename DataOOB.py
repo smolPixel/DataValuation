@@ -58,23 +58,8 @@ def main():
             for i in range(DATASET_SIZE):
                 if i not in boostrap:
                     values[i].append(dev_results)
-            print(values)
-            fdes
-            print(f"Results with all data is {results}")
 
-            results=[]
-            for i in range(DATASET_SIZE):
-                train_loo=copy.deepcopy(train)
-                train_loo.data.pop(i)
-                set_seed()
-                train_loo.reset_index()
-                Classifier = classifier_algo(train_loo)
-                _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
-                #If the perfo augments when removing (if diff is positive), then this was a bad data
-                values[i] = ((t - 1) / t) * values[i] + (dev_res-dev_baseline) / t
-                # values[i]=(dev_res-dev_baseline)
-        # print(values)
-        # fd
+        values=[np.mean(vv) for vv in values]
         results=values
         sorted_results=np.argsort(results)
         # print(sorted_results)
@@ -125,8 +110,9 @@ def main():
         print(Y)
         data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
-        plt.title(f'{name}-LOO-{NUM_ITER}-iters')
-        plt.savefig(f'{name}LOO{NUM_ITER}iter.png')
+        plt.title(f'{name}-DataOOB')
+        plt.savefig(f'{name}DataOOB.png')
+        fds
 
 
 if __name__ == '__main__':
