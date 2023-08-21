@@ -41,22 +41,25 @@ def main():
     # names=['BERT']
     names=['LogReg', 'RNN', 'BERT']
     for name, classifier_algo in zip(names, classifiers):
-        values=[0 for i in range(DATASET_SIZE)]
+        values=[[] for i in range(DATASET_SIZE)]
         plt.figure()
         print(f"Running LOO with {name} classifier")
 
         for t in range(1, NUM_BOOTSTRAP+1, 1):
             train_iter = copy.deepcopy(train)
             boostrap = train_iter.bootstrap_data(NUM_DATA_IN_BOOTSTRAP)
-            print(len(train_iter))
-            print(boostrap)
-            fds
             set_seed()
-            Classifier = classifier_algo(train)
-            results=Classifier.train_test(train, dev, test)
-            dev_baseline=results[1]
-            test_baseline=results[2]
+            Classifier = classifier_algo(train_iter)
+            results=Classifier.train_test(train_iter, dev, test)
+            dev_results=results[1]
+            # test_ba=results[2]
 
+
+            for i in range(DATASET_SIZE):
+                if i not in boostrap:
+                    values[i].append(dev_results)
+            print(values)
+            fdes
             print(f"Results with all data is {results}")
 
             results=[]
