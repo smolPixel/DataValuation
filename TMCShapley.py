@@ -48,11 +48,12 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     phis_prec=phis
     t=1
     truncation_counter=0
-    for t in range(1, 10, 1):
+    for t in range(1, ITER_NUM, 1):
         train_iter = copy.deepcopy(train)
         permuatation = train_iter.permute_data()
+        print(permutation)
         for j in tqdm(range(1, len(train_iter))):
-            if truncation_counter>5 and abs(dev_baseline-vals[j-1])<PT:
+            if truncation_counter>TRUNC_MAX and abs(dev_baseline-vals[j-1])<PT:
                 vals[j]=vals[j-1]
                 vjt=vals[j]
             else:
@@ -127,7 +128,7 @@ def main():
 
         auc_best=auc(values_x, results_remove_best)
         print(f"Area under curve is {auc_best}")
-        
+
         print("Evaluation of LOO, removing worst data by bs of 10")
         for i in range(5, 55, 5):
             train_eval = copy.deepcopy(train)
