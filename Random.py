@@ -43,6 +43,11 @@ def main():
     names=['BERT']
     """Calculating values for LOO"""
     for name, classifier_algo in zip(names, classifiers):
+        set_seed()
+        Classifier = classifier_algo(train)
+        results = Classifier.train_test(train, dev, test)
+        dev_baseline = results[1]
+        test_baseline = results[2]
         values=[0 for i in range(DATASET_SIZE)]
         plt.figure()
         print(f"Running LOO with {name} classifier")

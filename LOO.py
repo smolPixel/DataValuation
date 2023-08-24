@@ -40,7 +40,7 @@ def main():
     classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
     # names=['BERT']
     # names=['LogReg', 'RNN', 'BERT']
-    names=['BERT]
+    names=['BERT']
     """Calculating values for LOO"""
     for name, classifier_algo in zip(names, classifiers):
         values=[0 for i in range(DATASET_SIZE)]
