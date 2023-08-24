@@ -106,6 +106,8 @@ def main():
         # print(sorted_results[::-1])
         results_remove_best=[dev_baseline]
         results_remove_worst=[dev_baseline]
+        values_x = [0]
+        values_x.extend([i for i in range(5, 55, 5)])
         auc_best=auc(values_x, results_remove_best)
         print(f"Area under curve is {auc_best}")
         print("Evaluation of LOO, removing best data by bs of 10")
