@@ -48,7 +48,7 @@ def main():
         print(f"Running LOO with {name} classifier")
 
         for t in range(1, NUM_ITER+1, 1):
-            set_seed()
+            set_seed(seed=t)
             Classifier = classifier_algo(train)
             results=Classifier.train_test(train, dev, test)
             dev_baseline=results[1]
@@ -60,7 +60,7 @@ def main():
             for i in range(DATASET_SIZE):
                 train_loo=copy.deepcopy(train)
                 train_loo.data.pop(i)
-                set_seed()
+                set_seed(seed=t)
                 train_loo.reset_index()
                 Classifier = classifier_algo(train_loo)
                 _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
