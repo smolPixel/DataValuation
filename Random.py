@@ -98,16 +98,6 @@ def main():
 
         print(f"Final metric: {auc_worst-auc_best}")
 
-        X=[i for i in range(0,55,5)]
-        X.extend([i for i in range(0,55,5)])
-        strats=['remove bad' for i in range(0,55,5)]
-        strats.extend(['remove good' for i in range(0,55,5)])
-        Y=results_remove_worst
-        Y.extend(results_remove_best)
-        data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
-        sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
-        plt.title(f'Graphes/{name}-LOO-{NUM_ITER}-iters')
-        plt.savefig(f'Graphes/{name}LOO{NUM_ITER}iter.png')
 
     # print("Running LOO with RNN classifier")
     #
