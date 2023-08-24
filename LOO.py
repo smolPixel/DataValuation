@@ -48,6 +48,7 @@ def main():
         print(f"Running LOO with {name} classifier")
 
         for t in range(1, NUM_ITER+1, 1):
+            print(t)
             set_seed(seed=t)
             Classifier = classifier_algo(train)
             results=Classifier.train_test(train, dev, test)
