@@ -40,32 +40,16 @@ def main():
     classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
     # names=['BERT']
     # names=['LogReg', 'RNN', 'BERT']
-    names=['BERT]
+    names=['BERT']
     """Calculating values for LOO"""
     for name, classifier_algo in zip(names, classifiers):
         values=[0 for i in range(DATASET_SIZE)]
         plt.figure()
         print(f"Running LOO with {name} classifier")
 
-        for t in range(1, NUM_ITER+1, 1):
-            set_seed()
-            Classifier = classifier_algo(train)
-            results=Classifier.train_test(train, dev, test)
-            dev_baseline=results[1]
-            test_baseline=results[2]
-
-            print(f"Results with all data is {results}")
-
-            results=[]
-            for i in range(DATASET_SIZE):
-                train_loo=copy.deepcopy(train)
-                train_loo.data.pop(i)
-                set_seed()
-                train_loo.reset_index()
-                Classifier = classifier_algo(train_loo)
-                _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
-                #If the perfo augments when removing (if diff is positive), then this was a bad data
-                values[i] = ((t - 1) / t) * values[i] + (dev_res-dev_baseline) / t
+        values=[random.random() for i in range(values)]
+        print(values)
+        fds
                 # values[i]=(dev_res-dev_baseline)
         # print(values)
         # fd
