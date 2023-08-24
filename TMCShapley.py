@@ -19,6 +19,7 @@ from tqdm import tqdm
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.metrics import auc
 
 from Classifier.LogReg import LogReg_Classifier
 from Classifier.RNN import RNN_Classifier
@@ -36,6 +37,8 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
 
     #For now let's put PT at 2%, aka, when we get at 2% of the value of dev_baseline we are satisfied
     PT=0.02
+    TRUNC_MAX=5
+    ITER_NUM=10
 
     # train_iter=copy.deepcopy(train)
     # permuatation=train_iter.permute_data()
@@ -60,7 +63,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
                 train_trunc=copy.deepcopy(train_iter)
                 train_trunc.truncate(permuatation[:j])
                 new_point=permuatation[j-1]
-                set_seed()
+                set_seed(seed=t)
                 # print(len(train_trunc))
                 Classifier = classifier_algo(train_trunc)
                 _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
@@ -80,7 +83,8 @@ def main():
     # classifiers=[Bert_Classifier]
     classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
     # names=['BERT']
-    names=['LogReg', 'RNN', 'BERT']
+    # names=['LogReg', 'RNN', 'BERT']
+    names=['BERT']
     for name, classifier_algo in zip(names, classifiers):
         plt.figure()
         print(f"Running LOO with {name} classifier")
@@ -102,6 +106,8 @@ def main():
         # print(sorted_results[::-1])
         results_remove_best=[dev_baseline]
         results_remove_worst=[dev_baseline]
+        auc_best=auc(values_x, results_remove_best)
+        print(f"Area under curve is {auc_best}")
         print("Evaluation of LOO, removing best data by bs of 10")
         for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
@@ -134,7 +140,10 @@ def main():
             _, _, test_res = Classifier.train_test(train_eval, dev, test)
             results_remove_worst.append(test_res)
             print(f"Results of {test_res}")
+        auc_worst=auc(values_x, results_remove_worst)
+        print(f"Area under curve is {auc_worst}")
 
+        print(f"Final metric: {auc_worst-auc_best}")
 
         X=[i for i in range(0,55,5)]
         X.extend([i for i in range(0,55,5)])
@@ -146,8 +155,8 @@ def main():
         print(Y)
         data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
-        plt.title(f'{name}-TMC')
-        plt.savefig(f'{name}TMC.png')
+        plt.title(f'Graphes/{name}-TMC')
+        plt.savefig(f'Graphes/{name}TMC.png')
 
 
 if __name__ == '__main__':
