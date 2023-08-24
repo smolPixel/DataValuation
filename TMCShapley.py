@@ -51,7 +51,6 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     for t in range(1, ITER_NUM, 1):
         train_iter = copy.deepcopy(train)
         permuatation = train_iter.permute_data()
-        print(permuatation)
         for j in tqdm(range(1, len(train_iter))):
             if truncation_counter>TRUNC_MAX and abs(dev_baseline-vals[j-1])<PT:
                 vals[j]=vals[j-1]
