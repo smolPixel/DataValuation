@@ -40,7 +40,7 @@ def main():
     classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
     # names=['BERT']
     # names=['LogReg', 'RNN', 'BERT']
-    names=['LogReg']
+    names=['BERT']
     """Calculating values for LOO"""
     for name, classifier_algo in zip(names, classifiers):
         values=[0 for i in range(DATASET_SIZE)]
@@ -93,7 +93,8 @@ def main():
             _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
             results_remove_best.append(test_res)
             print(f"Results of {test_res}")
-        print(f"Area under curve is {auc(values_x, results_remove_best)}")
+        auc_best=auc(values_x, results_remove_best)
+        print(f"Area under curve is {auc_best}")
         print("Evaluation of LOO, removing worst data by bs of 10")
         for i in range(5, 55, 5):
             train_eval = copy.deepcopy(train)
@@ -110,7 +111,10 @@ def main():
             _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
             results_remove_worst.append(test_res)
             print(f"Results of {test_res}")
-        print(f"Area under curve is {auc(values_x, results_remove_worst)}")
+        auc_worst=auc(values_x, results_remove_worst)
+        print(f"Area under curve is {auc_worst}")
+
+        print(f"Final metric: {auc_worst-auc_best}")
 
         X=[i for i in range(0,55,5)]
         X.extend([i for i in range(0,55,5)])
@@ -118,13 +122,11 @@ def main():
         strats.extend(['remove good' for i in range(0,55,5)])
         Y=results_remove_worst
         Y.extend(results_remove_best)
-        print(X)
-        print(Y)
         data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
-        plt.title(f'{name}-LOO-{NUM_ITER}-iters')
-        plt.savefig(f'{name}LOO{NUM_ITER}iter.png')
-    fds
+        plt.title(f'Graphes/{name}-LOO-{NUM_ITER}-iters')
+        plt.savefig(f'Graphes/{name}LOO{NUM_ITER}iter.png')
+
     # print("Running LOO with RNN classifier")
     #
     # set_seed()
