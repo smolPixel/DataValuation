@@ -32,7 +32,7 @@ def set_seed(seed=42):
 def main():
     set_seed()
     DATASET_SIZE=100
-    NUM_ITER=10
+    NUM_ITER=1
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
@@ -50,7 +50,6 @@ def main():
         for t in range(1, NUM_ITER+1, 1):
             print(t)
             set_seed(seed=t)
-            train, dev, test = initialize_dataset(DATASET_SIZE)
             Classifier = classifier_algo(train)
             results=Classifier.train_test(train, dev, test)
             dev_baseline=results[1]
@@ -69,8 +68,6 @@ def main():
                 #If the perfo augments when removing (if diff is positive), then this was a bad data
                 values[i] = ((t - 1) / t) * values[i] + (dev_res-dev_baseline) / t
                 # values[i]=(dev_res-dev_baseline)
-        print(values)
-        fd
         results=values
         sorted_results=np.argsort(results)
         # print(sorted_results)
@@ -83,6 +80,7 @@ def main():
         for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
             eliminated=0
+            #Higher values = bad data , lower values = good data
             for ss in sorted_results:
                 if eliminated == i:
                     print(f"Testing with dataset of size of {len(train_eval)}")
