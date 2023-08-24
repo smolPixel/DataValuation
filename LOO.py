@@ -31,7 +31,7 @@ def set_seed(seed=42):
 
 def main():
     set_seed()
-    DATASET_SIZE=1000
+    DATASET_SIZE=100
     NUM_ITER=10
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
@@ -50,6 +50,7 @@ def main():
         for t in range(1, NUM_ITER+1, 1):
             print(t)
             set_seed(seed=t)
+            train, dev, test = initialize_dataset(DATASET_SIZE)
             Classifier = classifier_algo(train)
             results=Classifier.train_test(train, dev, test)
             dev_baseline=results[1]
