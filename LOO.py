@@ -18,6 +18,7 @@ from tqdm import tqdm
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.metrics import auc
 
 from Classifier.LogReg import LogReg_Classifier
 from Classifier.RNN import RNN_Classifier
@@ -31,14 +32,16 @@ def set_seed(seed=42):
 def main():
     set_seed()
     DATASET_SIZE=100
-    NUM_ITER=10
+    NUM_ITER=1
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
     # classifiers=[Bert_Classifier]
     classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
     # names=['BERT']
-    names=['LogReg', 'RNN', 'BERT']
+    # names=['LogReg', 'RNN', 'BERT']
+    names=['LogReg']
+    """Calculating values for LOO"""
     for name, classifier_algo in zip(names, classifiers):
         values=[0 for i in range(DATASET_SIZE)]
         plt.figure()
@@ -72,6 +75,9 @@ def main():
         # print(sorted_results[::-1])
         results_remove_best=[test_baseline]
         results_remove_worst=[test_baseline]
+        values_x=[i for i in range(5, 55, 5)]
+        print(values_x)
+        fds
         print("Evaluation of LOO, removing best data by bs of 10")
         for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
@@ -88,6 +94,7 @@ def main():
             _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
             results_remove_best.append(test_res)
             print(f"Results of {test_res}")
+
         print("Evaluation of LOO, removing worst data by bs of 10")
         for i in range(5, 55, 5):
             train_eval = copy.deepcopy(train)
