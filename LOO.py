@@ -31,7 +31,7 @@ def set_seed(seed=42):
 
 def main():
     set_seed()
-    DATASET_SIZE=100
+    DATASET_SIZE=1000
     NUM_ITER=10
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
