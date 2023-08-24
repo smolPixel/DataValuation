@@ -108,8 +108,6 @@ def main():
         results_remove_worst=[dev_baseline]
         values_x = [0]
         values_x.extend([i for i in range(5, 55, 5)])
-        auc_best=auc(values_x, results_remove_best)
-        print(f"Area under curve is {auc_best}")
         print("Evaluation of LOO, removing best data by bs of 10")
         for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
@@ -126,6 +124,10 @@ def main():
             _, _, test_res = Classifier.train_test(train_eval, dev, test)
             results_remove_best.append(test_res)
             print(f"Results of {test_res}")
+
+        auc_best=auc(values_x, results_remove_best)
+        print(f"Area under curve is {auc_best}")
+        
         print("Evaluation of LOO, removing worst data by bs of 10")
         for i in range(5, 55, 5):
             train_eval = copy.deepcopy(train)
