@@ -47,7 +47,7 @@ def main():
         plt.figure()
         print(f"Running LOO with {name} classifier")
 
-        values=[random.random() for i in range(values)]
+        values=[random.random() for i in range(DATASET_SIZE)]
         print(values)
         fds
                 # values[i]=(dev_res-dev_baseline)

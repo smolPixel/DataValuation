@@ -63,25 +63,7 @@
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_9.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/to_generate_chatgpt.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/to_generate_chatgpt.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/to_generate_ogsentences.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/to_generate_ogsentences.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BERTDataOOB.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BERTGradient.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BERTLOO.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BERTLOO5iter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BERTTMC.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LOO.py" beforeDir="false" afterPath="$PROJECT_DIR$/LOO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogRegDataOOB.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogRegLOO.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogRegLOO10iter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogRegLOO5iter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogRegTMC.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RNNDataOOB.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RNNGradient.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RNNLOO.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RNNLOO10iter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RNNLOO5iter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RNNTMC.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Random.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
