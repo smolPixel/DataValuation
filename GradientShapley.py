@@ -19,6 +19,7 @@ from tqdm import tqdm
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.metrics import auc
 
 from Classifier.LogReg import LogReg_Classifier
 from Classifier.RNN import RNN_Classifier
@@ -138,6 +139,8 @@ def main():
             _, _, test_res = Classifier.train_test(train_eval, dev, test)
             results_remove_best.append(test_res)
             print(f"Results of {test_res}")
+        auc_best = auc(values_x, results_remove_best)
+        print(f"Area under curve is {auc_best}")
         print("Evaluation of LOO, removing worst data by bs of 10")
         for i in range(5, 55, 5):
             train_eval = copy.deepcopy(train)
@@ -154,7 +157,10 @@ def main():
             _, _, test_res = Classifier.train_test(train_eval, dev, test)
             results_remove_worst.append(test_res)
             print(f"Results of {test_res}")
+        auc_worst = auc(values_x, results_remove_worst)
+        print(f"Area under curve is {auc_worst}")
 
+        print(f"Final metric: {auc_worst - auc_best}")
 
         X=[i for i in range(0,55,5)]
         X.extend([i for i in range(0,55,5)])

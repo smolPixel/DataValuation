@@ -66,7 +66,6 @@
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/to_generate_ogsentences.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/to_generate_ogsentences.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GradientShapley.py" beforeDir="false" afterPath="$PROJECT_DIR$/GradientShapley.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TMCShapley.py" beforeDir="false" afterPath="$PROJECT_DIR$/TMCShapley.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
