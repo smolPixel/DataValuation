@@ -36,15 +36,13 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr):
     #dev_baseline= V(D) in paper
 
     #For now let's put PT at 2%, aka, when we get at 2% of the value of dev_baseline we are satisfied
-    PT=0.02
-    #TODO FINE TUNING WITH ONE EPOCH
-
+    ITER=10
     #baseline is 0.5 for binary dataset
     vals=[0.5 for i in range(len(train))]
     phis=[0 for i in range(len(train))]
     phis_prec=phis
     t=1
-    for t in tqdm(range(1, 10, 1)):
+    for t in tqdm(range(1, ITER, 1)):
         train_iter = copy.deepcopy(train)
         permuatation = train_iter.permute_data()
         set_seed()
@@ -101,7 +99,7 @@ def main():
     # 1e-2
 
     # names=['BERT']
-    names=['RNN', 'BERT']
+    names=['BERT']
     for name, classifier_algo, lr in zip(names, classifiers, lrs):
         if name=="RNN":
             continue
@@ -122,8 +120,8 @@ def main():
         sorted_results=np.argsort(shapleys)
         # print(sorted_results)
         # print(sorted_results[::-1])
-        results_remove_best=[dev_baseline]
-        results_remove_worst=[dev_baseline]
+        results_remove_best=[test_baseline]
+        results_remove_worst=[test_baseline]
         print("Evaluation of LOO, removing best data by bs of 10")
         for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
