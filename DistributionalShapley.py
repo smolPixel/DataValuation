@@ -38,9 +38,11 @@ def sample_num_data(num_data):
     # print(sum(weights))
     num_dat = random.random()
     for i, cs in enumerate(cum_sum):
-        if num_dat<weights[i-1]:
+        if i==0 and num_dat<cs:
+            return 1
+        if weights[i-1]<num_dat<cs:
             #If it's greater, we have gone too far:
-            continue
+            return i
 
 
 def main():
