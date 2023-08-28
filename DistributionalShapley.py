@@ -37,6 +37,7 @@ def main():
     weights=[DATASET_SIZE-i for i in range(DATASET_SIZE)]
     weights=[ww/sum(weights) for ww in weights]
     print(weights)
+    print(sum(weights))
     fds
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
