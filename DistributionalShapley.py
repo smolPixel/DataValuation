@@ -34,18 +34,13 @@ def sample_num_data(num_data):
     weights = [num_data - i for i in range(num_data)]
     weights = [ww / sum(weights) for ww in weights]
     cum_sum = [sum(weights[0:x:1]) for x in range(1, len(weights) + 1)]
-    print(cum_sum)
-    print(len(cum_sum))
     # print(weights)
     # print(sum(weights))
     num_dat = random.random()
-    print(num_dat)
     for i, cs in enumerate(cum_sum):
-        if num_dat<cs:
+        if num_dat<weights[i-1]:
             #If it's greater, we have gone too far:
             continue
-        elif num_dat>cs:
-            return i-1
 
 
 def main():
