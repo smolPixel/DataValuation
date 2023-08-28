@@ -63,7 +63,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
                 train_trunc=copy.deepcopy(train_iter)
                 train_trunc.truncate(permuatation[:j])
                 new_point=permuatation[j-1]
-                set_seed(seed=t)
+                set_seed(random.randint(0, 10000))
                 # print(len(train_trunc))
                 Classifier = classifier_algo(train_trunc)
                 _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
