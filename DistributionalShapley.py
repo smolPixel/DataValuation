@@ -36,6 +36,8 @@ def main():
     NUM_DATA_IN_BOOTSTRAP=25
     weights=[DATASET_SIZE-i for i in range(DATASET_SIZE)]
     weights=[ww/sum(weights) for ww in weights]
+    cum_sum=[sum(weights[0:x:1]) for x in range(0, len(weights)+1)]
+    print(cum_sum)
     print(weights)
     print(sum(weights))
     fds
