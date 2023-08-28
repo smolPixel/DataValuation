@@ -1,4 +1,4 @@
-"""Baseline with LOO experiments"""
+"""Distributional Shapley as in https://arxiv.org/pdf/2002.12334.pdf"""
 
 
 #Main file
@@ -31,7 +31,7 @@ def set_seed(seed=42):
 def main():
     set_seed()
     DATASET_SIZE=100
-    NUM_BOOTSTRAP=100
+    NUM_BOOTSTRAP=500
     NUM_DATA_IN_BOOTSTRAP=25
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
