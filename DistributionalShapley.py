@@ -48,12 +48,8 @@ def sample_num_data(num_data):
 def main():
     set_seed()
     DATASET_SIZE=100
-    NUM_BOOTSTRAP=500
-    NUM_DATA_IN_BOOTSTRAP=25
-    for j in range(100):
-        print(sample_num_data(DATASET_SIZE))
+    NUM_BOOTSTRAP=50
 
-    fds
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
@@ -72,6 +68,7 @@ def main():
         test_baseline = results[2]
 
         for t in range(1, NUM_BOOTSTRAP+1, 1):
+            NUM_DATA_IN_BOOTSTRAP=sample_num_data(DATASET_SIZE)
             train_iter = copy.deepcopy(train)
             boostrap = train_iter.bootstrap_data(NUM_DATA_IN_BOOTSTRAP)
             set_seed(random.randint(0, 10000))
