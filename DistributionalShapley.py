@@ -29,18 +29,33 @@ def set_seed(seed=42):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
+
+def sample_num_data(num_data):
+    weights = [num_data - i for i in range(num_data)]
+    weights = [ww / sum(weights) for ww in weights]
+    cum_sum = [sum(weights[0:x:1]) for x in range(1, len(weights) + 1)]
+    print(cum_sum)
+    print(len(cum_sum))
+    # print(weights)
+    # print(sum(weights))
+    num_dat = random.random()
+    print(num_dat)
+    for i, cs in enumarate(cum_sum):
+        if num_dat<cs:
+            #If it's greater, we have gone too far:
+            continue
+        elif num_dat>cs:
+            return i-1
+
+
 def main():
     set_seed()
     DATASET_SIZE=100
     NUM_BOOTSTRAP=500
     NUM_DATA_IN_BOOTSTRAP=25
-    weights=[DATASET_SIZE-i for i in range(DATASET_SIZE)]
-    weights=[ww/sum(weights) for ww in weights]
-    cum_sum=[sum(weights[0:x:1]) for x in range(1, len(weights)+1)]
-    print(cum_sum)
-    print(len(cum_sum))
-    # print(weights)
-    # print(sum(weights))
+    for j in range(100):
+        print(sample_num_data(DATASET_SIZE))
+
     fds
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
