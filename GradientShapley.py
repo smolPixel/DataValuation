@@ -37,7 +37,7 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr):
     #dev_baseline= V(D) in paper
 
     #For now let's put PT at 2%, aka, when we get at 2% of the value of dev_baseline we are satisfied
-    ITER=50
+    ITER=10
     #baseline is 0.5 for binary dataset
     vals=[0.5 for i in range(len(train))]
     phis=[0 for i in range(len(train))]
@@ -46,7 +46,7 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr):
     for t in tqdm(range(1, ITER+1, 1)):
         train_iter = copy.deepcopy(train)
         permuatation = train_iter.permute_data()
-        set_seed()
+        # set_seed()
         # print(len(train_trunc))
         # 1e-6: 50.9 dont learn
         # 1e-5:49.1
