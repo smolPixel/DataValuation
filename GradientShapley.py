@@ -45,8 +45,9 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr):
     t=1
     for t in tqdm(range(1, ITER+1, 1)):
         train_iter = copy.deepcopy(train)
+        #We want a random shuffle of the data every split, but the same network
+        set_seed(random.randint(0, 10000))
         permuatation = train_iter.permute_data()
-        # set_seed()
         # print(len(train_trunc))
         # 1e-6: 50.9 dont learn
         # 1e-5:49.1
