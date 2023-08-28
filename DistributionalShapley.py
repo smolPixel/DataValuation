@@ -40,7 +40,7 @@ def sample_num_data(num_data):
     # print(sum(weights))
     num_dat = random.random()
     print(num_dat)
-    for i, cs in enumarate(cum_sum):
+    for i, cs in enumerate(cum_sum):
         if num_dat<cs:
             #If it's greater, we have gone too far:
             continue
