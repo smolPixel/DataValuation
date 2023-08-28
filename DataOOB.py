@@ -32,7 +32,7 @@ def main():
     set_seed()
     DATASET_SIZE=100
     NUM_BOOTSTRAP=10
-    NUM_DATA_IN_BOOTSTRAP=25
+    NUM_DATA_IN_BOOTSTRAP=50
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
