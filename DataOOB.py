@@ -37,9 +37,9 @@ def main():
 
     print(f"Initialized SST-2 with length of {len(train)}")
     # classifiers=[Bert_Classifier]
-    classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
+    classifiers=[Bert_Classifier]
     # names=['BERT']
-    names=['LogReg', 'RNN', 'BERT']
+    names=['BERT']
     for name, classifier_algo in zip(names, classifiers):
         values=[[] for i in range(DATASET_SIZE)]
         plt.figure()
@@ -53,7 +53,7 @@ def main():
         for t in range(1, NUM_BOOTSTRAP+1, 1):
             train_iter = copy.deepcopy(train)
             boostrap = train_iter.bootstrap_data(NUM_DATA_IN_BOOTSTRAP)
-            set_seed()
+            set_seed(random.randint(0, 10000))
             Classifier = classifier_algo(train_iter)
             results=Classifier.train_test(train_iter, dev, test)
             dev_results=results[1]
