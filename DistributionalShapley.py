@@ -1,4 +1,5 @@
-"""Distributional Shapley as in https://arxiv.org/pdf/2002.12334.pdf"""
+"""Fast Distributional Shapley as in https://arxiv.org/pdf/2002.12334.pdf. AFAK, same as DataOOB but with a weighting scheme to privilege
+sampling small subsets"""
 
 
 #Main file
@@ -33,6 +34,10 @@ def main():
     DATASET_SIZE=100
     NUM_BOOTSTRAP=500
     NUM_DATA_IN_BOOTSTRAP=25
+    weights=[DATASET_SIZE-i for i in range(DATASET_SIZE)]
+    weights=[ww/sum(weights) for ww in weights]
+    print(weights)
+    fds
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
