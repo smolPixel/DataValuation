@@ -37,7 +37,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
 
     #For now let's put PT at 2%, aka, when we get at 2% of the value of dev_baseline we are satisfied
     PT=0.02
-    TRUNC_MAX=10
+    TRUNC_MAX=5
     ITER_NUM=10
 
     # train_iter=copy.deepcopy(train)
@@ -50,6 +50,7 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     truncation_counter=0
     for t in range(1, ITER_NUM, 1):
         train_iter = copy.deepcopy(train)
+        set_seed(random.randint(0, 10000))
         permuatation = train_iter.permute_data()
         for j in tqdm(range(1, len(train_iter))):
             if truncation_counter>TRUNC_MAX and abs(dev_baseline-vals[j-1])<PT:
@@ -63,7 +64,6 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
                 train_trunc=copy.deepcopy(train_iter)
                 train_trunc.truncate(permuatation[:j])
                 new_point=permuatation[j-1]
-                set_seed(random.randint(0, 10000))
                 # print(len(train_trunc))
                 Classifier = classifier_algo(train_trunc)
                 _, vjt, _ = Classifier.train_test(train_trunc, dev, test)
