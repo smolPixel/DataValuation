@@ -71,7 +71,7 @@ def get_validation_grad(model, dev):
 def get_HPV(train_dataset, algo, grads):
     GRADIENT_ACCUMULATION_STEP=10
     C=1e7
-
+    R=10
     train_sampler = RandomSampler(train_dataset,
                                   replacement=True,
                                   num_samples=8000)
@@ -141,7 +141,7 @@ def get_HPV(train_dataset, algo, grads):
                     a + (b / C).cpu().float() for a, b in zip(final_res, res)
                 ]
 
-            final_res = [a / float(args.r) for a in final_res]
+            final_res = [a / float(R) for a in final_res]
             return final_res
 
 def InfluenceFunction(train, dev, test, classifier_algo):
