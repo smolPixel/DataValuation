@@ -24,7 +24,8 @@ from sklearn.metrics import auc
 from Classifier.LogReg import LogReg_Classifier
 from Classifier.RNN import RNN_Classifier
 from Classifier.BERT import Bert_Classifier
-from torch.utils.data import DataLoader
+from torch.utils.data import (DataLoader, RandomSampler, SequentialSampler,
+                              TensorDataset)
 def set_seed(seed=42):
     random.seed(seed)
     np.random.seed(seed)
