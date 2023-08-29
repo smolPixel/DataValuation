@@ -167,7 +167,7 @@ def main():
 
     print(f"Initialized SST-2 with length of {len(train)}")
     # classifiers=[Bert_Classifier]
-    classifiers=[RNN_Classifier, Bert_Classifier]
+    classifiers=[Bert_Classifier]
     lrs=[1e-3, 1e-5]
     # Bert 1e-5 : 61.3 but overfits
     # 1e-6: 50.9
