@@ -194,7 +194,7 @@ def main():
 
         results=[]
 
-        influenceFunc=InfluenceFunction(train, dev, test, classifier_algo)
+        influenceFunc=InfluenceFunction(train, dev, test, Classifier)
         sorted_results=np.argsort(shapleys)
         # print(sorted_results)
         # print(sorted_results[::-1])
