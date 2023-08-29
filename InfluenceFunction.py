@@ -54,7 +54,7 @@ def get_validation_grad(model, dev):
         attention_mask = encoding['attention_mask'].cuda()
         # print(encoding)
         labels = batch['label'].cuda()
-        outputs = algo(input_ids, attention_mask=attention_mask, labels=labels)
+        outputs = algo.model(input_ids, attention_mask=attention_mask, labels=labels)
         loss = outputs[0]
         loss.backward()
         grad = []
