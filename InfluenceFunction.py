@@ -35,8 +35,8 @@ def set_seed(seed=42):
 
 def get_validation_grad(model, eval_dataloader):
     algo=model.algo
-    algo.eval()
-    algo.zero_grad()
+    algo.model.eval()
+    algo.optimizer.zero_grad()
     dev_loader = DataLoader(
         dataset=dev,
         batch_size=16,
