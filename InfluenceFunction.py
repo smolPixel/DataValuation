@@ -69,12 +69,15 @@ def get_validation_grad(model, dev):
         return grad
 
 def get_HPV(train_dataset, algo, grads):
+    GRADIENT_ACCUMULATION_STEP=10
+
     train_sampler = RandomSampler(train_dataset,
                                   replacement=True,
                                   num_samples=8000)
     train_dataloader = DataLoader(train_dataset,
                                   sampler=train_sampler,
-                                  batch_size=10 // 10)
+                                  batch_size=10 // GRADIENT_ACCUMULATION_STEP)
+
 
     no_decay = ['bias', 'LayerNorm.weight']
     final_res = None
@@ -98,7 +101,7 @@ def get_HPV(train_dataset, algo, grads):
             grad = []
             H = 0
             for i, (g, g_v) in enumerate(zip(grad_list, res)):
-                H += (g * g_v).sum() / args.gradient_accumulation_steps
+                H += (g * g_v).sum() / GRADIENT_ACCUMULATION_STEP
             # H = grad @ v
             H.backward()
             print(H)
