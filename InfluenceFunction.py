@@ -34,31 +34,28 @@ def set_seed(seed=42):
 
 
 def get_validation_grad(model, eval_dataloader):
-
-    for batch in tqdm(eval_dataloader, desc="Calculating validation grad"):
+    model.eval()
+    model.zero_grad()
+    dev_loader = DataLoader(
+        dataset=dev,
+        batch_size=16,
+        shuffle=False,
+        num_workers=4,  # cpu_count(),
+        pin_memory=torch.cuda.is_available()
+    )
+    for batch in tqdm(dev_loader, desc="Calculating validation grad"):
+        #We basically accumulate grad over the whole validation dataset
         #if count > 10:
-        print(batch)
-        fds
         #    break
-        model.eval()
-        batch = tuple(t.to(args.device) for t in batch)
-
-        inputs = {
-            'input_ids':
-            batch[0],
-            'attention_mask':
-            batch[1],
-            'token_type_ids':
-            batch[2] if args.model_type in ['bert', 'xlnet'] else
-            None,  # XLM don't use segment_ids
-            'labels':
-            None
-        }
-        outputs = model(**inputs)
-        logits = outputs[0]
-        loss = F.cross_entropy(logits, batch[3], reduction='sum')
+        text_batch = batch['sentence']
+        encoding = model.tokenizer(text_batch, return_tensors='pt', padding=True, truncation=True)
+        input_ids = encoding['input_ids'].cuda()
+        attention_mask = encoding['attention_mask'].cuda()
+        # print(encoding)
+        labels = batch['label'].cuda()
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = outputs[0]
         loss.backward()
-        count += 1
         grad = []
         for p in model.parameters():
             if p.grad is None:
@@ -74,15 +71,9 @@ def InfluenceFunction(train, dev, test, classifier_algo):
     # Step 1: Get the HPV
     R=10
 
-    dev_loader = DataLoader(
-        dataset=dev,
-        batch_size=16,
-        shuffle=False,
-        num_workers=4,  # cpu_count(),
-        pin_memory=torch.cuda.is_available()
-    )
     #First, get validation gradient
     grad=get_validation_grad(classifier_algo, dev)
+    print(grad)
     fds
     # for r in range():
     #     res = [w.clone().cuda() for w in grad]
