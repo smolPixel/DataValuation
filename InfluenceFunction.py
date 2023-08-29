@@ -32,8 +32,139 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 
+
+def get_validation_grad(model, eval_dataloader):
+
+    for batch in tqdm(eval_dataloader, desc="Calculating validation grad"):
+        #if count > 10:
+        print(batch)
+        fds
+        #    break
+        model.eval()
+        batch = tuple(t.to(args.device) for t in batch)
+
+        inputs = {
+            'input_ids':
+            batch[0],
+            'attention_mask':
+            batch[1],
+            'token_type_ids':
+            batch[2] if args.model_type in ['bert', 'xlnet'] else
+            None,  # XLM don't use segment_ids
+            'labels':
+            None
+        }
+        outputs = model(**inputs)
+        logits = outputs[0]
+        loss = F.cross_entropy(logits, batch[3], reduction='sum')
+        loss.backward()
+        count += 1
+        grad = []
+        for p in model.parameters():
+            if p.grad is None:
+                print("wrong")
+            #print(len(eval_dataset))
+            grad.append((p.grad.data / len(eval_dataset)).cpu())
+
+        #print(grad)
+        return grad
+
 def InfluenceFunction(train, dev, test, classifier_algo):
     #Calculating the values of each point in the training set with influence function
+    # Step 1: Get the HPV
+    R=10
+
+    dev_loader = DataLoader(
+        dataset=self.training_set,
+        batch_size=self.argdict['batch_size'],
+        shuffle=False,
+        num_workers=4,  # cpu_count(),
+        pin_memory=torch.cuda.is_available()
+    )
+    #First, get validation gradient
+    grad=get_validation_grad(classifier_algo, dev)
+
+    for r in range():
+        res = [w.clone().cuda() for w in grad]
+        model.zero_grad()
+        for step, batch in enumerate(
+                tqdm(train_dataloader, desc="Calculating HVP")):
+            model.eval()
+
+            batch = tuple(t.to(args.device) for t in batch)
+
+            inputs = {
+                'input_ids':
+                    batch[0],
+                'attention_mask':
+                    batch[1],
+                'token_type_ids':
+                    batch[2] if args.model_type in ['bert', 'xlnet'] else
+                    None,  # XLM don't use segment_ids
+                'labels':
+                    None
+            }
+
+            length = inputs["attention_mask"].sum(2).max().item()
+            # print(length)
+            # print(inputs["attention_mask"])
+            # x = input("stop")
+            inputs["input_ids"] = inputs["input_ids"][:, :length]
+            inputs["attention_mask"] = inputs["attention_mask"][:, :length]
+            outputs = model(**inputs)
+            logits = outputs[0]
+
+            loss = F.cross_entropy(logits, batch[3], reduction='mean')
+
+            grad_list = torch.autograd.grad(loss,
+                                            model.parameters(),
+                                            create_graph=True)
+            grad = []
+            H = 0
+            for i, (g, g_v) in enumerate(zip(grad_list, res)):
+                H += (g * g_v).sum() / args.gradient_accumulation_steps
+            # H = grad @ v
+            H.backward()
+
+            # grad = []
+            if (step + 1) % args.gradient_accumulation_steps == 0:
+
+                print(res[20])
+
+                for i, ((n, p),
+                        v_p) in enumerate(zip(model.named_parameters(), res)):
+                    try:
+                        if not any(nd in n for nd in no_decay):
+                            res[i] = (1 - args.damping) * v_p - (
+                                p.grad.data.add_(args.weight_decay,
+                                                 v_p)) / args.c + v[i].cuda()
+                        else:
+                            res[i] = (1 - args.damping) * v_p - (
+                                p.grad.data) / args.c + v[i].cuda()
+                    except RuntimeError:
+
+                        v_p = v_p.cpu()
+
+                        p_grad = p.grad.data.cpu()
+
+                        if not any(nd in n for nd in no_decay):
+                            res[i] = ((1 - args.damping) * v_p -
+                                      (p_grad.add_(args.weight_decay, v_p)) /
+                                      args.c + v[i]).cuda()
+                        else:
+                            res[i] = ((1 - args.damping) * v_p -
+                                      (p_grad) / args.c + v[i]).cuda()
+                model.zero_grad()
+
+        if final_res is None:
+            final_res = [(b / args.c).cpu().float() for b in res]
+        else:
+            final_res = [
+                a + (b / args.c).cpu().float() for a, b in zip(final_res, res)
+            ]
+
+    final_res = [a / float(args.r) for a in final_res]
+
 
 
     return phis
@@ -71,7 +202,7 @@ def main():
 
         results=[]
 
-        shapleys=Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr)
+        influenceFunc=InfluenceFunction(train, dev, test, classifier_algo)
         sorted_results=np.argsort(shapleys)
         # print(sorted_results)
         # print(sorted_results[::-1])
