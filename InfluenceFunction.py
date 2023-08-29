@@ -78,7 +78,7 @@ def get_HPV(train_dataset, algo, grads):
 
     no_decay = ['bias', 'LayerNorm.weight']
     final_res = None
-    for r in trange(10):
+    for r in range(10):
         res = [w.clone().cuda() for w in grads]
         algo.optimizer.zero_grad()
         for step, batch in enumerate(
