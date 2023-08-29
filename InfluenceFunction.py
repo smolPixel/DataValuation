@@ -144,6 +144,61 @@ def get_HPV(train_dataset, algo, grads):
             final_res = [a / float(R) for a in final_res]
             return final_res
 
+def get_influence(training_set, algo, HPV):
+    eval_sampler = SequentialSampler(train_dataset)
+    eval_dataloader = DataLoader(train_dataset,
+                                 sampler=eval_sampler,
+                                 batch_size=1)
+    for batch in tqdm(eval_dataloader, desc="Calculating validation grad"):
+        # if count > 10:
+        #    break
+        model.eval()
+        batch = tuple(t.to(args.device) for t in batch)
+
+        inputs = {
+            'input_ids':
+                batch[0],
+            'attention_mask':
+                batch[1],
+            'token_type_ids':
+                batch[2] if args.model_type in ['bert', 'xlnet'] else
+                None,  # XLM don't use segment_ids
+            'labels':
+                None
+        }
+        model.zero_grad()
+        outputs = model(**inputs)
+        logits = outputs[0]
+        loss = F.cross_entropy(logits, batch[3], reduction='mean')
+        loss.backward()
+        count += 1
+        influence = 0
+        for i, ((n, p), v) in enumerate(zip(model.named_parameters(), HVP)):
+            if p.grad is None:
+                print("wrong")
+            else:
+                if not any(nd in n for nd in no_decay):
+                    influence += (
+                                         (p.grad.data.add_(args.weight_decay, p.data)) *
+                                         v).sum() * -1
+
+
+                #                    influence += ((p.grad.data)*v).sum() * -1
+                else:
+                    influence += ((p.grad.data) * v).sum() * -1
+
+        if influence.item() < 0:
+            negative_count += 1
+        influence_list.append(influence.item())
+        if count % 100 == 0:
+            print(influence.item())
+            print(negative_count / count)
+    influence_list = np.array(influence_list)
+    print(influence_list)
+    fds
+    return influence_list
+
+
 def InfluenceFunction(train, dev, test, classifier_algo):
     #Calculating the values of each point in the training set with influence function
     # Step 1: Get the HPV
@@ -152,6 +207,7 @@ def InfluenceFunction(train, dev, test, classifier_algo):
     #First, get validation gradient
     grad=get_validation_grad(classifier_algo, dev)
     HPV=get_HPV(train, classifier_algo, grad)
+    get_influence(training_set, classifier_algo, HPV)
     print(HPV)
     fds
 
