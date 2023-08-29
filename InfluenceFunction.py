@@ -70,6 +70,7 @@ def get_validation_grad(model, dev):
 
 def get_HPV(train_dataset, algo, grads):
     GRADIENT_ACCUMULATION_STEP=10
+    C=1e7
 
     train_sampler = RandomSampler(train_dataset,
                                   replacement=True,
@@ -114,10 +115,10 @@ def get_HPV(train_dataset, algo, grads):
                         if not any(nd in n for nd in no_decay):
                             res[i] = (1 - args.damping) * v_p - (
                                 p.grad.data.add_(args.weight_decay,
-                                                 v_p)) / args.c + v[i].cuda()
+                                                 v_p)) / C + v[i].cuda()
                         else:
                             res[i] = (1 - args.damping) * v_p - (
-                                p.grad.data) / args.c + v[i].cuda()
+                                p.grad.data) / C + v[i].cuda()
                     except RuntimeError:
 
                         v_p = v_p.cpu()
@@ -127,17 +128,17 @@ def get_HPV(train_dataset, algo, grads):
                         if not any(nd in n for nd in no_decay):
                             res[i] = ((1 - args.damping) * v_p -
                                       (p_grad.add_(args.weight_decay, v_p)) /
-                                      args.c + v[i]).cuda()
+                                      C + v[i]).cuda()
                         else:
                             res[i] = ((1 - args.damping) * v_p -
-                                      (p_grad) / args.c + v[i]).cuda()
+                                      (p_grad) / C + v[i]).cuda()
                 model.zero_grad()
 
             if final_res is None:
-                final_res = [(b / args.c).cpu().float() for b in res]
+                final_res = [(b / C).cpu().float() for b in res]
             else:
                 final_res = [
-                    a + (b / args.c).cpu().float() for a, b in zip(final_res, res)
+                    a + (b / C).cpu().float() for a, b in zip(final_res, res)
                 ]
 
             final_res = [a / float(args.r) for a in final_res]
