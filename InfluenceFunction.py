@@ -34,8 +34,9 @@ def set_seed(seed=42):
 
 
 def get_validation_grad(model, eval_dataloader):
-    model.eval()
-    model.zero_grad()
+    algo=model.algo
+    algo.eval()
+    algo.zero_grad()
     dev_loader = DataLoader(
         dataset=dev,
         batch_size=16,
@@ -48,16 +49,16 @@ def get_validation_grad(model, eval_dataloader):
         #if count > 10:
         #    break
         text_batch = batch['sentence']
-        encoding = model.tokenizer(text_batch, return_tensors='pt', padding=True, truncation=True)
+        encoding = algo.tokenizer(text_batch, return_tensors='pt', padding=True, truncation=True)
         input_ids = encoding['input_ids'].cuda()
         attention_mask = encoding['attention_mask'].cuda()
         # print(encoding)
         labels = batch['label'].cuda()
-        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        outputs = algo(input_ids, attention_mask=attention_mask, labels=labels)
         loss = outputs[0]
         loss.backward()
         grad = []
-        for p in model.parameters():
+        for p in algo.parameters():
             if p.grad is None:
                 print("wrong")
             #print(len(eval_dataset))
