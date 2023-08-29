@@ -58,7 +58,7 @@ def get_validation_grad(model, dev):
         loss = outputs[0]
         loss.backward()
         grad = []
-        for p in algo.parameters():
+        for p in algo.model.parameters():
             if p.grad is None:
                 print("wrong")
             #print(len(eval_dataset))
