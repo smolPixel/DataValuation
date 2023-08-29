@@ -104,8 +104,44 @@ def get_HPV(train_dataset, algo, grads):
                 H += (g * g_v).sum() / GRADIENT_ACCUMULATION_STEP
             # H = grad @ v
             H.backward()
-            print(H)
-            fds
+            if (step + 1) % GRADIENT_ACCUMULATION_STEP == 0:
+
+                print(res[20])
+
+                for i, ((n, p),
+                        v_p) in enumerate(zip(model.named_parameters(), res)):
+                    try:
+                        if not any(nd in n for nd in no_decay):
+                            res[i] = (1 - args.damping) * v_p - (
+                                p.grad.data.add_(args.weight_decay,
+                                                 v_p)) / args.c + v[i].cuda()
+                        else:
+                            res[i] = (1 - args.damping) * v_p - (
+                                p.grad.data) / args.c + v[i].cuda()
+                    except RuntimeError:
+
+                        v_p = v_p.cpu()
+
+                        p_grad = p.grad.data.cpu()
+
+                        if not any(nd in n for nd in no_decay):
+                            res[i] = ((1 - args.damping) * v_p -
+                                      (p_grad.add_(args.weight_decay, v_p)) /
+                                      args.c + v[i]).cuda()
+                        else:
+                            res[i] = ((1 - args.damping) * v_p -
+                                      (p_grad) / args.c + v[i]).cuda()
+                model.zero_grad()
+
+            if final_res is None:
+                final_res = [(b / args.c).cpu().float() for b in res]
+            else:
+                final_res = [
+                    a + (b / args.c).cpu().float() for a, b in zip(final_res, res)
+                ]
+
+            final_res = [a / float(args.r) for a in final_res]
+            return final_res
 
 def InfluenceFunction(train, dev, test, classifier_algo):
     #Calculating the values of each point in the training set with influence function
