@@ -75,8 +75,8 @@ def InfluenceFunction(train, dev, test, classifier_algo):
     R=10
 
     dev_loader = DataLoader(
-        dataset=self.training_set,
-        batch_size=self.argdict['batch_size'],
+        dataset=dev,
+        batch_size=16,
         shuffle=False,
         num_workers=4,  # cpu_count(),
         pin_memory=torch.cuda.is_available()
