@@ -62,7 +62,7 @@ def get_validation_grad(model, dev):
             if p.grad is None:
                 print("wrong")
             #print(len(eval_dataset))
-            grad.append((p.grad.data / len(eval_dataset)).cpu())
+            grad.append((p.grad.data / len(dev)).cpu())
 
         #print(grad)
         return grad
