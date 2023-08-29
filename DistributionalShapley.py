@@ -132,8 +132,8 @@ def main():
         print(Y)
         data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
-        plt.title(f'{name}-DataOOB')
-        plt.savefig(f'{name}DataOOB.png')
+        plt.title(f'{name}-Distributional')
+        plt.savefig(f'{name}Distributional.png')
 
 
 if __name__ == '__main__':
