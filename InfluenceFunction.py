@@ -93,7 +93,7 @@ def get_HPV(train_dataset, algo, grads):
             outputs = algo.model(input_ids, attention_mask=attention_mask, labels=labels)
             loss = outputs[0]
             grad_list = torch.autograd.grad(loss,
-                                            model.parameters(),
+                                            algo.model.parameters(),
                                             create_graph=True)
             grad = []
             H = 0
