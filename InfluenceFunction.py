@@ -67,6 +67,42 @@ def get_validation_grad(model, dev):
         #print(grad)
         return grad
 
+def get_HPV(train_dataset, algo, grads):
+    train_sampler = RandomSampler(train_dataset,
+                                  replacement=True,
+                                  num_samples=8000)
+    train_dataloader = DataLoader(train_dataset,
+                                  sampler=train_sampler,
+                                  batch_size=10 // 10)
+
+    no_decay = ['bias', 'LayerNorm.weight']
+    final_res = None
+    for r in trange(10):
+        res = [w.clone().cuda() for w in grads]
+        algo.optimizer.zero_grad()
+        for step, batch in enumerate(
+                tqdm(train_dataloader, desc="Calculating HVP")):
+            algo.model.eval()
+            text_batch = batch['sentence']
+            encoding = algo.tokenizer(text_batch, return_tensors='pt', padding=True, truncation=True)
+            input_ids = encoding['input_ids'].cuda()
+            attention_mask = encoding['attention_mask'].cuda()
+            # print(encoding)
+            labels = batch['label'].cuda()
+            outputs = algo.model(input_ids, attention_mask=attention_mask, labels=labels)
+            loss = outputs[0]
+            grad_list = torch.autograd.grad(loss,
+                                            model.parameters(),
+                                            create_graph=True)
+            grad = []
+            H = 0
+            for i, (g, g_v) in enumerate(zip(grad_list, res)):
+                H += (g * g_v).sum() / args.gradient_accumulation_steps
+            # H = grad @ v
+            H.backward()
+            print(H)
+            fds
+
 def InfluenceFunction(train, dev, test, classifier_algo):
     #Calculating the values of each point in the training set with influence function
     # Step 1: Get the HPV
@@ -74,88 +110,10 @@ def InfluenceFunction(train, dev, test, classifier_algo):
 
     #First, get validation gradient
     grad=get_validation_grad(classifier_algo, dev)
-    print(grad)
+    HPV=get_HPV(train, classifier_algo, grad)
+    print(HPV)
     fds
-    # for r in range():
-    #     res = [w.clone().cuda() for w in grad]
-    #     model.zero_grad()
-    #     for step, batch in enumerate(
-    #             tqdm(train_dataloader, desc="Calculating HVP")):
-    #         model.eval()
-    #
-    #         batch = tuple(t.to(args.device) for t in batch)
-    #
-    #         inputs = {
-    #             'input_ids':
-    #                 batch[0],
-    #             'attention_mask':
-    #                 batch[1],
-    #             'token_type_ids':
-    #                 batch[2] if args.model_type in ['bert', 'xlnet'] else
-    #                 None,  # XLM don't use segment_ids
-    #             'labels':
-    #                 None
-    #         }
-    #
-    #         length = inputs["attention_mask"].sum(2).max().item()
-    #         # print(length)
-    #         # print(inputs["attention_mask"])
-    #         # x = input("stop")
-    #         inputs["input_ids"] = inputs["input_ids"][:, :length]
-    #         inputs["attention_mask"] = inputs["attention_mask"][:, :length]
-    #         outputs = model(**inputs)
-    #         logits = outputs[0]
-    #
-    #         loss = F.cross_entropy(logits, batch[3], reduction='mean')
-    #
-    #         grad_list = torch.autograd.grad(loss,
-    #                                         model.parameters(),
-    #                                         create_graph=True)
-    #         grad = []
-    #         H = 0
-    #         for i, (g, g_v) in enumerate(zip(grad_list, res)):
-    #             H += (g * g_v).sum() / args.gradient_accumulation_steps
-    #         # H = grad @ v
-    #         H.backward()
-    #
-    #         # grad = []
-    #         if (step + 1) % args.gradient_accumulation_steps == 0:
-    #
-    #             print(res[20])
-    #
-    #             for i, ((n, p),
-    #                     v_p) in enumerate(zip(model.named_parameters(), res)):
-    #                 try:
-    #                     if not any(nd in n for nd in no_decay):
-    #                         res[i] = (1 - args.damping) * v_p - (
-    #                             p.grad.data.add_(args.weight_decay,
-    #                                              v_p)) / args.c + v[i].cuda()
-    #                     else:
-    #                         res[i] = (1 - args.damping) * v_p - (
-    #                             p.grad.data) / args.c + v[i].cuda()
-    #                 except RuntimeError:
-    #
-    #                     v_p = v_p.cpu()
-    #
-    #                     p_grad = p.grad.data.cpu()
-    #
-    #                     if not any(nd in n for nd in no_decay):
-    #                         res[i] = ((1 - args.damping) * v_p -
-    #                                   (p_grad.add_(args.weight_decay, v_p)) /
-    #                                   args.c + v[i]).cuda()
-    #                     else:
-    #                         res[i] = ((1 - args.damping) * v_p -
-    #                                   (p_grad) / args.c + v[i]).cuda()
-    #             model.zero_grad()
-    #
-    #     if final_res is None:
-    #         final_res = [(b / args.c).cpu().float() for b in res]
-    #     else:
-    #         final_res = [
-    #             a + (b / args.c).cpu().float() for a, b in zip(final_res, res)
-    #         ]
-    #
-    # final_res = [a / float(args.r) for a in final_res]
+
 
 
 
