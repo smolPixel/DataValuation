@@ -31,7 +31,7 @@ def set_seed(seed=42):
 
 def main():
     DATASET_SIZE=100
-    NUM_ITER=5
+    NUM_ITER=10
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
