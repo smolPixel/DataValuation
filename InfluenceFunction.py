@@ -240,7 +240,7 @@ def main():
         results=[]
 
         influenceFunc=InfluenceFunction(train, dev, test, Classifier)
-        sorted_results=np.argsort(shapleys)
+        sorted_results=np.argsort(influenceFunc)
         # print(sorted_results)
         # print(sorted_results[::-1])
         results_remove_best=[test_baseline]
