@@ -150,6 +150,7 @@ def get_influence(training_set, algo, HPV):
                                  sampler=eval_sampler,
                                  batch_size=1)
     count=0
+    WEIGHT_DECAY=0.01
     for batch in tqdm(eval_dataloader, desc="Calculating validation grad"):
         # if count > 10:
         #    break
@@ -166,12 +167,12 @@ def get_influence(training_set, algo, HPV):
         loss.backward()
         count += 1
         influence = 0
-        for i, ((n, p), v) in enumerate(zip(model.named_parameters(), HVP)):
+        for i, ((n, p), v) in enumerate(zip(algo.model.named_parameters(), HVP)):
             if p.grad is None:
                 print("wrong")
             else:
                 if not any(nd in n for nd in no_decay):
-                    influence += ((p.grad.data.add_(args.weight_decay, p.data))*v).sum() * -1
+                    influence += ((p.grad.data.add_(WEIGHT_DECAY, p.data))*v).sum() * -1
                 #                    influence += ((p.grad.data)*v).sum() * -1
                 else:
                     influence += ((p.grad.data) * v).sum() * -1
