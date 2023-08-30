@@ -30,7 +30,6 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 def main():
-    set_seed()
     DATASET_SIZE=100
     NUM_ITER=1
     train, dev, test=initialize_dataset(DATASET_SIZE)
@@ -43,7 +42,6 @@ def main():
     names=['BERT']
     """Calculating values for LOO"""
     for name, classifier_algo in zip(names, classifiers):
-        set_seed()
         Classifier = classifier_algo(train)
         results = Classifier.train_test(train, dev, test)
         dev_baseline = results[1]
@@ -57,6 +55,7 @@ def main():
         # print(values)
         # fd
         results=values
+        set_seed(random.randint(0, 10000))
         sorted_results=np.argsort(results)
         # print(sorted_results)
         # print(sorted_results[::-1])
