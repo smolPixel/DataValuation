@@ -152,7 +152,7 @@ def get_influence(training_set, algo, HPV):
     for batch in tqdm(eval_dataloader, desc="Calculating validation grad"):
         # if count > 10:
         #    break
-        model.eval()
+        algo.model.eval()
         batch = tuple(t.to(args.device) for t in batch)
         text_batch = batch['sentence']
         encoding = algo.tokenizer(text_batch, return_tensors='pt', padding=True, truncation=True)
