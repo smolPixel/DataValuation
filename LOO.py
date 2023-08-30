@@ -103,7 +103,7 @@ def main():
                 eliminated += 1
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
-            _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
+            _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
             results_remove_worst.append(test_res)
             print(f"Results of {test_res}")
         auc_worst=auc(values_x, results_remove_worst)
