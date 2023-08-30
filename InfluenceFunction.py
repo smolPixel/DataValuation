@@ -145,8 +145,8 @@ def get_HPV(train_dataset, algo, grads):
             return final_res
 
 def get_influence(training_set, algo, HPV):
-    eval_sampler = SequentialSampler(train_dataset)
-    eval_dataloader = DataLoader(train_dataset,
+    eval_sampler = SequentialSampler(training_set)
+    eval_dataloader = DataLoader(training_set,
                                  sampler=eval_sampler,
                                  batch_size=1)
     for batch in tqdm(eval_dataloader, desc="Calculating validation grad"):
@@ -154,23 +154,15 @@ def get_influence(training_set, algo, HPV):
         #    break
         model.eval()
         batch = tuple(t.to(args.device) for t in batch)
+        text_batch = batch['sentence']
+        encoding = algo.tokenizer(text_batch, return_tensors='pt', padding=True, truncation=True)
+        input_ids = encoding['input_ids'].cuda()
+        attention_mask = encoding['attention_mask'].cuda()
+        # print(encoding)
+        labels = batch['label'].cuda()
+        outputs = algo.model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = outputs[0]
 
-        inputs = {
-            'input_ids':
-                batch[0],
-            'attention_mask':
-                batch[1],
-            'token_type_ids':
-                batch[2] if args.model_type in ['bert', 'xlnet'] else
-                None,  # XLM don't use segment_ids
-            'labels':
-                None
-        }
-        model.zero_grad()
-        outputs = model(**inputs)
-        logits = outputs[0]
-        loss = F.cross_entropy(logits, batch[3], reduction='mean')
-        loss.backward()
         count += 1
         influence = 0
         for i, ((n, p), v) in enumerate(zip(model.named_parameters(), HVP)):
