@@ -144,7 +144,7 @@ def get_HPV(train_dataset, algo, grads):
             final_res = [a / float(R) for a in final_res]
             return final_res
 
-def get_influence(training_set, algo, HPV):
+def get_influence(training_set, algo, HVP):
     eval_sampler = SequentialSampler(training_set)
     eval_dataloader = DataLoader(training_set,
                                  sampler=eval_sampler,
