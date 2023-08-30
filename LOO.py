@@ -30,7 +30,6 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 def main():
-    set_seed()
     DATASET_SIZE=100
     NUM_ITER=10
     train, dev, test=initialize_dataset(DATASET_SIZE)
