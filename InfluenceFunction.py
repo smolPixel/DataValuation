@@ -153,7 +153,7 @@ def get_influence(training_set, algo, HPV):
         # if count > 10:
         #    break
         algo.model.eval()
-        batch = tuple(t.to(args.device) for t in batch)
+        # batch = tuple(t.to(args.device) for t in batch)
         text_batch = batch['sentence']
         encoding = algo.tokenizer(text_batch, return_tensors='pt', padding=True, truncation=True)
         input_ids = encoding['input_ids'].cuda()
@@ -162,7 +162,7 @@ def get_influence(training_set, algo, HPV):
         labels = batch['label'].cuda()
         outputs = algo.model(input_ids, attention_mask=attention_mask, labels=labels)
         loss = outputs[0]
-
+        loss.backward()
         count += 1
         influence = 0
         for i, ((n, p), v) in enumerate(zip(model.named_parameters(), HVP)):
