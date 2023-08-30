@@ -50,7 +50,6 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     truncation_counter=0
     for t in range(1, ITER_NUM, 1):
         train_iter = copy.deepcopy(train)
-        set_seed(random.randint(0, 10000))
         permuatation = train_iter.permute_data()
         for j in tqdm(range(1, len(train_iter))):
             if truncation_counter>TRUNC_MAX and abs(dev_baseline-vals[j-1])<PT:
@@ -75,7 +74,6 @@ def TMC_Shapley(train, dev, test, classifier_algo, dev_baseline):
     return phis
 
 def main():
-    set_seed()
     DATASET_SIZE=100
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
@@ -89,7 +87,6 @@ def main():
         plt.figure()
         print(f"Running LOO with {name} classifier")
 
-        set_seed()
         Classifier = classifier_algo(train)
         results=Classifier.train_test(train, dev, test)
         dev_baseline=results[1]
