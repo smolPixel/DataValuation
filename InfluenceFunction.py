@@ -199,7 +199,7 @@ def InfluenceFunction(train, dev, test, classifier_algo):
     #First, get validation gradient
     grad=get_validation_grad(classifier_algo, dev)
     HPV=get_HPV(train, classifier_algo, grad)
-    get_influence(training_set, classifier_algo, HPV)
+    get_influence(train, classifier_algo, HPV)
     print(HPV)
     fds
 
