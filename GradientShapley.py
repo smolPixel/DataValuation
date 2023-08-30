@@ -86,7 +86,6 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr):
     return phis
 
 def main():
-    set_seed()
     DATASET_SIZE=100
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
@@ -108,7 +107,6 @@ def main():
         plt.figure()
         print(f"Running LOO with {name} classifier")
 
-        set_seed()
         Classifier = classifier_algo(train)
         results=Classifier.train_test(train, dev, test)
         dev_baseline=results[1]
