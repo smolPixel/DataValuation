@@ -188,8 +188,6 @@ def get_influence(training_set, algo, HVP):
             print(influence.item())
             print(negative_count / count)
     influence_list = np.array(influence_list)
-    print(influence_list)
-    fds
     return influence_list
 
 
@@ -201,9 +199,7 @@ def InfluenceFunction(train, dev, test, classifier_algo):
     #First, get validation gradient
     grad=get_validation_grad(classifier_algo, dev)
     HPV=get_HPV(train, classifier_algo, grad)
-    get_influence(train, classifier_algo, HPV)
-    print(HPV)
-    fds
+    return get_influence(train, classifier_algo, HPV)
 
 
 
