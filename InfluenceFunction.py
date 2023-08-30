@@ -149,6 +149,8 @@ def get_influence(training_set, algo, HVP):
     eval_dataloader = DataLoader(training_set,
                                  sampler=eval_sampler,
                                  batch_size=1)
+    HVP = [it.cuda() for it in HVP]
+    no_decay = ['bias', 'LayerNorm.weight']
     count=0
     WEIGHT_DECAY=0.01
     for batch in tqdm(eval_dataloader, desc="Calculating validation grad"):
