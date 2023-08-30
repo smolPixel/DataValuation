@@ -153,6 +153,8 @@ def get_influence(training_set, algo, HVP):
     no_decay = ['bias', 'LayerNorm.weight']
     count=0
     WEIGHT_DECAY=0.01
+    negative_count = 0
+    influence_list = []
     for batch in tqdm(eval_dataloader, desc="Calculating validation grad"):
         # if count > 10:
         #    break
