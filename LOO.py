@@ -49,7 +49,6 @@ def main():
 
         for t in range(1, NUM_ITER+1, 1):
             print(t)
-            set_seed(seed=t)
             Classifier = classifier_algo(train)
             results=Classifier.train_test(train, dev, test)
             dev_baseline=results[1]
@@ -61,7 +60,6 @@ def main():
             for i in range(DATASET_SIZE):
                 train_loo=copy.deepcopy(train)
                 train_loo.data.pop(i)
-                set_seed(seed=t)
                 train_loo.reset_index()
                 Classifier = classifier_algo(train_loo)
                 _, dev_res, _ = Classifier.train_test(train_loo, dev, test)
@@ -87,7 +85,6 @@ def main():
                     break
                 train_eval.data.pop(ss)
                 eliminated+=1
-            set_seed()
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
             _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
@@ -105,7 +102,6 @@ def main():
                     break
                 train_eval.data.pop(ss)
                 eliminated += 1
-            set_seed()
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
             _, dev_res, _ = Classifier.train_test(train_eval, dev, test)
