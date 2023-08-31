@@ -86,6 +86,7 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr):
     return phis
 
 def main():
+    split_test = 'dev'
     DATASET_SIZE=100
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
@@ -120,8 +121,12 @@ def main():
         sorted_results=np.argsort(shapleys)
         # print(sorted_results)
         # print(sorted_results[::-1])
-        results_remove_best=[test_baseline]
-        results_remove_worst=[test_baseline]
+        if split_test == 'dev':
+            baseline = dev_baseline
+        else:
+            baseline = test_baseline
+        results_remove_best = [baseline]
+        results_remove_worst = [baseline]
         values_x = [0]
         values_x.extend([i for i in range(5, 55, 5)])
         print("Evaluation of LOO, removing best data by bs of 10")
@@ -137,8 +142,11 @@ def main():
             set_seed()
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
-            _, _, test_res = Classifier.train_test(train_eval, dev, test)
-            results_remove_best.append(test_res)
+            _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
+            if split_test=='test':
+                results_remove_best.append(test_res)
+            else:
+                results_remove_best.append(dev_res)
             print(f"Results of {test_res}")
         auc_best = auc(values_x, results_remove_best)
         print(f"Area under curve is {auc_best}")
@@ -155,8 +163,11 @@ def main():
             set_seed()
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
-            _, _, test_res = Classifier.train_test(train_eval, dev, test)
-            results_remove_worst.append(test_res)
+            _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
+            if split_test=='test':
+                results_remove_worst.append(test_res)
+            else:
+                results_remove_worst.append(dev_res)
             print(f"Results of {test_res}")
         auc_worst = auc(values_x, results_remove_worst)
         print(f"Area under curve is {auc_worst}")

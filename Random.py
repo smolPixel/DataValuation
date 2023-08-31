@@ -36,7 +36,7 @@ def main():
 
     print(f"Initialized SST-2 with length of {len(train)}")
     # classifiers=[Bert_Classifier]
-    classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
+    classifiers=[Bert_Classifier]
     # names=['BERT']
     # names=['LogReg', 'RNN', 'BERT']
     names=['BERT']
@@ -55,7 +55,6 @@ def main():
         # print(values)
         # fd
         results=values
-        set_seed(random.randint(0, 10000))
         sorted_results=np.argsort(results)
         # print(sorted_results)
         # print(sorted_results[::-1])
