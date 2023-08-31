@@ -73,7 +73,7 @@ def get_HPV(train_dataset, algo, grads):
     C=1e7
     R=5
     BS=30
-    NUM_SAMPLES=4000
+    NUM_SAMPLES=4
     train_sampler = RandomSampler(train_dataset,
                                   replacement=True,
                                   num_samples=NUM_SAMPLES)
@@ -297,8 +297,8 @@ def main():
         print(Y)
         data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
-        plt.title(f'{name}-Gradient')
-        plt.savefig(f'{name}Gradient.png')
+        plt.title(f'{name}-Influence')
+        plt.savefig(f'{name}Influence.png')
 
 
 if __name__ == '__main__':
