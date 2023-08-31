@@ -30,7 +30,7 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 def main():
-    split_test = 'dev'
+    split_test = 'test'
     DATASET_SIZE=100
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
