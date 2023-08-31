@@ -72,17 +72,19 @@ def get_HPV(train_dataset, algo, grads):
     GRADIENT_ACCUMULATION_STEP=10
     C=1e7
     R=10
+    BS=10
+    NUM_SAMPLES=8000
     train_sampler = RandomSampler(train_dataset,
                                   replacement=True,
-                                  num_samples=8000)
+                                  num_samples=NUM_SAMPLES)
     train_dataloader = DataLoader(train_dataset,
                                   sampler=train_sampler,
-                                  batch_size=10 // GRADIENT_ACCUMULATION_STEP)
+                                  batch_size=BS // GRADIENT_ACCUMULATION_STEP)
 
 
     no_decay = ['bias', 'LayerNorm.weight']
     final_res = None
-    for r in range(10):
+    for r in range(R):
         res = [w.clone().cuda() for w in grads]
         algo.optimizer.zero_grad()
         for step, batch in enumerate(
@@ -214,7 +216,7 @@ def main():
     print(f"Initialized SST-2 with length of {len(train)}")
     # classifiers=[Bert_Classifier]
     classifiers=[Bert_Classifier]
-    lrs=[1e-3, 1e-5]
+    lrs=[1e-5]
     # Bert 1e-5 : 61.3 but overfits
     # 1e-6: 50.9
     # 1e-4: 50.9
@@ -229,7 +231,6 @@ def main():
         plt.figure()
         print(f"Running LOO with {name} classifier")
 
-        set_seed()
         Classifier = classifier_algo(train)
         results=Classifier.train_test(train, dev, test)
         dev_baseline=results[1]
