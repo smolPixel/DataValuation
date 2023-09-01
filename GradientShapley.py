@@ -37,7 +37,7 @@ def Gradient_Shapley(train, dev, test, classifier_algo, dev_baseline, lr):
     #dev_baseline= V(D) in paper
 
     #For now let's put PT at 2%, aka, when we get at 2% of the value of dev_baseline we are satisfied
-    ITER=10
+    ITER=20
     #baseline is 0.5 for binary dataset
     vals=[0.5 for i in range(len(train))]
     phis=[0 for i in range(len(train))]
