@@ -46,9 +46,10 @@ def sample_num_data(num_data):
 
 
 def main():
+    split_test = 'dev'
     set_seed()
     DATASET_SIZE=100
-    NUM_BOOTSTRAP=200
+    NUM_BOOTSTRAP=50
 
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
@@ -82,10 +83,14 @@ def main():
         values=[np.mean(vv) for vv in values]
         results=values
         sorted_results=np.argsort(results)
+        if split_test=='dev':
+            baseline=dev_baseline
+        else:
+            baseline=test_baseline
         # print(sorted_results)
         # print(sorted_results[::-1])
-        results_remove_best=[test_baseline]
-        results_remove_worst=[test_baseline]
+        results_remove_best=[baseline]
+        results_remove_worst=[baseline]
         print("Evaluation of LOO, removing best data by bs of 10")
         for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
@@ -100,7 +105,10 @@ def main():
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
             _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
-            results_remove_best.append(test_res)
+            if split_test == 'test':
+                results_remove_best.append(test_res)
+            else:
+                results_remove_best.append(dev_res)
             print(f"Results of {test_res}")
         print("Evaluation of LOO, removing worst data by bs of 10")
         for i in range(5, 55, 5):
@@ -116,7 +124,10 @@ def main():
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
             _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
-            results_remove_worst.append(test_res)
+            if split_test == 'test':
+                results_remove_worst.append(test_res)
+            else:
+                results_remove_worst.append(dev_res)
             print(f"Results of {test_res}")
 
 
