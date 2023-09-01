@@ -67,6 +67,7 @@
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/to_generate_chatgpt.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/to_generate_chatgpt.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/to_generate_ogsentences.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/to_generate_ogsentences.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataOOB.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataOOB.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/.~lock.Labelled_Sentence_TREC6_MQSVAE400Gened.tsv#" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/.~lock.Labelled_Sentence_TREC6_MQSVAE400Gened_Human.tsv#" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/Labelled_Sentence_IronyB_MQSVAE400Gened_Human.tsv" beforeDir="false" afterPath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/Labelled_Sentence_IronyB_MQSVAE400Gened_Human.tsv" afterDir="false" />
@@ -86,7 +87,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../DAControlled" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

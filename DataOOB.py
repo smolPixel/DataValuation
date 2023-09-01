@@ -30,7 +30,7 @@ def set_seed(seed=42):
 
 def main():
     DATASET_SIZE=100
-    NUM_BOOTSTRAP=500
+    NUM_BOOTSTRAP=100
     NUM_DATA_IN_BOOTSTRAP=25
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
@@ -67,7 +67,7 @@ def main():
         # print(sorted_results[::-1])
         results_remove_best=[test_baseline]
         results_remove_worst=[test_baseline]
-        print("Evaluation of LOO, removing best data by bs of 10")
+        print("Evaluation of OOB, removing best data by bs of 10")
         for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
             eliminated=0
