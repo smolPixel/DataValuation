@@ -92,6 +92,8 @@ def main():
         # print(sorted_results[::-1])
         results_remove_best=[baseline]
         results_remove_worst=[baseline]
+        values_x=[0]
+        values_x.extend([i for i in range(5, 55, 5)])
         print("Evaluation of LOO, removing best data by bs of 10")
         for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
