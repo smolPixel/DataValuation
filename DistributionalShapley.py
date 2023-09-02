@@ -47,10 +47,10 @@ def sample_num_data(num_data):
 
 
 def main():
-    split_test = 'test'
+    split_test = 'dev'
     set_seed()
     DATASET_SIZE=100
-    NUM_BOOTSTRAP=100
+    NUM_BOOTSTRAP=50
 
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
