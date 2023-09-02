@@ -98,6 +98,7 @@ def main():
             else:
                 results_remove_best.append(dev_res)
             print(f"Results of {test_res}")
+        print(values_x, results_remove_best)
         auc_best=auc(values_x, results_remove_best)
         print(f"Area under curve is {auc_best}")
         print("Evaluation of LOO, removing worst data by bs of 10")
