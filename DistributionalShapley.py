@@ -49,7 +49,7 @@ def main():
     split_test = 'dev'
     set_seed()
     DATASET_SIZE=100
-    NUM_BOOTSTRAP=100
+    NUM_BOOTSTRAP=200
 
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
