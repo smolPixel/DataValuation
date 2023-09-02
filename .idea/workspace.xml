@@ -98,16 +98,16 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/media/frederic/Alternia/DAControlled/Configs/TREC6/1000"
+    "last_opened_file_path": "/media/frederic/Alternia/DAControlled/Configs/SST-2/1000"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/../DAControlled/Configs/TREC6/1000" />
+      <recent name="$PROJECT_DIR$/../DAControlled/Configs/SST-2/1000" />
       <recent name="$PROJECT_DIR$/../DAControlled/Configs/SST-2/10" />
+      <recent name="$PROJECT_DIR$/../DAControlled/Configs/TREC6/1000" />
       <recent name="$PROJECT_DIR$/../DAControlled/Configs/IronyB/1000" />
       <recent name="$PROJECT_DIR$/../DAControlled/Configs/TREC6/10" />
-      <recent name="$PROJECT_DIR$/../DAControlled/Configs/IronyB/10" />
     </key>
   </component>
   <component name="RunManager" selected="Python.Splitting_file_in_two">
