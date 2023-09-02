@@ -72,8 +72,8 @@ def get_HPV(train_dataset, algo, grads):
     GRADIENT_ACCUMULATION_STEP=10
     C=1e7
     R=10
-    BS=10
-    NUM_SAMPLES=8000
+    BS=20
+    NUM_SAMPLES=4000
     train_sampler = RandomSampler(train_dataset,
                                   replacement=True,
                                   num_samples=NUM_SAMPLES)
