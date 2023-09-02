@@ -18,6 +18,7 @@ from tqdm import tqdm
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.metrics import auc
 
 from Classifier.LogReg import LogReg_Classifier
 from Classifier.RNN import RNN_Classifier
@@ -29,10 +30,10 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 def main():
-    split_test = 'dev'
+    split_test = 'test'
     DATASET_SIZE=100
-    NUM_BOOTSTRAP=10
-    NUM_DATA_IN_BOOTSTRAP=50
+    NUM_BOOTSTRAP=100
+    NUM_DATA_IN_BOOTSTRAP=25
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
@@ -72,6 +73,8 @@ def main():
             baseline = test_baseline
         results_remove_best = [baseline]
         results_remove_worst = [baseline]
+        values_x = [0]
+        values_x.extend([i for i in range(5, 55, 5)])
         print("Evaluation of OOB, removing best data by bs of 10")
         for i in range(5, 55, 5):
             train_eval=copy.deepcopy(train)
@@ -91,6 +94,8 @@ def main():
             else:
                 results_remove_best.append(dev_res)
             print(f"Results of {test_res}")
+        auc_best = auc(values_x, results_remove_best)
+        print(f"Area under curve is {auc_best}")
         print("Evaluation of LOO, removing worst data by bs of 10")
         for i in range(5, 55, 5):
             train_eval = copy.deepcopy(train)
@@ -110,7 +115,9 @@ def main():
             else:
                 results_remove_worst.append(dev_res)
             print(f"Results of {test_res}")
-
+        auc_worst = auc(values_x, results_remove_worst)
+        print(f"Area under curve is {auc_worst}")
+        print(f"Final metric: {auc_worst-auc_best}")
 
         X=[i for i in range(0,55,5)]
         X.extend([i for i in range(0,55,5)])
