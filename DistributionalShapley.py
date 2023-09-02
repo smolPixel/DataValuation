@@ -46,18 +46,18 @@ def sample_num_data(num_data):
 
 
 def main():
-    split_test = 'dev'
+    split_test = 'test'
     set_seed()
     DATASET_SIZE=100
-    NUM_BOOTSTRAP=200
+    NUM_BOOTSTRAP=50
 
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
+    classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
     # classifiers=[Bert_Classifier]
-    classifiers=[Bert_Classifier]
     # names=['BERT']
-    names=['BERT']
+    names=['LogRe', 'RNN', 'BERT']
     for name, classifier_algo in zip(names, classifiers):
         values=[[] for i in range(DATASET_SIZE)]
         plt.figure()
@@ -141,8 +141,8 @@ def main():
         print(Y)
         data_plot=pd.DataFrame({'Number of data points removed': X, 'Accuracy': Y, 'Strategy':strats})
         sns.lineplot(x='Number of data points removed', y='Accuracy', hue='Strategy', data=data_plot)
-        plt.title(f'{name}-Distributional')
-        plt.savefig(f'{name}Distributional.png')
+        plt.title(f'Graphes/{name}-Distributional')
+        plt.savefig(f'Graphes/{name}Distributional.png')
 
 
 if __name__ == '__main__':
