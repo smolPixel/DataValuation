@@ -71,9 +71,9 @@ def get_validation_grad(model, dev):
 def get_HPV(train_dataset, algo, grads):
     GRADIENT_ACCUMULATION_STEP=10
     C=1e7
-    R=5
-    BS=30
-    NUM_SAMPLES=4000
+    R=10
+    BS=10
+    NUM_SAMPLES=8000
     train_sampler = RandomSampler(train_dataset,
                                   replacement=True,
                                   num_samples=NUM_SAMPLES)
@@ -209,7 +209,7 @@ def InfluenceFunction(train, dev, test, classifier_algo):
     return phis
 
 def main():
-    split_test = 'dev'
+    split_test = 'test'
     DATASET_SIZE=100
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
