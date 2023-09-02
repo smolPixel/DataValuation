@@ -67,6 +67,7 @@
       <change beforePath="$PROJECT_DIR$/InfluenceFunction.py" beforeDir="false" afterPath="$PROJECT_DIR$/InfluenceFunction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/.~lock.Labelled_Sentence_FakeNews_MQSVAE400Gened_Human.tsv#" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/Labelled_Sentence_FakeNews_MQSVAE400Gened_Human.tsv" beforeDir="false" afterPath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/Labelled_Sentence_FakeNews_MQSVAE400Gened_Human.tsv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../europa/Model/BARTm.py" beforeDir="false" afterPath="$PROJECT_DIR$/../europa/Model/BARTm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
