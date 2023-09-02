@@ -19,6 +19,7 @@ from tqdm import tqdm
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.metrics import auc
 
 from Classifier.LogReg import LogReg_Classifier
 from Classifier.RNN import RNN_Classifier
