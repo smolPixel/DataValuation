@@ -71,9 +71,9 @@ def get_validation_grad(model, dev):
 def get_HPV(train_dataset, algo, grads):
     GRADIENT_ACCUMULATION_STEP=10
     C=1e7
-    R=5
-    BS=30
-    NUM_SAMPLES=4
+    R=10
+    BS=10
+    NUM_SAMPLES=8000
     train_sampler = RandomSampler(train_dataset,
                                   replacement=True,
                                   num_samples=NUM_SAMPLES)
@@ -209,7 +209,7 @@ def InfluenceFunction(train, dev, test, classifier_algo):
     return phis
 
 def main():
-    set_seed()
+    split_test = 'test'
     DATASET_SIZE=100
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
@@ -244,8 +244,12 @@ def main():
         sorted_results=np.argsort(influenceFunc)
         # print(sorted_results)
         # print(sorted_results[::-1])
-        results_remove_best=[test_baseline]
-        results_remove_worst=[test_baseline]
+        if split_test == 'dev':
+            baseline = dev_baseline
+        else:
+            baseline = test_baseline
+        results_remove_best = [baseline]
+        results_remove_worst = [baseline]
         values_x = [0]
         values_x.extend([i for i in range(5, 55, 5)])
         print("Evaluation of LOO, removing best data by bs of 10")
@@ -261,8 +265,11 @@ def main():
             set_seed()
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
-            _, _, test_res = Classifier.train_test(train_eval, dev, test)
-            results_remove_best.append(test_res)
+            _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
+            if split_test == 'test':
+                results_remove_best.append(test_res)
+            else:
+                results_remove_best.append(dev_res)
             print(f"Results of {test_res}")
         auc_best = auc(values_x, results_remove_best)
         print(f"Area under curve is {auc_best}")
@@ -279,8 +286,11 @@ def main():
             set_seed()
             train_eval.reset_index()
             Classifier = classifier_algo(train_eval)
-            _, _, test_res = Classifier.train_test(train_eval, dev, test)
-            results_remove_worst.append(test_res)
+            _, dev_res, test_res = Classifier.train_test(train_eval, dev, test)
+            if split_test == 'test':
+                results_remove_worst.append(test_res)
+            else:
+                results_remove_worst.append(dev_res)
             print(f"Results of {test_res}")
         auc_worst = auc(values_x, results_remove_worst)
         print(f"Area under curve is {auc_worst}")
