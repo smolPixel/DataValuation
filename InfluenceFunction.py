@@ -209,7 +209,7 @@ def InfluenceFunction(train, dev, test, classifier_algo):
     return phis
 
 def main():
-    split_test = 'test'
+    split_test = 'dev'
     DATASET_SIZE=100
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
