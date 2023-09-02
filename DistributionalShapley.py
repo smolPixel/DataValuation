@@ -54,10 +54,10 @@ def main():
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
-    classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
-    # classifiers=[Bert_Classifier]
-    # names=['BERT']
-    names=['LogRe', 'RNN', 'BERT']
+    # classifiers=[LogReg_Classifier, RNN_Classifier, Bert_Classifier]
+    classifiers=[Bert_Classifier]
+    names=['BERT']
+    # names=['LogRe', 'RNN', 'BERT']
     for name, classifier_algo in zip(names, classifiers):
         values=[[] for i in range(DATASET_SIZE)]
         plt.figure()
@@ -110,6 +110,8 @@ def main():
             else:
                 results_remove_best.append(dev_res)
             print(f"Results of {test_res}")
+            auc_best = auc(values_x, results_remove_best)
+            print(f"Area under curve is {auc_best}")
         print("Evaluation of LOO, removing worst data by bs of 10")
         for i in range(5, 55, 5):
             train_eval = copy.deepcopy(train)
@@ -129,7 +131,9 @@ def main():
             else:
                 results_remove_worst.append(dev_res)
             print(f"Results of {test_res}")
-
+            auc_worst = auc(values_x, results_remove_worst)
+            print(f"Area under curve is {auc_worst}")
+        print(f"Final metric: {auc_worst-auc_best}")
 
         X=[i for i in range(0,55,5)]
         X.extend([i for i in range(0,55,5)])

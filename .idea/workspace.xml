@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12f32bed-6d82-4744-ae3b-8e75b0f51e20" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../DAControlled/TODO.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAControlled/TODO.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAControlled/xhan/influence-function-analysis" beforeDir="false" afterPath="$PROJECT_DIR$/../DAControlled/xhan/influence-function-analysis" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunk_Curr/requests_chunk" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/Chunk_Curr/requests_chunk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_0" beforeDir="false" />
@@ -67,7 +68,6 @@
       <change beforePath="$PROJECT_DIR$/DistributionalShapley.py" beforeDir="false" afterPath="$PROJECT_DIR$/DistributionalShapley.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/.~lock.Labelled_Sentence_FakeNews_MQSVAE400Gened_Human.tsv#" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/Labelled_Sentence_FakeNews_MQSVAE400Gened_Human.tsv" beforeDir="false" afterPath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/Labelled_Sentence_FakeNews_MQSVAE400Gened_Human.tsv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../europa/Configs/EuropaMu/mbart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../europa/Configs/EuropaMu/mbart.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,16 +99,16 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/media/frederic/Alternia/europa/Configs/EuropaMu"
+    "last_opened_file_path": "/media/frederic/Alternia/europa/Model"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/../europa/Configs/EuropaMu" />
+      <recent name="$PROJECT_DIR$/../europa/Model" />
       <recent name="$PROJECT_DIR$/../DAControlled/Configs/SST-2/1000" />
+      <recent name="$PROJECT_DIR$/../DAControlled/MetaStrategy" />
       <recent name="$PROJECT_DIR$/../DAControlled/Configs/SST-2/10" />
-      <recent name="$PROJECT_DIR$/../DAControlled/Configs/TREC6/1000" />
-      <recent name="$PROJECT_DIR$/../DAControlled/Configs/IronyB/1000" />
+      <recent name="$PROJECT_DIR$/../europa/Configs/EuropaMu" />
     </key>
   </component>
   <component name="RunManager" selected="Python.Splitting_file_in_two">
