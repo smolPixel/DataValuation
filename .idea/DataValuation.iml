@@ -9,5 +9,6 @@
     <orderEntry type="module" module-name="Doctorate" />
     <orderEntry type="module" module-name="europa" />
     <orderEntry type="module" module-name="KPGDataset" />
+    <orderEntry type="module" module-name="HR Simulator" />
   </component>
 </module>
