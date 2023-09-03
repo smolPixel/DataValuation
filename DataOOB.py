@@ -30,10 +30,10 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 def main():
-    split_test = 'test'
+    split_test = 'dev'
     DATASET_SIZE=100
-    NUM_BOOTSTRAP=10
-    NUM_DATA_IN_BOOTSTRAP=50
+    NUM_BOOTSTRAP=100
+    NUM_DATA_IN_BOOTSTRAP=25
     train, dev, test=initialize_dataset(DATASET_SIZE)
 
     print(f"Initialized SST-2 with length of {len(train)}")
