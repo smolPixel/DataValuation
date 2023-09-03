@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12f32bed-6d82-4744-ae3b-8e75b0f51e20" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../DAControlled/Configs/TREC6/1000/VAE_Doublons.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../DAControlled/Configs/TREC6/1000/VAE_Doublons.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAControlled/xhan/influence-function-analysis" beforeDir="false" afterPath="$PROJECT_DIR$/../DAControlled/xhan/influence-function-analysis" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunk_Curr/requests_chunk" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/Chunk_Curr/requests_chunk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_0" beforeDir="false" />
@@ -64,7 +65,6 @@
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/to_generate_chatgpt.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/to_generate_chatgpt.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/to_generate_ogsentences.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/to_generate_ogsentences.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataOOB.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataOOB.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/.~lock.Labelled_Sentence_IronyB_MQSVAE400Gened.tsv#" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/.~lock.Labelled_Sentence_IronyB_MQSVAE400Gened_Human.tsv#" beforeDir="false" />
     </list>
@@ -81,7 +81,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../DAControlled" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -98,16 +98,16 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/media/frederic/Alternia/DAControlled/Configs/FakeNews/10"
+    "last_opened_file_path": "/media/frederic/Alternia/DAControlled/Configs/IronyB/10"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/../DAControlled/Configs/FakeNews/10" />
+      <recent name="$PROJECT_DIR$/../DAControlled/Configs/IronyB/10" />
       <recent name="$PROJECT_DIR$/../DAControlled/Configs/Irony/1000" />
+      <recent name="$PROJECT_DIR$/../DAControlled/Configs/TREC6/1000" />
+      <recent name="$PROJECT_DIR$/../DAControlled/Configs/FakeNews/10" />
       <recent name="$PROJECT_DIR$/../DAControlled/Configs/SST-2/1000" />
-      <recent name="$PROJECT_DIR$/../DAControlled/Configs/Irony/10" />
-      <recent name="$PROJECT_DIR$/../DAControlled/MetaStrategy" />
     </key>
   </component>
   <component name="RunManager" selected="Python.Splitting_file_in_two">
