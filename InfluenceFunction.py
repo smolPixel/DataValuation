@@ -1,4 +1,4 @@
-"""Calculating values with Influence Function, following https://arxiv.org/pdf/2004.11546.pdf"""
+    """Calculating values with Influence Function, following https://arxiv.org/pdf/2004.11546.pdf"""
 
 
 #Main file
@@ -74,6 +74,7 @@ def get_HPV(train_dataset, algo, grads):
     R=10
     BS=10
     NUM_SAMPLES=8000
+    damping=0.01
     train_sampler = RandomSampler(train_dataset,
                                   replacement=True,
                                   num_samples=NUM_SAMPLES)
@@ -119,7 +120,7 @@ def get_HPV(train_dataset, algo, grads):
                                 p.grad.data.add_(args.weight_decay,
                                                  v_p)) / C + v[i].cuda()
                         else:
-                            res[i] = (1 - args.damping) * v_p - (
+                            res[i] = (1 - damping) * v_p - (
                                 p.grad.data) / C + v[i].cuda()
                     except RuntimeError:
 
