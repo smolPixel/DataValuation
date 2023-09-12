@@ -111,7 +111,7 @@ def get_HPV(train_dataset, algo, grads):
             H.backward()
             if (step + 1) % GRADIENT_ACCUMULATION_STEP == 0:
 
-                print(res[20])
+                # print(res[20])
 
                 for i, ((n, p),
                         v_p) in enumerate(zip(algo.model.named_parameters(), res)):
