@@ -119,7 +119,7 @@ def get_HPV(train_dataset, algo, grads):
                         if not any(nd in n for nd in no_decay):
                             res[i] = (1 - damping) * v_p - (
                                 p.grad.data.add_(weight_decay,
-                                                 v_p)) / C + v[i].cuda()
+                                                 v_p)) / C + grads[i].cuda()
                         else:
                             res[i] = (1 - damping) * v_p - (
                                 p.grad.data) / C + v[i].cuda()
