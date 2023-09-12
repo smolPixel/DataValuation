@@ -5,69 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12f32bed-6d82-4744-ae3b-8e75b0f51e20" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../DAControlled/TODO.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAControlled/TODO.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAControlled/xhan/influence-function-analysis" beforeDir="false" afterPath="$PROJECT_DIR$/../DAControlled/xhan/influence-function-analysis" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunk_Curr/requests_chunk" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/Chunk_Curr/requests_chunk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/generate_chunk_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/label_chunk_9" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Chunks_Pre/ogsentence_chunk_9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Generated_senteces.tsv" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/Generated_senteces.tsv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Splitting_file_in_two.py" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/Splitting_file_in_two.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_10.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_11.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_12.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_5.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_6.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_7.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_8.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/Chunk_9.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/to_generate_chatgpt.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/to_generate_chatgpt.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/to_generate_ogsentences.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/to_generate_ogsentences.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DAIro/borderify/Temp output/temp_0.json" beforeDir="false" afterPath="$PROJECT_DIR$/../DAIro/borderify/Temp output/temp_0.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/DataValuation.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DataValuation.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataOOB.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataOOB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/.~lock.Labelled_Sentence_IronyB_MQSVAE400Gened.tsv#" beforeDir="false" afterPath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/.~lock.Labelled_Sentence_IronyB_MQSVAE400Gened.tsv#" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/.~lock.Labelled_Sentence_IronyB_MQSVAE400Gened_Human.tsv#" beforeDir="false" afterPath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/.~lock.Labelled_Sentence_IronyB_MQSVAE400Gened_Human.tsv#" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/Labelled_Sentence_IronyB_MQSVAE400Gened_Human.tsv" beforeDir="false" afterPath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/OGData/Labelled_Sentence_IronyB_MQSVAE400Gened_Human.tsv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DistributionalShapley.py" beforeDir="false" afterPath="$PROJECT_DIR$/DistributionalShapley.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InfluenceFunction.py" beforeDir="false" afterPath="$PROJECT_DIR$/InfluenceFunction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/Comparisons.py" beforeDir="false" afterPath="$PROJECT_DIR$/../MQ/Labellers/ChatGPTData/Comparisons.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../europa/Configs/EuropaMu/mbart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../europa/Configs/EuropaMu/mbart.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,20 +46,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/media/frederic/Alternia/DAControlled/Configs/IronyB/10"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/media/frederic/Alternia/DAControlled/Configs/IronyB/1000&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/../DAControlled/Configs/IronyB/10" />
-      <recent name="$PROJECT_DIR$/../DAControlled/Configs/Irony/1000" />
-      <recent name="$PROJECT_DIR$/../DAControlled/Configs/SST-2/1000" />
+      <recent name="$PROJECT_DIR$/../DAControlled/Configs/IronyB/1000" />
+      <recent name="$PROJECT_DIR$/../DAControlled/Configs/Irony/10" />
       <recent name="$PROJECT_DIR$/../DAControlled/Configs/TREC6/1000" />
-      <recent name="$PROJECT_DIR$/../DAControlled/Configs/FakeNews/10" />
+      <recent name="$PROJECT_DIR$/../DAIro/borderify" />
+      <recent name="$PROJECT_DIR$/../DAControlled/Configs/CLS/100" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../HR Simulator" />
     </key>
   </component>
   <component name="RunManager" selected="Python.Comparisons">
@@ -154,6 +109,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="calculate_results" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="europa" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../europa/results" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../europa/results/calculate_results.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="sandbox" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Doctorate" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -179,6 +155,7 @@
       <list>
         <item itemvalue="Python.Comparisons" />
         <item itemvalue="Python.Splitting_file_in_two" />
+        <item itemvalue="Python.calculate_results" />
         <item itemvalue="Python.sandbox" />
       </list>
     </recent_temporary>

@@ -143,8 +143,8 @@ def get_HPV(train_dataset, algo, grads):
                     a + (b / C).cpu().float() for a, b in zip(final_res, res)
                 ]
 
-            final_res = [a / float(R) for a in final_res]
-            return final_res
+    final_res = [a / float(R) for a in final_res]
+    return final_res
 
 def get_influence(training_set, algo, HVP):
     eval_sampler = SequentialSampler(training_set)
