@@ -112,7 +112,7 @@ def get_HPV(train_dataset, algo, grads):
                 print(res[20])
 
                 for i, ((n, p),
-                        v_p) in enumerate(zip(model.named_parameters(), res)):
+                        v_p) in enumerate(zip(algo.named_parameters(), res)):
                     try:
                         if not any(nd in n for nd in no_decay):
                             res[i] = (1 - args.damping) * v_p - (
