@@ -122,7 +122,7 @@ def get_HPV(train_dataset, algo, grads):
                                                  v_p)) / C + grads[i].cuda()
                         else:
                             res[i] = (1 - damping) * v_p - (
-                                p.grad.data) / C + v[i].cuda()
+                                p.grad.data) / C + grads[i].cuda()
                     except RuntimeError:
 
                         v_p = v_p.cpu()
