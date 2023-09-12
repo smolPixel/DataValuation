@@ -136,7 +136,7 @@ def get_HPV(train_dataset, algo, grads):
                         else:
                             res[i] = ((1 - damping) * v_p -
                                       (p_grad) / C + v[i]).cuda()
-                model.zero_grad()
+                algo.model.zero_grad()
 
             if final_res is None:
                 final_res = [(b / C).cpu().float() for b in res]
