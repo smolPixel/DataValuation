@@ -1,4 +1,4 @@
-    """Calculating values with Influence Function, following https://arxiv.org/pdf/2004.11546.pdf"""
+"""Calculating values with Influence Function, following https://arxiv.org/pdf/2004.11546.pdf"""
 
 
 #Main file
