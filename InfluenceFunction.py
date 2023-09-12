@@ -75,6 +75,7 @@ def get_HPV(train_dataset, algo, grads):
     BS=10
     NUM_SAMPLES=8000
     damping=0.01
+    weight_decay=0.01
     train_sampler = RandomSampler(train_dataset,
                                   replacement=True,
                                   num_samples=NUM_SAMPLES)
@@ -116,8 +117,8 @@ def get_HPV(train_dataset, algo, grads):
                         v_p) in enumerate(zip(algo.model.named_parameters(), res)):
                     try:
                         if not any(nd in n for nd in no_decay):
-                            res[i] = (1 - args.damping) * v_p - (
-                                p.grad.data.add_(args.weight_decay,
+                            res[i] = (1 - damping) * v_p - (
+                                p.grad.data.add_(weight_decay,
                                                  v_p)) / C + v[i].cuda()
                         else:
                             res[i] = (1 - damping) * v_p - (
@@ -129,11 +130,11 @@ def get_HPV(train_dataset, algo, grads):
                         p_grad = p.grad.data.cpu()
 
                         if not any(nd in n for nd in no_decay):
-                            res[i] = ((1 - args.damping) * v_p -
+                            res[i] = ((1 - damping) * v_p -
                                       (p_grad.add_(args.weight_decay, v_p)) /
                                       C + v[i]).cuda()
                         else:
-                            res[i] = ((1 - args.damping) * v_p -
+                            res[i] = ((1 - damping) * v_p -
                                       (p_grad) / C + v[i]).cuda()
                 model.zero_grad()
 
